@@ -614,12 +614,24 @@
                 <div class="kpi-value">16,247</div>
                 <div class="kpi-change positive">↑ 同比 +2.4%</div>
                 <div class="kpi-change negative">↓ 环比 -45.2%</div>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="kpi-title">YTD累计销量</div>
+                    <div class="kpi-value" style="font-size: 22px;">3,055,703</div>
+                    <div class="kpi-change positive">↑ +20.8%</div>
+                    <div class="kpi-change" style="color: #aaa; font-size: 12px;">累计同比 +527,296</div>
+                </div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-title">本周总销售额</div>
                 <div class="kpi-value">$2.74M</div>
                 <div class="kpi-change positive">↑ 同比 +11.1%</div>
                 <div class="kpi-change negative">↓ 环比 -46.0%</div>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="kpi-title">YTD累计销售额</div>
+                    <div class="kpi-value" style="font-size: 22px;">$411.04M</div>
+                    <div class="kpi-change positive">↑ +26.7%</div>
+                    <div class="kpi-change" style="color: #aaa; font-size: 12px;">累计同比 +$86.77M</div>
+                </div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-title">线上销售占比</div>
@@ -638,6 +650,10 @@
         <!-- KPI八周趋势图 -->
         <div class="kpi-charts-container">
             <div class="kpi-chart-card">
+                <div class="kpi-chart-title">POP单店单周销量 - 八周趋势</div>
+                <div id="popSalesChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
                 <div class="kpi-chart-title">本周总销量 - 八周趋势</div>
                 <div id="totalSalesChart" class="kpi-chart"></div>
             </div>
@@ -648,10 +664,6 @@
             <div class="kpi-chart-card">
                 <div class="kpi-chart-title">线上销售占比 - 八周趋势</div>
                 <div id="onlineSalesChart" class="kpi-chart"></div>
-            </div>
-            <div class="kpi-chart-card">
-                <div class="kpi-chart-title">POP单店单周销量 - 八周趋势</div>
-                <div id="popSalesChart" class="kpi-chart"></div>
             </div>
         </div>
         
@@ -804,7 +816,7 @@
         
         <!-- SKU八周占比图表 -->
         <div class="sku-share-chart-container">
-            <div class="sku-share-chart-title">📈 八周各SKU占比趋势</div>
+            <div class="sku-share-chart-title">📈 八周各SKU占比趋势(可点击以增加/删除SKU)</div>
             <div id="skuShareChart" class="sku-share-chart"></div>
         </div>
         
@@ -1443,6 +1455,7 @@
                 { name: 'S820', data: [32.50, 27.68, 34.24, 39.06, 33.62, 32.69, 36.26, 33.00] }
             ]
         };
+        
         
         // POP单店单周销量图表
         const popSalesOption = {

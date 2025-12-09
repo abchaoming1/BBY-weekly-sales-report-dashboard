@@ -49,6 +49,31 @@
             padding: 15px 20px;
         }
         
+        .chart-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+
+        .toggle-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
         .activity-title {
             font-size: 18px;
             font-weight: bold;
@@ -814,9 +839,15 @@
             </div>
         </div>
         
-        <!-- SKU八周占比图表 -->
+        <!-- SKU八周占比图表容器 -->
         <div class="sku-share-chart-container">
-            <div class="sku-share-chart-title">📈 八周各SKU占比趋势(可点击以增加/删除SKU)</div>
+            <div class="section-header" style="border-bottom: none; margin: 0 0 20px 0;">
+                <h2 class="sku-share-chart-title">📈 八周各SKU趋势</h2>
+                <div class="chart-toggle">
+                    <button id="showPercentage" class="toggle-btn active">显示占比</button>
+                    <button id="showVolume" class="toggle-btn">显示销量</button>
+                </div>
+            </div>
             <div id="skuShareChart" class="sku-share-chart"></div>
         </div>
         
@@ -1417,31 +1448,31 @@
         // 八周数据
         const eightWeekData = {
             popSales: {
-                weeks: ['2025-42', '2025-43', '2025-44', '2025-45', '2025-46', '2025-47', '2025-48', '2025-49'],
+                weeks: ['Wk-42', 'Wk-43', 'Wk-44', 'Wk-45', 'Wk-46', 'Wk-47', 'Wk-48', 'Wk-49'],
                 values: [7.85, 8.35, 7.09, 7.55, 7.81, 10.86, 22.04, 10.25],
                 title: 'POP单店单周销量 - 八周趋势'
             },
             totalSales: {
-                weeks: ['2025-42', '2025-43', '2025-44', '2025-45', '2025-46', '2025-47', '2025-48', '2025-49'],
+                weeks: ['Wk-42', 'Wk-43', 'Wk-44', 'Wk-45', 'Wk-46', 'Wk-47', 'Wk-48', 'Wk-49'],
                 values: [9426, 9681, 7827, 9170, 9004, 14856, 29627, 16247],
                 title: '本周总销量 - 八周趋势'
             },
             totalRevenue: {
-                weeks: ['2025-42', '2025-43', '2025-44', '2025-45', '2025-46', '2025-47', '2025-48', '2025-49'],
+                weeks: ['Wk-42', 'Wk-43', 'Wk-44', 'Wk-45', 'Wk-46', 'Wk-47', 'Wk-48', 'Wk-49'],
                 values: [1632229, 1602586, 1340349, 1577212, 1535200, 2606847, 5075919, 2741498],
                 title: '本周总销售额 - 八周趋势'
             },
             onlineSales: {
-                weeks: ['2025-42', '2025-43', '2025-44', '2025-45', '2025-46', '2025-47', '2025-48', '2025-49'],
+                weeks: ['Wk-42', 'Wk-43', 'Wk-44', 'Wk-45', 'Wk-46', 'Wk-47', 'Wk-48', 'Wk-49'],
                 values: [2723, 2584, 1791, 2749, 2369, 5667, 11020, 7541],
                 percentages: [28.89, 26.69, 22.88, 29.98, 26.32, 38.16, 37.20, 46.45],
                 title: '线上销售占比 - 八周趋势'
             }
         };
         
-        // SKU八周占比数据
+        // SKU八周占比数据 - 包含所有12个SKU，添加Other
         const skuShareData = {
-            weeks: ['2025-42', '2025-43', '2025-44', '2025-45', '2025-46', '2025-47', '2025-48', '2025-49'],
+            weeks: ['Wk-42', 'Wk-43', 'Wk-44', 'Wk-45', 'Wk-46', 'Wk-47', 'Wk-48', 'Wk-49'],
             series: [
                 { name: 'T511', data: [9.24, 13.09, 10.37, 8.68, 8.63, 9.06, 12.22, 12.35] },
                 { name: 'T910', data: [0.46, 0.42, 0.72, 0.40, 0.41, 0.25, 0.09, 1.18] },
@@ -1452,10 +1483,281 @@
                 { name: 'S661', data: [1.15, 1.38, 1.49, 0.91, 0.79, 1.13, 1.45, 1.91] },
                 { name: 'S803', data: [6.20, 17.16, 9.35, 9.52, 11.94, 6.19, 8.09, 8.12] },
                 { name: 'S810', data: [5.36, 4.03, 4.36, 5.20, 7.91, 4.07, 1.27, 5.52] },
-                { name: 'S820', data: [32.50, 27.68, 34.24, 39.06, 33.62, 32.69, 36.26, 33.00] }
+                { name: 'S820', data: [32.50, 27.68, 34.24, 39.06, 33.62, 32.69, 36.26, 33.00] },
+                { name: 'C120', data: [3.09, 3.10, 2.96, 2.68, 2.85, 2.58, 1.83, 2.83] },
+                { name: 'Other', data: [1.01, 0.82, 1.03, 2.07, 1.25, 4.91, 0.43, 0.50] }
             ]
         };
-        
+
+        // SKU八周销量数据 - 包含所有12个SKU
+        const skuVolumeData = {
+            weeks: ['Wk-42', 'Wk-43', 'Wk-44', 'Wk-45', 'Wk-46', 'Wk-47', 'Wk-48', 'Wk-49'],
+            series: [
+                { name: 'T511', data: [871, 1267, 812, 796, 777, 1346, 3620, 2007] },
+                { name: 'T910', data: [43, 41, 56, 37, 37, 37, 27, 191] },
+                { name: 'T920', data: [1368, 612, 536, 615, 541, 920, 2402, 1242] },
+                { name: 'T921', data: [902, 906, 862, 852, 844, 1454, 3032, 1588] },
+                { name: 'E310', data: [1215, 1311, 1097, 1164, 1192, 3429, 4191, 1754] },
+                { name: 'S710', data: [473, 378, 360, 426, 430, 666, 1741, 1034] },
+                { name: 'S661', data: [108, 134, 117, 83, 71, 168, 429, 311] },
+                { name: 'S803', data: [584, 1661, 732, 873, 1075, 919, 2398, 1320] },
+                { name: 'S810', data: [505, 390, 341, 477, 712, 604, 377, 897] },
+                { name: 'S820', data: [3063, 2680, 2680, 3582, 3027, 4856, 10742, 5362] },
+                { name: 'C120', data: [291, 300, 232, 246, 283, 384, 542, 459] },
+                { name: 'Other', data: [3, 1, 2, 19, 15, 73, 126, 82] }
+            ]
+        };
+
+        // 颜色配置 - 12个不同的颜色
+        const skuColors = [
+            '#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6',
+            '#1abc9c', '#d35400', '#c0392b', '#8e44ad', '#27ae60',
+            '#16a085', '#2980b9'
+        ];
+
+        // 当前显示类型：percentage或volume
+        let currentChartType = 'percentage';
+
+        // 创建占比图表配置
+        function createPercentageOption() {
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function(params) {
+                        let result = params[0].name + '<br/>';
+                        let total = 0;
+                        params.forEach(function(item) {
+                            if (item.value > 0) {
+                                result += '<span style="display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + '"></span>' + 
+                                        item.seriesName + ': ' + item.value.toFixed(1) + '%<br/>';
+                                total += item.value;
+                            }
+                        });
+                        result += '<hr style="margin:5px 0;border:none;border-top:1px solid #2c3e50">';
+                        result += '<strong>总计: ' + total.toFixed(1) + '%</strong>';
+                        return result;
+                    }
+                },
+                legend: {
+                    data: skuShareData.series.map(item => item.name),
+                    textStyle: { color: '#ecf0f1', fontSize: 12 },
+                    type: 'scroll',
+                    orient: 'horizontal',
+                    top: 30,
+                    left: 'center',
+                    width: '90%',
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 5,
+                    pageIconColor: '#3498db',
+                    pageIconInactiveColor: '#666',
+                    pageTextStyle: { color: '#ecf0f1' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '80px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: skuShareData.weeks,
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    axisLabel: { 
+                        rotate: 0, 
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: { 
+                        formatter: '{value}%'
+                    },
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    splitLine: { lineStyle: { color: '#2c3e50' } },
+                    max: 100
+                },
+                series: skuShareData.series.map((item, index) => ({
+                    name: item.name,
+                    type: 'bar',
+                    stack: '总量',
+                    data: item.data,
+                    itemStyle: {
+                        color: skuColors[index % skuColors.length],
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    emphasis: { focus: 'series' },
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function(params) {
+                            return params.value > 3 ? params.value.toFixed(1) + '%' : '';
+                        },
+                        fontSize: 10,
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textShadowBlur: 2,
+                        textShadowColor: 'rgba(0,0,0,0.8)'
+                    },
+                    barWidth: '70%'
+                }))
+            };
+        }
+
+        // 创建销量图表配置 - 使用实际条数，Y轴显示条数
+        function createVolumeOption() {
+            // 计算Y轴的最大值（取所有周最大总销量的1.2倍）
+            let maxTotalVolume = 0;
+            for (let i = 0; i < skuVolumeData.weeks.length; i++) {
+                let weeklyTotal = 0;
+                skuVolumeData.series.forEach(series => {
+                    weeklyTotal += series.data[i];
+                });
+                if (weeklyTotal > maxTotalVolume) {
+                    maxTotalVolume = weeklyTotal;
+                }
+            }
+            
+            // 向上取整到最近的千位
+            maxTotalVolume = Math.ceil(maxTotalVolume / 1000) * 1000;
+            
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function(params) {
+                        let result = params[0].name + '<br/>';
+                        let total = 0;
+                        params.forEach(function(item) {
+                            if (item.value > 0) {
+                                result += '<span style="display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + '"></span>' + 
+                                        item.seriesName + ': ' + item.value.toLocaleString() + ' 条<br/>';
+                                total += item.value;
+                            }
+                        });
+                        result += '<hr style="margin:5px 0;border:none;border-top:1px solid #2c3e50">';
+                        result += '<strong>总计: ' + total.toLocaleString() + ' 条</strong>';
+                        return result;
+                    }
+                },
+                legend: {
+                    data: skuVolumeData.series.map(item => item.name),
+                    textStyle: { color: '#ecf0f1', fontSize: 12 },
+                    type: 'scroll',
+                    orient: 'horizontal',
+                    top: 30,
+                    left: 'center',
+                    width: '90%',
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 5,
+                    pageIconColor: '#3498db',
+                    pageIconInactiveColor: '#666',
+                    pageTextStyle: { color: '#ecf0f1' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '80px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: skuVolumeData.weeks,
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    axisLabel: { 
+                        rotate: 0, 
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '销量(条)',
+                    min: 0,
+                    max: maxTotalVolume,
+                    axisLabel: { 
+                        formatter: function(value) {
+                            // 简化大数字显示
+                            if (value >= 10000) {
+                                return (value/10000).toFixed(0) + '万';
+                            } else if (value >= 1000) {
+                                return (value/1000).toFixed(0) + 'k';
+                            }
+                            return value;
+                        }
+                    },
+                    axisLine: { 
+                        lineStyle: { color: '#ecf0f1' } 
+                    },
+                    splitLine: { 
+                        lineStyle: { color: '#2c3e50' } 
+                    }
+                },
+                series: skuVolumeData.series.map((item, index) => ({
+                    name: item.name,
+                    type: 'bar',
+                    stack: '总量',
+                    data: item.data,
+                    itemStyle: {
+                        color: skuColors[index % skuColors.length],
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    emphasis: { focus: 'series' },
+                    label: {
+                        show: true, // 显示标签
+                        position: 'inside', // 在柱子内部显示
+                        formatter: function(params) {
+                            // 只对较大的数值显示标签，避免图表过于拥挤
+                            if (params.value >= 500) {
+                                // 格式化显示：大于1000显示K，否则显示原数字
+                                if (params.value >= 1000) {
+                                    return (params.value/1000).toFixed(1) + 'k';
+                                }
+                                return params.value.toLocaleString();
+                            }
+                            return ''; // 小数值不显示
+                        },
+                        fontSize: 9,
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textShadowBlur: 2,
+                        textShadowColor: 'rgba(0,0,0,0.8)',
+                        rotate: 0 // 水平显示
+                    },
+                    barWidth: '70%'
+                }))
+            };
+        }
+
+        // 初始渲染占比图表
+        skuShareChart.setOption(createPercentageOption());
+
+        // 切换按钮功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const showPercentageBtn = document.getElementById('showPercentage');
+            const showVolumeBtn = document.getElementById('showVolume');
+            
+            showPercentageBtn.addEventListener('click', function() {
+                if (currentChartType !== 'percentage') {
+                    currentChartType = 'percentage';
+                    showPercentageBtn.classList.add('active');
+                    showVolumeBtn.classList.remove('active');
+                    skuShareChart.setOption(createPercentageOption());
+                }
+            });
+            
+            showVolumeBtn.addEventListener('click', function() {
+                if (currentChartType !== 'volume') {
+                    currentChartType = 'volume';
+                    showVolumeBtn.classList.add('active');
+                    showPercentageBtn.classList.remove('active');
+                    skuShareChart.setOption(createVolumeOption());
+                }
+            });
+        });
         
         // POP单店单周销量图表
         const popSalesOption = {
@@ -1483,6 +1785,7 @@
             },
             yAxis: {
                 type: 'value',
+                name: '销量(条)',
                 axisLine: {
                     lineStyle: {
                         color: '#ecf0f1'
@@ -1540,6 +1843,7 @@
             },
             yAxis: {
                 type: 'value',
+                name: '销量(条)',
                 axisLine: {
                     lineStyle: {
                         color: '#ecf0f1'
@@ -1589,6 +1893,7 @@
             },
             yAxis: {
                 type: 'value',
+                name: '销售额($)',
                 axisLabel: {
                     formatter: function(value) {
                         return '$' + (value / 1000000).toFixed(1) + 'M';
@@ -1663,7 +1968,7 @@
             yAxis: [
                 {
                     type: 'value',
-                    name: '线上销量',
+                    name: '线上销量(条)',
                     position: 'left',
                     axisLine: {
                         lineStyle: {
@@ -1678,7 +1983,7 @@
                 },
                 {
                     type: 'value',
-                    name: '线上占比',
+                    name: '线上占比(%)',
                     position: 'right',
                     axisLabel: {
                         formatter: '{value}%'
@@ -1723,122 +2028,6 @@
             ]
         };
         
-        // 修改为堆叠柱状图 - 百分比直接显示在柱子上
-        const skuShareOption = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'shadow'
-                },
-                formatter: function(params) {
-                    let result = params[0].name + '<br/>';
-                    let total = 0;
-                    params.forEach(function(item) {
-                        if (item.value > 0) { // 只显示有值的系列
-                            result += '<span style="display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + '"></span>' + 
-                                     item.seriesName + ': ' + item.value + '%<br/>';
-                            total += item.value;
-                        }
-                    });
-                    result += '<hr style="margin:5px 0;border:none;border-top:1px solid #2c3e50">';
-                    result += '<strong>总计: ' + total.toFixed(1) + '%</strong>';
-                    return result;
-                }
-            },
-            legend: {
-                data: skuShareData.series.map(item => item.name),
-                textStyle: {
-                    color: '#ecf0f1',
-                    fontSize: 12
-                },
-                type: 'scroll',
-                orient: 'horizontal',
-                top: 5,
-                left: 'center',
-                width: '90%',
-                itemWidth: 12,
-                itemHeight: 12,
-                itemGap: 5,
-                pageIconColor: '#3498db',
-                pageIconInactiveColor: '#666',
-                pageTextStyle: {
-                    color: '#ecf0f1'
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '10%',
-                top: '20%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                data: skuShareData.weeks,
-                axisLine: {
-                    lineStyle: {
-                        color: '#ecf0f1'
-                    }
-                },
-                axisLabel: {
-                    rotate: 0,
-                    fontSize: 11
-                }
-            },
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value}%'
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: '#ecf0f1'
-                    }
-                },
-                splitLine: {
-                    lineStyle: {
-                        color: '#2c3e50'
-                    }
-                },
-                max: 100
-            },
-            series: skuShareData.series.map((item, index) => {
-                // 为每个系列分配不同颜色
-                const colors = [
-                    '#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6',
-                    '#1abc9c', '#d35400', '#c0392b', '#8e44ad', '#27ae60'
-                ];
-                
-                return {
-                    name: item.name,
-                    type: 'bar',
-                    stack: '总量',
-                    data: item.data,
-                    itemStyle: {
-                        color: colors[index % colors.length],
-                        borderRadius: [2, 2, 0, 0]
-                    },
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    // 添加标签显示百分比（仅当值大于3%时显示）
-                    label: {
-                        show: true,
-                        position: 'inside',
-                        formatter: function(params) {
-                            return params.value > 3 ? params.value.toFixed(1) + '%' : '';
-                        },
-                        fontSize: 10,
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        textShadowBlur: 2,
-                        textShadowColor: 'rgba(0,0,0,0.8)'
-                    },
-                    barWidth: '70%'
-                };
-            })
-        };
-        
         // 渲染所有图表
         salesVolumeChart.setOption(salesVolumeOption);
         salesAmountChart.setOption(salesAmountOption);
@@ -1846,7 +2035,6 @@
         totalSalesChart.setOption(totalSalesOption);
         totalRevenueChart.setOption(totalRevenueOption);
         onlineSalesChart.setOption(onlineSalesOption);
-        skuShareChart.setOption(skuShareOption);
         
         // 响应窗口大小变化
         window.addEventListener('resize', function() {

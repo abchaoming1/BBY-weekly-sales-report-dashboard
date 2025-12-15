@@ -675,6 +675,10 @@
         <!-- KPI八周趋势图 -->
         <div class="kpi-charts-container">
             <div class="kpi-chart-card">
+                <div class="kpi-chart-title">POP单店单周销量 - 八周趋势</div>
+                <div id="popSalesChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
                 <div class="kpi-chart-title">本周总销量 - 八周趋势</div>
                 <div id="totalSalesChart" class="kpi-chart"></div>
             </div>
@@ -686,16 +690,12 @@
                 <div class="kpi-chart-title">线上销售占比 - 八周趋势</div>
                 <div id="onlineSalesChart" class="kpi-chart"></div>
             </div>
-            <div class="kpi-chart-card">
-                <div class="kpi-chart-title">POP单店单周销量 - 八周趋势</div>
-                <div id="popSalesChart" class="kpi-chart"></div>
-            </div>
         </div>
         
         <!-- 一句话总结 -->
         <div class="summary-card">
             <div class="summary-text">
-                📉 <strong>黑五网一末尾表现：</strong>本周为黑五网一促销末尾2天，销量回落后与去年同期趋势相似，爬坡与回落曲线高度吻合。整体表现约为去年的1.15倍，高价产品占比提升推动整体利润增长。
+                📉 <strong>黑五网一末尾表现：</strong>本周为黑五网一促销末尾2天，销量回落后与去年同期趋势相似，爬坡与回落曲线高度吻合。整体表现约为去年的1.5倍，高价产品占比提升推动整体利润增长。
             </div>
         </div>
         
@@ -1922,7 +1922,7 @@
             }]
         };
         
-        // 线上销售占比图表 - 双Y轴
+        // 线上销售占比图表 - 混合图表：线上销量bar，线上占比line
         const onlineSalesOption = {
             tooltip: {
                 trigger: 'axis',
@@ -1957,12 +1957,14 @@
             },
             xAxis: {
                 type: 'category',
-                boundaryGap: false,
                 data: eightWeekData.onlineSales.weeks,
                 axisLine: {
                     lineStyle: {
                         color: '#ecf0f1'
                     }
+                },
+                axisLabel: {
+                    color: '#ecf0f1'
                 }
             },
             yAxis: [
@@ -1975,6 +1977,9 @@
                             color: '#ecf0f1'
                         }
                     },
+                    axisLabel: {
+                        color: '#ecf0f1'
+                    },
                     splitLine: {
                         lineStyle: {
                             color: '#2c3e50'
@@ -1986,7 +1991,8 @@
                     name: '线上占比(%)',
                     position: 'right',
                     axisLabel: {
-                        formatter: '{value}%'
+                        formatter: '{value}%',
+                        color: '#ecf0f1'
                     },
                     axisLine: {
                         lineStyle: {
@@ -1995,22 +2001,31 @@
                     },
                     splitLine: {
                         show: false
-                    }
+                    },
+                    min: 0,
+                    max: 100
                 }
             ],
             series: [
                 {
                     name: '线上销量',
-                    type: 'line',
+                    type: 'bar',
                     data: eightWeekData.onlineSales.values,
                     yAxisIndex: 0,
                     itemStyle: {
-                        color: '#3498db'
+                        color: '#3498db',
+                        borderRadius: [2, 2, 0, 0]
                     },
-                    lineStyle: {
-                        width: 3
-                    },
-                    smooth: true
+                    barWidth: '60%',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toLocaleString();
+                        },
+                        fontSize: 11,
+                        color: '#ecf0f1'
+                    }
                 },
                 {
                     name: '线上占比',
@@ -2018,12 +2033,24 @@
                     data: eightWeekData.onlineSales.percentages,
                     yAxisIndex: 1,
                     itemStyle: {
-                        color: '#9b59b6'
+                        color: '#f39c12'  // 改为黄色
                     },
                     lineStyle: {
-                        width: 3
+                        width: 3,
+                        color: '#f39c12'  // 改为黄色
                     },
-                    smooth: true
+                    symbol: 'circle',
+                    symbolSize: 8,
+                    smooth: true,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toFixed(1) + '%';
+                        },
+                        fontSize: 10,  // 字体小一点
+                        color: '#f39c12'  // 改为黄色
+                    }
                 }
             ]
         };

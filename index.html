@@ -11,52 +11,235 @@
             margin: 0 auto;
             padding: 40px 20px;
             text-align: center;
+            background-color: #f0f7ff;
         }
-        .btn {
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+        .year-btn {
             display: inline-block;
-            padding: 15px 30px;
-            background-color: #2563eb;
+            padding: 15px 40px;
+            background-color: #3b82f6;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-size: 18px;
             font-weight: bold;
-            margin: 20px 0;
-            transition: background-color 0.3s;
+            margin: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            width: 180px;
         }
-        .btn:hover {
+        .year-btn:hover {
             background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(29, 78, 216, 0.2);
         }
-        .container {
-            background: #f8fafc;
-            padding: 40px;
-            border-radius: 12px;
-            margin-top: 40px;
+        .week-btn {
+            display: block;
+            padding: 12px 20px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            margin: 8px auto;
+            transition: all 0.2s;
+            width: 90%;
+            max-width: 300px;
+            text-align: center;
+            border-left: 4px solid #0ea5e9;
+        }
+        .week-btn:hover {
+            background-color: #bae6fd;
+            transform: translateX(5px);
+        }
+        .year-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        .year-section.active {
+            display: block;
+        }
+        .year-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .back-btn {
+            background-color: #94a3b8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .back-btn:hover {
+            background-color: #64748b;
+        }
+        .year-title {
+            font-size: 24px;
+            color: #1e293b;
+            font-weight: bold;
+        }
+        .year-stats {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dashboard-title {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .dashboard-subtitle {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+        .instructions {
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #475569;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 BBY周报仪表板</h1>
-        <p>查看最新的销售数据和分析报告</p>
+        <div id="main-dashboard">
+            <h1 class="dashboard-title">📊 BBY周报仪表板</h1>
+            <p class="dashboard-subtitle">查看最新的销售数据和分析报告</p>
+            <p>请选择要查看的年份：</p>
+            
+            <button class="year-btn" onclick="showYear(2025)">
+                2025年报告
+            </button>
+            
+            <button class="year-btn" onclick="showYear(2026)">
+                2026年报告
+            </button>
+            
+            <div class="instructions">
+                <strong>使用说明：</strong> 点击上方年份按钮，查看该年份所有可用的周报。目前提供2025年和2026年的销售分析报告。
+            </div>
+        </div>
         
-        <a href="BBY-Week_47-Sales-Analysis-Report.html" class="btn">
-            查看第47周销售分析报告
-        </a>
-
-        <a href="BBY-Week_48-Sales-Analysis-Report.html" class="btn">
-            查看第48周销售分析报告
-        </a>
-
-        <a href="BBY-Week_49-Sales-Analysis-Report.html" class="btn">
-            查看第49周销售分析报告
-        </a>
-
-        <a href="BBY-Week_50-Sales-Analysis-Report.html" class="btn">
-            查看第50周销售分析报告
-        </a>
+        <!-- 2025年报告部分 -->
+        <div id="year-2025" class="year-section">
+            <div class="year-header">
+                <h2 class="year-title">2025年销售分析报告</h2>
+                <button class="back-btn" onclick="backToDashboard()">← 返回年份选择</button>
+            </div>
+            <p class="year-stats">2025年共有6份销售分析报告</p>
+            
+            <a href="BBY-Week_47-Sales-Analysis-Report.html" class="week-btn">
+                第47周销售分析报告
+            </a>
+            
+            <a href="BBY-Week_48-Sales-Analysis-Report.html" class="week-btn">
+                第48周销售分析报告
+            </a>
+            
+            <a href="BBY-Week_49-Sales-Analysis-Report.html" class="week-btn">
+                第49周销售分析报告
+            </a>
+            
+            <a href="BBY-Week_50-Sales-Analysis-Report.html" class="week-btn">
+                第50周销售分析报告
+            </a>
+            
+            <a href="BBY-2025_Week_50-Sales-Analysis-Report.html" class="week-btn">
+                第52周销售分析报告
+            </a>
+            
+            <div class="instructions">
+                注意：第52周的报告链接为"BBY-2025_Week_50-Sales-Analysis-Report.html"，请确认文件名是否正确。
+            </div>
+        </div>
         
-        <p><small>点击上方按钮访问详细的销售数据分析</small></p>
+        <!-- 2026年报告部分 -->
+        <div id="year-2026" class="year-section">
+            <div class="year-header">
+                <h2 class="year-title">2026年销售分析报告</h2>
+                <button class="back-btn" onclick="backToDashboard()">← 返回年份选择</button>
+            </div>
+            <p class="year-stats">2026年目前有1份销售分析报告</p>
+            
+            <a href="BBY-2026_Week_1-Sales-Analysis-Report.html" class="week-btn">
+                第1周销售分析报告
+            </a>
+            
+            <div class="instructions">
+                2026年的报告将随着时间推移逐步增加，请定期查看更新。
+            </div>
+        </div>
     </div>
+
+    <script>
+        function showYear(year) {
+            // 隐藏主仪表板
+            document.getElementById('main-dashboard').style.display = 'none';
+            
+            // 隐藏所有年份部分
+            document.querySelectorAll('.year-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 显示选中年份的部分
+            document.getElementById(`year-${year}`).classList.add('active');
+        }
+        
+        function backToDashboard() {
+            // 显示主仪表板
+            document.getElementById('main-dashboard').style.display = 'block';
+            
+            // 隐藏所有年份部分
+            document.querySelectorAll('.year-section').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+        
+        // 添加键盘快捷键支持
+        document.addEventListener('keydown', function(event) {
+            // ESC键返回主仪表板
+            if (event.key === 'Escape') {
+                backToDashboard();
+            }
+            // 1键选择2025年
+            if (event.key === '1') {
+                showYear(2025);
+            }
+            // 2键选择2026年
+            if (event.key === '2') {
+                showYear(2026);
+            }
+        });
+    </script>
 </body>
 </html>

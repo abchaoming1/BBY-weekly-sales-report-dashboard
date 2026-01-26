@@ -1,0 +1,2415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week-4 BBY销售数据智能平台 - 市场调整期分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #ecf0f1;
+            --border-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .top-banner {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .activity-banner {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            border-radius: 8px;
+            padding: 15px 20px;
+        }
+        
+        .chart-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+
+        .toggle-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .activity-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .activity-date {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* 新品上市模块样式调整 */
+        .data-cards .data-card:first-child {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, var(--card-bg) 100%);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .data-cards .data-card:last-child {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.2) 0%, var(--card-bg) 100%);
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .new-product-banner {
+            background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+            border-radius: 8px;
+            padding: 15px 20px;
+        }
+        
+        .new-product-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .new-product-info {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .filter-item {
+            padding: 8px 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-item:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .filter-item.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .kpi-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .kpi-title {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        .kpi-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .kpi-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .kpi-change.positive {
+            color: var(--success-color);
+        }
+        
+        .kpi-change.negative {
+            color: var(--danger-color);
+        }
+        
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .summary-text {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* KPI图表容器 */
+        .kpi-charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-chart-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .kpi-chart-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .kpi-chart {
+            width: 100%;
+            height: 250px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin: 0;
+        }
+        
+        .table-filters {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .table-filter-item {
+            padding: 6px 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .table-filter-item:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .table-filter-item.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 400px;
+        }
+        
+        .chart-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .chart {
+            width: 100%;
+            height: 350px;
+        }
+        
+        .data-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .data-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .data-card-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .data-item:last-child {
+            border-bottom: none;
+        }
+        
+        .data-label {
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .data-value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .business-analysis {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .analysis-section {
+            margin-bottom: 20px;
+        }
+        
+        .analysis-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .analysis-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .positive-change {
+            color: var(--success-color);
+        }
+        
+        .negative-change {
+            color: var(--danger-color);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .tag.hot {
+            background-color: var(--danger-color);
+        }
+        
+        .tag.good {
+            background-color: var(--success-color);
+        }
+        
+        .tag.warning {
+            background-color: var(--warning-color);
+        }
+        
+        .tag.normal {
+            background-color: var(--primary-color);
+        }
+        
+        /* SKU原因分析行样式 */
+        .sku-reason-row {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .sku-reason-cell {
+            padding: 15px;
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        
+        .sku-reason-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        /* SKU占比图表容器 */
+        .sku-share-chart-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .sku-share-chart-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .sku-share-chart {
+            width: 100%;
+            height: 500px;
+        }
+        
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .competitor-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .competitor-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .competitor-name {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .competitor-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .competitor-save {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .inventory-warning {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .warning-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .warning-item:last-child {
+            border-bottom: none;
+        }
+        
+        .ca-value {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .ca-value.low {
+            background-color: var(--danger-color);
+        }
+        
+        .ca-value.medium {
+            background-color: var(--warning-color);
+        }
+        
+        .ca-value.high {
+            background-color: var(--success-color);
+        }
+        
+        .sku-analysis-all {
+            display: block;
+        }
+        
+        .sku-analysis-bone {
+            display: none;
+        }
+        
+        .sku-analysis-air {
+            display: none;
+        }
+        
+        .product-line-bone {
+            display: none;
+        }
+        
+        .product-line-air {
+            display: none;
+        }
+        
+        .product-line-all {
+            display: table-row;
+        }
+        
+        .sku-reason-bone {
+            display: none;
+        }
+        
+        .sku-reason-air {
+            display: none;
+        }
+        
+        .sku-reason-all {
+            display: table-row;
+        }
+        
+        @media (max-width: 768px) {
+            .top-banner {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-container, .data-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpi-charts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sku-share-chart {
+                height: 400px;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filters {
+                margin-top: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .table-filters {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部横幅区域 -->
+        <div class="top-banner">
+            <!-- 活动消息 -->
+            <div class="activity-banner">
+                <div class="activity-title">📦 Week-4 市场调整期</div>
+                <div class="activity-date">日期：2026.1.11 - 2026.1.17 | 整体销量环比下降24.39%，新品T010增速放缓</div>
+            </div>
+            
+            <!-- 新品上市信息 -->
+            <div class="new-product-banner">
+                <div class="new-product-title">🆕 新品上市：T010 (第三周)</div>
+                <div class="new-product-info">上市日期：2026.1.5 | 本周销量1,435条，占比14.72%</div>
+                <div class="new-product-info">环比下降24.61%，市场进入调整期</div>
+            </div>
+        </div>
+        
+        <header>
+            <div class="logo">BBY销售数据智能平台 - Week 4</div>
+            <div class="filters">
+                <div class="filter-item active" data-filter="all">全部产品线</div>
+                <div class="filter-item" data-filter="bone">骨导线</div>
+                <div class="filter-item" data-filter="air">气导线</div>
+            </div>
+        </header>
+        
+        <!-- 核心KPI指标 -->
+        <div class="kpi-cards">
+            <div class="kpi-card">
+                <div class="kpi-title">本周总销量</div>
+                <div class="kpi-value">9,746</div>
+                <div class="kpi-change positive">↑ 同比 +16.41%</div>
+                <div class="kpi-change negative">↓ 环比 -24.39%</div>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="kpi-title">YTD累计销量</div>
+                    <div class="kpi-value" style="font-size: 22px;">42,734</div>
+                    <div class="kpi-change positive">↑ +17.44%</div>
+                    <div class="kpi-change" style="color: #aaa; font-size: 12px;">累计同比 +6,347</div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">本周总销售额</div>
+                <div class="kpi-value">$1.78M</div>
+                <div class="kpi-change positive">↑ 同比 +34.90%</div>
+                <div class="kpi-change negative">↓ 环比 -27.54%</div>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="kpi-title">YTD累计销售额</div>
+                    <div class="kpi-value" style="font-size: 22px;">$7.76M</div>
+                    <div class="kpi-change positive">↑ +36.59%</div>
+                    <div class="kpi-change" style="color: #aaa; font-size: 12px;">累计同比 +$2.08M</div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">线上销售占比</div>
+                <div class="kpi-value">29.09%</div>
+                <div class="kpi-change negative">↓ 环比 -26.30%</div>
+                <div class="kpi-change">本周线上销量2,341条</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">POP门店表现 - 单店单周</div>
+                <div class="kpi-value">7.48</div>
+                <div class="kpi-change">上周 8.59</div>
+                <div class="kpi-change negative">↓ 环比 -12.92%</div>
+            </div>
+        </div>
+        
+        <!-- KPI八周趋势图 -->
+        <div class="kpi-charts-container">
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">本周总销量 - 八周趋势</div>
+                <div id="totalSalesChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">本周总销售额 - 八周趋势</div>
+                <div id="totalRevenueChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">线上销售占比 - 八周趋势</div>
+                <div id="onlineSalesChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">POP单店单周销量 - 八周趋势</div>
+                <div id="popSalesChart" class="kpi-chart"></div>
+            </div>
+        </div>
+        
+        <!-- 一句话总结 -->
+        <div class="summary-card">
+            <div class="summary-text">
+    📉 <strong>Week-4关键表现：</strong>市场进入调整期，整体销量环比下降24.39%。新品T010第三周销量1,435条，占比14.72%，环比下降24.61%。T511表现突出，销量1,100条，占比11.29%，环比增长64%。S820仍为骨导线主力，销量2,422条，占比24.85%。气导线占比57.38%，环比下降11.04%。<strong>线上销售占比大幅回落至29.09%，环比下降26.30%，线上销量2,341条。</strong>整体市场呈现季节性调整特征。
+            </div>
+        </div>
+        
+        <h2 class="section-title">业务线表现对比</h2>
+        <div class="charts-container">
+            <div class="chart-card">
+                <div class="chart-title">销量占比分布 (Week 4)</div>
+                <div id="salesVolumeChart" class="chart"></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title">销售额占比分布 (Week 4)</div>
+                <div id="salesAmountChart" class="chart"></div>
+            </div>
+        </div>
+
+        <div class="data-cards">
+            <div class="data-card">
+                <div class="data-card-title">骨导线表现 (Week 4)</div>
+                <div class="data-item">
+                    <div class="data-label">本周销量</div>
+                    <div class="data-value">3,894</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量占比</div>
+                    <div class="data-value">39.95%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量同比</div>
+                    <div class="data-value negative-change">↓ -11.58%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量环比</div>
+                    <div class="data-value negative-change">↓ -9.67%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销量</div>
+                    <div class="data-value">18,596</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销量同比</div>
+                    <div class="data-value negative-change">↓ -9.35%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本周销售额</div>
+                    <div class="data-value">$649,135</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额占比</div>
+                    <div class="data-value">36.42%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额同比</div>
+                    <div class="data-value negative-change">↓ -9.22%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额环比</div>
+                    <div class="data-value negative-change">↓ -10.62%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销售额</div>
+                    <div class="data-value">$3.14M</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销售额同比</div>
+                    <div class="data-value negative-change">↓ -5.34%</div>
+                </div>
+            </div>
+            
+            <div class="data-card">
+                <div class="data-card-title">气导线表现 (Week 4)</div>
+                <div class="data-item">
+                    <div class="data-label">本周销量</div>
+                    <div class="data-value">5,592</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量占比</div>
+                    <div class="data-value">57.38%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量同比</div>
+                    <div class="data-value positive-change">↑ +52.04%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量环比</div>
+                    <div class="data-value negative-change">↓ -32.69%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销量</div>
+                    <div class="data-value">23,107</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销量同比</div>
+                    <div class="data-value positive-change">↑ +58.08%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本周销售额</div>
+                    <div class="data-value">$1.09M</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额占比</div>
+                    <div class="data-value">61.12%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额同比</div>
+                    <div class="data-value positive-change">↑ +97.18%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额环比</div>
+                    <div class="data-value negative-change">↓ -35.45%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销售额</div>
+                    <div class="data-value">$4.45M</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销售额同比</div>
+                    <div class="data-value positive-change">↑ +108.66%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 业务线表现分析 -->
+        <div class="business-analysis">
+            <div class="analysis-section">
+                <div class="analysis-title">📊 业务线表现深度分析 (Week 4)</div>
+                <div class="analysis-content">
+                    <p><strong>骨导线分析：</strong>销量环比下降9.67%，占比升至39.95%。S820仍为骨导线主力，销量2,422条，占比24.85%。S803表现稳健，销量610条，环比增长5%。骨导线整体表现相对稳定，下降幅度小于气导线。</p>
+                    <p><strong>气导线分析：</strong>销量环比大幅下降32.69%，占比降至57.38%。新品T010第三周销量1,435条，占比14.72%，环比下降24.61%。E310销量1,274条，环比大幅下降63%。T921销量1,201条，环比下降21%。气导线整体进入调整期。</p>
+                    <p><strong>T511亮眼表现：</strong>T511销量1,100条，占比11.29%，环比增长64%。成为本周亮点，显示低价段产品在调整期的韧性。</p>
+                    <p><strong>市场调整期特征：</strong>整体市场环比下降24.39%，新品效应减弱，线上渠道大幅收缩，POP门店表现下滑。预计为季节性调整，需要关注后续恢复情况。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新品上市模块 -->
+        <h2 class="section-title">🎯 新品上市表现追踪</h2>
+        <div class="data-cards" style="margin-top: 20px;">
+            <div class="data-card">
+                <div class="data-card-title">T010 新品上市表现</div>
+                <div class="data-item">
+                    <div class="data-label">本周销量</div>
+                    <div class="data-value">1,435</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本周占比</div>
+                    <div class="data-value">14.72%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">上市第三周环比</div>
+                    <div class="data-value negative-change">↓ -24.61%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销量</div>
+                    <div class="data-value">3,761</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销售额</div>
+                    <div class="data-value">$940,166</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">市场份额</div>
+                    <div class="data-value">保持前三</div>
+                </div>
+            </div>
+            
+            <div class="data-card">
+                <div class="data-card-title">市场调整期影响分析</div>
+                <div class="data-item">
+                    <div class="data-label">整体市场环比</div>
+                    <div class="data-value negative-change">↓ -24.39%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">气导线整体环比</div>
+                    <div class="data-value negative-change">↓ -32.69%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">T010环比</div>
+                    <div class="data-value negative-change">↓ -24.61%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">E310环比</div>
+                    <div class="data-value negative-change">↓ -63%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">T921环比</div>
+                    <div class="data-value negative-change">↓ -21%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">市场阶段</div>
+                    <div class="data-value">调整期</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新品上市趋势分析 -->
+        <div class="business-analysis" style="margin-top: 20px;">
+            <div class="analysis-section">
+                <div class="analysis-title">📈 T010新品上市趋势分析</div>
+                <div class="analysis-content">
+                    <p><strong>上市表现：</strong>T010上市第三周销量1,435条，占总销量14.72%，环比下降24.61%。上市三周累计销量3,761条，销售额$940,166。新品在调整期仍保持前三位置。</p>
+                    
+                    <p><strong>市场影响：</strong>市场整体进入调整期，环比下降24.39%。T010作为高端新品，下降幅度与市场整体一致，显示新品在市场调整期仍保持相对稳定。</p>
+                    
+                    <p><strong>竞争格局：</strong>气导线整体下降32.69%，T010表现优于气导线平均水平。E310大幅下降63%，T921下降21%。新品T010在市场调整期表现出较强韧性。</p>
+                    
+                    <p><strong>价格定位：</strong>作为目前最高端产品（$249.99），T010在市场调整期仍保持14.72%市场份额，证明其高端定位得到市场认可。</p>
+                    
+                    <p><strong>后续预测：</strong>市场调整期预计将持续1-2周。T010有望在市场恢复后重新进入增长轨道。需要关注库存和渠道表现。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新品上市周趋势图容器 -->
+        <div class="chart-card" style="margin-bottom: 30px;">
+            <div class="chart-title">T010新品上市周趋势</div>
+            <div id="newProductTrendChart" class="chart" style="height: 300px;"></div>
+        </div>
+        
+        <!-- SKU销量排行榜标题和筛选按钮 -->
+        <div class="section-header">
+            <h2 class="section-title">SKU销量排行榜 (Week 4)</h2>
+        </div>
+        
+        <!-- SKU八周占比图表容器 -->
+        <div class="sku-share-chart-container">
+            <div class="section-header" style="border-bottom: none; margin: 0 0 20px 0;">
+                <h2 class="sku-share-chart-title">📈 八周各SKU趋势</h2>
+                <div class="chart-toggle">
+                    <button id="showPercentage" class="toggle-btn active">显示占比</button>
+                    <button id="showVolume" class="toggle-btn">显示销量</button>
+                </div>
+            </div>
+            <div id="skuShareChart" class="sku-share-chart"></div>
+        </div>
+        
+        <div class="table-filters">
+                <div class="table-filter-item active" data-filter="all">全部产品线</div>
+                <div class="table-filter-item" data-filter="bone">骨导线</div>
+                <div class="table-filter-item" data-filter="air">气导线</div>
+        </div>
+
+        <div class="table-container">
+            <table id="skuTable">
+                <thead>
+                    <tr>
+                        <th>型号</th>
+                        <th>本周销量</th>
+                        <th>周涨幅</th>
+                        <th>MSRP</th>
+                        <th>折后价</th>
+                        <th>价格带</th>
+                        <th>打折天数</th>
+                        <th>打折力度</th>
+                        <th>节省金额</th>
+                        <th>关键表现</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- S820 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S820</td>
+                        <td>2,422</td>
+                        <td class="positive-change">↑ 1%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$179.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>骨导主力 <span class="tag good">稳健</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S820 - 骨导高端主力</div>
+                            销量2,422条，占比24.85%，环比增长1%。依然是骨导线主力军，无促销活动。
+                        </td>
+                    </tr>
+                    
+                    <!-- T010 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T010</td>
+                        <td>1,435</td>
+                        <td class="negative-change">↓ -25%</td>
+                        <td class="price-msrp">$249.99</td>
+                        <td class="price-discounted">$249.99</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>新品调整 <span class="tag warning">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T010 - 新品上市第三周</div>
+                            销量1,435条，占比14.72%，环比下降25%。市场调整期，新品增速放缓。
+                        </td>
+                    </tr>
+                    
+                    <!-- E310 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>E310</td>
+                        <td>1,274</td>
+                        <td class="negative-change">↓ -63%</td>
+                        <td class="price-msrp">$199.99</td>
+                        <td class="price-discounted">$199.99</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅调整 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">E310 - 气导支柱产品</div>
+                            销量1,274条，占比13.07%，环比大幅下降63%。市场调整期受影响最大。
+                        </td>
+                    </tr>
+                    
+                    <!-- T921 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T921</td>
+                        <td>1,201</td>
+                        <td class="negative-change">↓ -21%</td>
+                        <td class="price-msrp">$199.95</td>
+                        <td class="price-discounted">$199.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>相对稳健 <span class="tag normal">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T921 - 气导高端产品</div>
+                            销量1,201条，占比12.48%，环比下降21%。在市场调整期表现相对稳健。
+                        </td>
+                    </tr>
+                    
+                    <!-- T511 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T511</td>
+                        <td>1,100</td>
+                        <td class="positive-change">↑ 64%</td>
+                        <td class="price-msrp">$119.95</td>
+                        <td class="price-discounted">$119.95</td>
+                        <td>低端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>亮眼表现 <span class="tag hot">增长</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T511 - 低价段产品</div>
+                            销量1,100条，占比11.29%，环比大幅增长64%。成为本周亮点，显示低价产品在调整期的韧性。
+                        </td>
+                    </tr>
+                    
+                    <!-- S803 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S803</td>
+                        <td>610</td>
+                        <td class="positive-change">↑ 5%</td>
+                        <td class="price-msrp">$129.95</td>
+                        <td class="price-discounted">$129.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>稳定增长 <span class="tag good">稳健</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S803 - 表现稳健</div>
+                            销量610条，占比6.26%，环比增长5%。在市场调整期实现逆势增长。
+                        </td>
+                    </tr>
+                    
+                    <!-- S710 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S710</td>
+                        <td>537</td>
+                        <td class="negative-change">↓ -14%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$179.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>小幅调整 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S710 - 高端骨导</div>
+                            销量537条，占比5.51%，环比下降14%。市场调整期正常波动。
+                        </td>
+                    </tr>
+                    
+                    <!-- T920 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T920</td>
+                        <td>510</td>
+                        <td class="negative-change">↓ -25%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$149.99</td>
+                        <td>高端</td>
+                        <td>3天</td>
+                        <td class="discount-positive">16.65%</td>
+                        <td class="savings">$29.96</td>
+                        <td>促销调整 <span class="tag normal">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T920 - 促销中</div>
+                            销量510条，占比5.23%，环比下降25%。有促销活动，折扣16.65%。
+                        </td>
+                    </tr>
+                    
+                    <!-- C120 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>C120</td>
+                        <td>260</td>
+                        <td class="negative-change">↓ -3%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>稳定表现 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">C120 - 稳定表现</div>
+                            销量260条，占比2.67%，环比微降3%。表现相对稳定。
+                        </td>
+                    </tr>
+                    
+                    <!-- S810 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S810</td>
+                        <td>137</td>
+                        <td class="negative-change">↓ -78%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅下滑 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S810 - 大幅下滑</div>
+                            销量137条，占比1.41%，环比大幅下降78%。需要关注库存和销售策略。
+                        </td>
+                    </tr>
+                    
+                    <!-- T910 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T910</td>
+                        <td>57</td>
+                        <td class="negative-change">↓ -90%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>表现不佳 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T910 - 表现不佳</div>
+                            销量57条，占比0.58%，环比大幅下降90%。表现持续不佳。
+                        </td>
+                    </tr>
+                    
+                    <!-- S661 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S661</td>
+                        <td>179</td>
+                        <td class="positive-change">↑ 156%</td>
+                        <td class="price-msrp">$79.95</td>
+                        <td class="price-discounted">$79.95</td>
+                        <td>低端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅增长 <span class="tag hot">增长</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S661 - 低价段增长</div>
+                            销量179条，占比1.84%，环比大幅增长156%。低价产品在调整期表现突出。
+                        </td>
+                    </tr>
+
+                    <!-- 骨导线产品 -->
+                    <tr class="product-line-bone sku-reason-bone" data-line="bone">
+                        <td>S820</td>
+                        <td>2,422</td>
+                        <td class="positive-change">↑ 1%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$179.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>骨导主力 <span class="tag good">稳健</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-bone">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S820 - 骨导高端主力</div>
+                            销量2,422条，占比24.85%，环比增长1%。依然是骨导线主力军。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-bone sku-reason-bone" data-line="bone">
+                        <td>S803</td>
+                        <td>610</td>
+                        <td class="positive-change">↑ 5%</td>
+                        <td class="price-msrp">$129.95</td>
+                        <td class="price-discounted">$129.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>稳定增长 <span class="tag good">稳健</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-bone">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S803 - 表现稳健</div>
+                            销量610条，占比6.26%，环比增长5%。在市场调整期实现逆势增长。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-bone sku-reason-bone" data-line="bone">
+                        <td>S710</td>
+                        <td>537</td>
+                        <td class="negative-change">↓ -14%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$179.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>小幅调整 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-bone">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S710 - 高端骨导</div>
+                            销量537条，占比5.51%，环比下降14%。市场调整期正常波动。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-bone sku-reason-bone" data-line="bone">
+                        <td>S810</td>
+                        <td>137</td>
+                        <td class="negative-change">↓ -78%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅下滑 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-bone">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S810 - 大幅下滑</div>
+                            销量137条，占比1.41%，环比大幅下降78%。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-bone sku-reason-bone" data-line="bone">
+                        <td>S661</td>
+                        <td>179</td>
+                        <td class="positive-change">↑ 156%</td>
+                        <td class="price-msrp">$79.95</td>
+                        <td class="price-discounted">$79.95</td>
+                        <td>低端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅增长 <span class="tag hot">增长</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-bone">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S661 - 低价段增长</div>
+                            销量179条，占比1.84%，环比大幅增长156%。
+                        </td>
+                    </tr>
+
+                    <!-- 气导线产品 -->
+                    <tr class="product-line-air sku-reason-air" data-line="air">
+                        <td>T010</td>
+                        <td>1,435</td>
+                        <td class="negative-change">↓ -25%</td>
+                        <td class="price-msrp">$249.99</td>
+                        <td class="price-discounted">$249.99</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>新品调整 <span class="tag warning">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-air">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T010 - 新品上市第三周</div>
+                            销量1,435条，占比14.72%，环比下降25%。市场调整期，新品增速放缓。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-air sku-reason-air" data-line="air">
+                        <td>E310</td>
+                        <td>1,274</td>
+                        <td class="negative-change">↓ -63%</td>
+                        <td class="price-msrp">$199.99</td>
+                        <td class="price-discounted">$199.99</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅调整 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-air">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">E310 - 气导支柱产品</div>
+                            销量1,274条，占比13.07%，环比大幅下降63%。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-air sku-reason-air" data-line="air">
+                        <td>T921</td>
+                        <td>1,201</td>
+                        <td class="negative-change">↓ -21%</td>
+                        <td class="price-msrp">$199.95</td>
+                        <td class="price-discounted">$199.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>相对稳健 <span class="tag normal">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-air">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T921 - 气导高端产品</div>
+                            销量1,201条，占比12.48%，环比下降21%。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-air sku-reason-air" data-line="air">
+                        <td>T511</td>
+                        <td>1,100</td>
+                        <td class="positive-change">↑ 64%</td>
+                        <td class="price-msrp">$119.95</td>
+                        <td class="price-discounted">$119.95</td>
+                        <td>低端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>亮眼表现 <span class="tag hot">增长</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-air">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T511 - 低价段产品</div>
+                            销量1,100条，占比11.29%，环比大幅增长64%。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-air sku-reason-air" data-line="air">
+                        <td>T920</td>
+                        <td>510</td>
+                        <td class="negative-change">↓ -25%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$149.99</td>
+                        <td>高端</td>
+                        <td>3天</td>
+                        <td class="discount-positive">16.65%</td>
+                        <td class="savings">$29.96</td>
+                        <td>促销调整 <span class="tag normal">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-air">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T920 - 促销中</div>
+                            销量510条，占比5.23%，环比下降25%。有促销活动，折扣16.65%。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-air sku-reason-air" data-line="air">
+                        <td>C120</td>
+                        <td>260</td>
+                        <td class="negative-change">↓ -3%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>稳定表现 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-air">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">C120 - 稳定表现</div>
+                            销量260条，占比2.67%，环比微降3%。
+                        </td>
+                    </tr>
+                    
+                    <tr class="product-line-air sku-reason-air" data-line="air">
+                        <td>T910</td>
+                        <td>57</td>
+                        <td class="negative-change">↓ -90%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>表现不佳 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-air">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T910 - 表现不佳</div>
+                            销量57条，占比0.58%，环比大幅下降90%。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 库存健康度监控 -->
+        <h2 class="section-title">库存健康度监控</h2>
+        <div class="inventory-warning">
+            <div class="warning-item">
+                <div>
+                    <strong>E310-SB</strong>
+                    <div style="font-size: 12px; color: #aaa;">E310-ST-NB-US-326-BBY</div>
+                </div>
+                <div class="ca-value low">CA 14</div>
+                <div style="color: var(--danger-color); font-weight: bold;">库存严重不足，急需补货</div>
+            </div>
+        </div>
+        
+        <!-- 竞品监控墙 -->
+        <h2 class="section-title">竞品监控墙</h2>
+        <div class="competitor-grid">
+            <!-- 竞品数据缺失，保持空白 -->
+        </div>
+    </div>
+
+    <script>
+        // 初始化ECharts实例
+        const salesVolumeChart = echarts.init(document.getElementById('salesVolumeChart'));
+        const salesAmountChart = echarts.init(document.getElementById('salesAmountChart'));
+        const popSalesChart = echarts.init(document.getElementById('popSalesChart'));
+        const totalSalesChart = echarts.init(document.getElementById('totalSalesChart'));
+        const totalRevenueChart = echarts.init(document.getElementById('totalRevenueChart'));
+        const onlineSalesChart = echarts.init(document.getElementById('onlineSalesChart'));
+        const skuShareChart = echarts.init(document.getElementById('skuShareChart'));
+        
+        // 销量占比饼图配置 - 根据Week-4数据更新
+        const salesVolumeOption = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c}%'
+            },
+            legend: {
+                orient: 'vertical',
+                right: 10,
+                top: 'center',
+                textStyle: {
+                    color: '#ecf0f1'
+                }
+            },
+            series: [
+                {
+                    name: '销量占比',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#1a1a2e',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 18,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        { value: 39.95, name: '骨导销量 39.95%' },
+                        { value: 57.38, name: '气导销量 57.38%' },
+                        { value: 2.67, name: '其他 2.67%' }
+                    ],
+                    color: ['#3498db', '#2ecc71', '#f39c12']
+                }
+            ]
+        };
+
+        // 销售额占比饼图配置 - 根据Week-4数据更新
+        const salesAmountOption = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c}%'
+            },
+            legend: {
+                orient: 'vertical',
+                right: 10,
+                top: 'center',
+                textStyle: {
+                    color: '#ecf0f1'
+                }
+            },
+            series: [
+                {
+                    name: '销售额占比',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#1a1a2e',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 18,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        { value: 36.42, name: '骨导销售额 36.42%' },
+                        { value: 61.12, name: '气导销售额 61.12%' },
+                        { value: 2.46, name: '其他 2.46%' }
+                    ],
+                    color: ['#3498db', '#2ecc71', '#f39c12']
+                }
+            ]
+        };
+        
+        // 八周数据 - 更新包含最新一周2026/1/18
+        const eightWeekData = {
+            popSales: {
+                weeks: ['2025/11/23', '2025/11/30', '2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18'],
+                values: [22.04, 10.25, 11.01, 21.62, 28.05, 9.59, 7.93, 8.59, 7.48],
+                title: 'POP单店单周销量 - 八周趋势'
+            },
+            totalSales: {
+                weeks: ['2025/11/23', '2025/11/30', '2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18'],
+                values: [29627, 16247, 14862, 27114, 33426, 11009, 9090, 12889, 9746],
+                title: '本周总销量 - 八周趋势'
+            },
+            totalRevenue: {
+                weeks: ['2025/11/23', '2025/11/30', '2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18'],
+                values: [5075918.65, 2741497.65, 2491526.9, 4648504.3, 5771218.7, 1918759.55, 1602892.38, 2459581.71, 1782330.1],
+                title: '本周总销售额 - 八周趋势'
+            },
+            onlineSales: {
+                weeks: ['2025/11/23', '2025/11/30', '2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18'],
+                values: [11020, 7536, 5449, 8633, 9584, 2428, 1946, 4155, 2341],
+                percentages: [37.20, 46.44, 36.90, 32.13, 28.85, 23.10, 22.63, 39.47, 29.09],
+                title: '线上销售占比 - 八周趋势'
+            }
+        };
+        
+        // 八周SKU占比数据 - 更新包含最新一周2026/1/18
+        const skuShareData = {
+            weeks: ['2025/11/23', '2025/11/30', '2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18'],
+            series: [
+                { name: 'T511', data: [12.22, 12.35, 9.85, 9.77, 11.67, 10.36, 9.45, 5.19, 11.29] },
+                { name: 'T910', data: [0.09, 1.18, 2.09, 0.24, 0.11, 0.31, 0.50, 0.33, 0.58] },
+                { name: 'T920', data: [8.11, 7.64, 6.30, 7.10, 7.47, 6.45, 8.92, 5.27, 5.23] },
+                { name: 'T921', data: [10.23, 9.77, 9.99, 11.31, 11.44, 13.16, 10.22, 11.91, 12.48] },
+                { name: 'E310', data: [14.15, 10.80, 11.33, 13.19, 15.67, 16.02, 11.49, 26.98, 13.07] },
+                { name: 'S710', data: [5.88, 6.36, 6.26, 6.25, 5.40, 7.07, 7.32, 4.86, 5.51] },
+                { name: 'S661', data: [1.45, 1.91, 1.49, 1.59, 0.47, 0.56, 0.56, 0.54, 1.84] },
+                { name: 'S803', data: [8.09, 8.12, 15.37, 10.24, 7.93, 6.13, 4.16, 4.50, 6.26] },
+                { name: 'S810', data: [1.27, 5.52, 2.54, 1.69, 4.85, 6.36, 11.88, 4.88, 1.41] },
+                { name: 'S820', data: [36.26, 33.00, 31.78, 36.17, 33.13, 31.16, 27.82, 18.52, 24.85] },
+                { name: 'C120', data: [1.83, 2.83, 2.46, 2.08, 1.69, 2.22, 2.81, 2.09, 2.67] },
+                { name: 'T010', data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 4.64, 14.77, 14.72] },
+                { name: 'Other', data: [0.43, 0.50, 0.54, 0.37, 0.18, 0.21, 0.24, 0.15, 0.09] }
+            ]
+        };
+
+        // 八周SKU销量数据 - 更新包含最新一周2026/1/18
+        const skuVolumeData = {
+            weeks: ['2025/11/23', '2025/11/30', '2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18'],
+            series: [
+                { name: 'T511', data: [3620, 2007, 1464, 2649, 3900, 1140, 859, 669, 1100] },
+                { name: 'T910', data: [27, 191, 311, 66, 36, 34, 45, 43, 57] },
+                { name: 'T920', data: [2402, 1242, 936, 1925, 2498, 710, 811, 679, 510] },
+                { name: 'T921', data: [3032, 1588, 1485, 3066, 3824, 1449, 929, 1535, 1216] },
+                { name: 'E310', data: [4191, 1754, 1684, 3575, 5237, 1764, 1044, 3478, 1274] },
+                { name: 'S710', data: [1741, 1034, 930, 1694, 1804, 778, 665, 626, 537] },
+                { name: 'S661', data: [429, 311, 221, 431, 158, 62, 51, 70, 179] },
+                { name: 'S803', data: [2398, 1320, 2284, 2777, 2651, 675, 378, 580, 610] },
+                { name: 'S810', data: [377, 897, 378, 459, 1621, 700, 1080, 629, 137] },
+                { name: 'S820', data: [10742, 5362, 4723, 9808, 11074, 3430, 2529, 2387, 2422] },
+                { name: 'C120', data: [542, 459, 366, 565, 564, 244, 255, 270, 260] },
+                { name: 'T010', data: [0, 0, 0, 0, 0, 0, 422, 1904, 1435] },
+                { name: 'Other', data: [126, 82, 80, 99, 59, 23, 22, 19, 9] }
+            ]
+        };
+
+        // 颜色配置 - 13个不同的颜色
+        const skuColors = [
+            '#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6',
+            '#1abc9c', '#d35400', '#c0392b', '#8e44ad', '#27ae60',
+            '#16a085', '#2980b9', '#8e44ad'
+        ];
+
+        // 当前显示类型：percentage或volume
+        let currentChartType = 'percentage';
+
+        // 创建占比图表配置
+        function createPercentageOption() {
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function(params) {
+                        let result = params[0].name + '<br/>';
+                        let total = 0;
+                        params.forEach(function(item) {
+                            if (item.value > 0) {
+                                result += '<span style="display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + '"></span>' + 
+                                        item.seriesName + ': ' + item.value.toFixed(1) + '%<br/>';
+                                total += item.value;
+                            }
+                        });
+                        result += '<hr style="margin:5px 0;border:none;border-top:1px solid #2c3e50">';
+                        result += '<strong>总计: ' + total.toFixed(1) + '%</strong>';
+                        return result;
+                    }
+                },
+                legend: {
+                    data: skuShareData.series.map(item => item.name),
+                    textStyle: { color: '#ecf0f1', fontSize: 12 },
+                    type: 'scroll',
+                    orient: 'horizontal',
+                    top: 30,
+                    left: 'center',
+                    width: '90%',
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 5,
+                    pageIconColor: '#3498db',
+                    pageIconInactiveColor: '#666',
+                    pageTextStyle: { color: '#ecf0f1' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '80px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: skuShareData.weeks,
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    axisLabel: { 
+                        rotate: 0, 
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: { 
+                        formatter: '{value}%'
+                    },
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    splitLine: { lineStyle: { color: '#2c3e50' } },
+                    max: 100
+                },
+                series: skuShareData.series.map((item, index) => ({
+                    name: item.name,
+                    type: 'bar',
+                    stack: '总量',
+                    data: item.data,
+                    itemStyle: {
+                        color: skuColors[index % skuColors.length],
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    emphasis: { focus: 'series' },
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function(params) {
+                            return params.value > 3 ? params.value.toFixed(1) + '%' : '';
+                        },
+                        fontSize: 10,
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textShadowBlur: 2,
+                        textShadowColor: 'rgba(0,0,0,0.8)'
+                    },
+                    barWidth: '70%'
+                }))
+            };
+        }
+
+        // 创建销量图表配置 - 使用实际条数，Y轴显示条数
+        function createVolumeOption() {
+            // 计算Y轴的最大值（取所有周最大总销量的1.2倍）
+            let maxTotalVolume = 0;
+            for (let i = 0; i < skuVolumeData.weeks.length; i++) {
+                let weeklyTotal = 0;
+                skuVolumeData.series.forEach(series => {
+                    weeklyTotal += series.data[i];
+                });
+                if (weeklyTotal > maxTotalVolume) {
+                    maxTotalVolume = weeklyTotal;
+                }
+            }
+            
+            // 向上取整到最近的千位
+            maxTotalVolume = Math.ceil(maxTotalVolume / 1000) * 1000;
+            
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function(params) {
+                        let result = params[0].name + '<br/>';
+                        let total = 0;
+                        params.forEach(function(item) {
+                            if (item.value > 0) {
+                                result += '<span style="display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + '"></span>' + 
+                                        item.seriesName + ': ' + item.value.toLocaleString() + ' 条<br/>';
+                                total += item.value;
+                            }
+                        });
+                        result += '<hr style="margin:5px 0;border:none;border-top:1px solid #2c3e50">';
+                        result += '<strong>总计: ' + total.toLocaleString() + ' 条</strong>';
+                        return result;
+                    }
+                },
+                legend: {
+                    data: skuVolumeData.series.map(item => item.name),
+                    textStyle: { color: '#ecf0f1', fontSize: 12 },
+                    type: 'scroll',
+                    orient: 'horizontal',
+                    top: 30,
+                    left: 'center',
+                    width: '90%',
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 5,
+                    pageIconColor: '#3498db',
+                    pageIconInactiveColor: '#666',
+                    pageTextStyle: { color: '#ecf0f1' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '80px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: skuVolumeData.weeks,
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    axisLabel: { 
+                        rotate: 0, 
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '销量(条)',
+                    min: 0,
+                    max: maxTotalVolume,
+                    axisLabel: { 
+                        formatter: function(value) {
+                            // 简化大数字显示
+                            if (value >= 10000) {
+                                return (value/10000).toFixed(0) + '万';
+                            } else if (value >= 1000) {
+                                return (value/1000).toFixed(0) + 'k';
+                            }
+                            return value;
+                        }
+                    },
+                    axisLine: { 
+                        lineStyle: { color: '#ecf0f1' } 
+                    },
+                    splitLine: { 
+                        lineStyle: { color: '#2c3e50' } 
+                    }
+                },
+                series: skuVolumeData.series.map((item, index) => ({
+                    name: item.name,
+                    type: 'bar',
+                    stack: '总量',
+                    data: item.data,
+                    itemStyle: {
+                        color: skuColors[index % skuColors.length],
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    emphasis: { focus: 'series' },
+                    label: {
+                        show: true, // 显示标签
+                        position: 'inside', // 在柱子内部显示
+                        formatter: function(params) {
+                            // 只对较大的数值显示标签，避免图表过于拥挤
+                            if (params.value >= 500) {
+                                // 格式化显示：大于1000显示K，否则显示原数字
+                                if (params.value >= 1000) {
+                                    return (params.value/1000).toFixed(1) + 'k';
+                                }
+                                return params.value.toLocaleString();
+                            }
+                            return ''; // 小数值不显示
+                        },
+                        fontSize: 9,
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textShadowBlur: 2,
+                        textShadowColor: 'rgba(0,0,0,0.8)',
+                        rotate: 0 // 水平显示
+                    },
+                    barWidth: '70%'
+                }))
+            };
+        }
+
+        // 初始渲染占比图表
+        skuShareChart.setOption(createPercentageOption());
+
+        // 切换按钮功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const showPercentageBtn = document.getElementById('showPercentage');
+            const showVolumeBtn = document.getElementById('showVolume');
+            
+            showPercentageBtn.addEventListener('click', function() {
+                if (currentChartType !== 'percentage') {
+                    currentChartType = 'percentage';
+                    showPercentageBtn.classList.add('active');
+                    showVolumeBtn.classList.remove('active');
+                    skuShareChart.setOption(createPercentageOption());
+                }
+            });
+            
+            showVolumeBtn.addEventListener('click', function() {
+                if (currentChartType !== 'volume') {
+                    currentChartType = 'volume';
+                    showVolumeBtn.classList.add('active');
+                    showPercentageBtn.classList.remove('active');
+                    skuShareChart.setOption(createVolumeOption());
+                }
+            });
+        });
+        
+        // POP单店单周销量图表
+        const popSalesOption = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: function(params) {
+                    return params[0].name + '<br/>单店销量: ' + params[0].value + ' 条';
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.popSales.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '销量(条)',
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#2c3e50'
+                    }
+                }
+            },
+            series: [{
+                data: eightWeekData.popSales.values,
+                type: 'line',
+                smooth: true,
+                lineStyle: {
+                    width: 3,
+                    color: '#3498db'
+                },
+                itemStyle: {
+                    color: '#3498db'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: 'rgba(52, 152, 219, 0.5)' },
+                        { offset: 1, color: 'rgba(52, 152, 219, 0.1)' }
+                    ])
+                }
+            }]
+        };
+        
+        // 本周总销量图表
+        const totalSalesOption = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: function(params) {
+                    return params[0].name + '<br/>销量: ' + params[0].value.toLocaleString() + ' 条';
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.totalSales.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '销量(条)',
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#2c3e50'
+                    }
+                }
+            },
+            series: [{
+                data: eightWeekData.totalSales.values,
+                type: 'bar',
+                itemStyle: {
+                    color: function(params) {
+                        return params.dataIndex === 8 ? '#3498db' : '#2ecc71';
+                    }
+                },
+                barWidth: '60%'
+            }]
+        };
+        
+        // 本周总销售额图表
+        const totalRevenueOption = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: function(params) {
+                    return params[0].name + '<br/>销售额: $' + (params[0].value / 1000000).toFixed(2) + 'M';
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.totalRevenue.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '销售额($)',
+                axisLabel: {
+                    formatter: function(value) {
+                        return '$' + (value / 1000000).toFixed(1) + 'M';
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#2c3e50'
+                    }
+                }
+            },
+            series: [{
+                data: eightWeekData.totalRevenue.values,
+                type: 'bar',
+                itemStyle: {
+                    color: function(params) {
+                        return params.dataIndex === 8 ? '#3498db' : '#f39c12';
+                    }
+                },
+                barWidth: '60%'
+            }]
+        };
+
+        // 初始化新品趋势图表
+        const newProductTrendChart = echarts.init(document.getElementById('newProductTrendChart'));
+
+        // 新品T010上市趋势数据 - 更新包含第三周数据
+        const newProductTrendData = {
+            weeks: ['上市前', '第1周', '第2周', '第3周'],
+            sales: [0, 422, 1904, 1435],
+            share: [0, 4.64, 14.77, 14.72]
+        };
+
+        // 新品趋势图表配置
+        const newProductTrendOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                },
+                formatter: function(params) {
+                    let result = params[0].name + '<br/>';
+                    params.forEach(function(item) {
+                        if (item.seriesName === '销量') {
+                            result += item.marker + item.seriesName + ': ' + item.value.toLocaleString() + ' 条<br/>';
+                        } else {
+                            result += item.marker + item.seriesName + ': ' + item.value + '%<br/>';
+                        }
+                    });
+                    return result;
+                }
+            },
+            legend: {
+                data: ['销量', '市场份额'],
+                textStyle: {
+                    color: '#ecf0f1'
+                },
+                top: 5
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '20%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: newProductTrendData.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                axisLabel: {
+                    color: '#ecf0f1',
+                    fontSize: 14
+                }
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '销量(条)',
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#ecf0f1'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#2c3e50'
+                        }
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '市场份额(%)',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value}%',
+                        color: '#ecf0f1'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    min: 0,
+                    max: 20
+                }
+            ],
+            series: [
+                {
+                    name: '销量',
+                    type: 'bar',
+                    data: newProductTrendData.sales,
+                    yAxisIndex: 0,
+                    itemStyle: {
+                        color: '#3498db',
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    barWidth: '40%',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toLocaleString();
+                        },
+                        fontSize: 12,
+                        color: '#ecf0f1',
+                        fontWeight: 'bold'
+                    }
+                },
+                {
+                    name: '市场份额',
+                    type: 'line',
+                    data: newProductTrendData.share,
+                    yAxisIndex: 1,
+                    itemStyle: {
+                        color: '#f39c12'
+                    },
+                    lineStyle: {
+                        width: 4,
+                        color: '#f39c12'
+                    },
+                    symbol: 'circle',
+                    symbolSize: 10,
+                    smooth: true,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value + '%';
+                        },
+                        fontSize: 12,
+                        color: '#f39c12',
+                        fontWeight: 'bold'
+                    }
+                }
+            ]
+        };
+
+        // 渲染新品趋势图表
+        newProductTrendChart.setOption(newProductTrendOption);
+
+        // 在窗口大小变化时也要调整新品趋势图表
+        window.addEventListener('resize', function() {
+            // ...原有的resize代码...
+            newProductTrendChart.resize();
+        });
+
+        // 线上销售占比图表 - 混合图表：线上销量bar，线上占比line
+        const onlineSalesOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                },
+                formatter: function(params) {
+                    let result = params[0].name + '<br/>';
+                    params.forEach(function(item) {
+                        if (item.seriesName === '线上销量') {
+                            result += item.marker + item.seriesName + ': ' + item.value.toLocaleString() + ' 条<br/>';
+                        } else {
+                            result += item.marker + item.seriesName + ': ' + item.value + '%<br/>';
+                        }
+                    });
+                    return result;
+                }
+            },
+            legend: {
+                data: ['线上销量', '线上占比'],
+                textStyle: {
+                    color: '#ecf0f1'
+                },
+                top: 5
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '20%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.onlineSales.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                axisLabel: {
+                    color: '#ecf0f1'
+                }
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '线上销量(条)',
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#ecf0f1'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#2c3e50'
+                        }
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '线上占比(%)',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value}%',
+                        color: '#ecf0f1'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    min: 0,
+                    max: 100
+                }
+            ],
+            series: [
+                {
+                    name: '线上销量',
+                    type: 'bar',
+                    data: eightWeekData.onlineSales.values,
+                    yAxisIndex: 0,
+                    itemStyle: {
+                        color: '#3498db',
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    barWidth: '60%',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toLocaleString();
+                        },
+                        fontSize: 11,
+                        color: '#ecf0f1'
+                    }
+                },
+                {
+                    name: '线上占比',
+                    type: 'line',
+                    data: eightWeekData.onlineSales.percentages,
+                    yAxisIndex: 1,
+                    itemStyle: {
+                        color: '#f39c12'
+                    },
+                    lineStyle: {
+                        width: 3,
+                        color: '#f39c12'
+                    },
+                    symbol: 'circle',
+                    symbolSize: 8,
+                    smooth: true,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toFixed(1) + '%';
+                        },
+                        fontSize: 10,
+                        color: '#f39c12'
+                    }
+                }
+            ]
+        };
+        
+        // 渲染所有图表
+        salesVolumeChart.setOption(salesVolumeOption);
+        salesAmountChart.setOption(salesAmountOption);
+        popSalesChart.setOption(popSalesOption);
+        totalSalesChart.setOption(totalSalesOption);
+        totalRevenueChart.setOption(totalRevenueOption);
+        onlineSalesChart.setOption(onlineSalesOption);
+        
+        // 响应窗口大小变化
+        window.addEventListener('resize', function() {
+            salesVolumeChart.resize();
+            salesAmountChart.resize();
+            popSalesChart.resize();
+            totalSalesChart.resize();
+            totalRevenueChart.resize();
+            onlineSalesChart.resize();
+            skuShareChart.resize();
+            newProductTrendChart.resize();
+        });
+        
+        // 产品线筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterItems = document.querySelectorAll('.filter-item, .table-filter-item');
+            
+            function handleFilterClick(item) {
+                const filter = item.getAttribute('data-filter');
+                
+                // 更新所有筛选按钮的active状态
+                filterItems.forEach(i => i.classList.remove('active'));
+                filterItems.forEach(i => {
+                    if (i.getAttribute('data-filter') === filter) {
+                        i.classList.add('active');
+                    }
+                });
+                
+                // 处理表格行显示
+                const allRows = document.querySelectorAll('#skuTable tbody tr');
+                allRows.forEach(row => {
+                    if (filter === 'all') {
+                        // 显示全部产品线和原因行
+                        if (row.classList.contains('product-line-all') || 
+                            row.classList.contains('sku-reason-all')) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    } else if (filter === 'bone') {
+                        // 显示骨导线和骨导线原因行
+                        if (row.classList.contains('product-line-bone') || 
+                            row.classList.contains('sku-reason-bone')) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    } else if (filter === 'air') {
+                        // 显示气导线和气导线原因行
+                        if (row.classList.contains('product-line-air') || 
+                            row.classList.contains('sku-reason-air')) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            }
+            
+            // 为所有筛选按钮添加事件监听
+            filterItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    handleFilterClick(this);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

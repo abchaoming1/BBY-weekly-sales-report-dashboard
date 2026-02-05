@@ -1,0 +1,3336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week-5 BBY销售数据智能平台 - 市场调整期分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #ecf0f1;
+            --border-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .top-banner {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .activity-banner {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            border-radius: 8px;
+            padding: 15px 20px;
+        }
+        
+        .chart-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+
+        .toggle-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .activity-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .activity-date {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .data-cards .data-card:first-child {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, var(--card-bg) 100%);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .data-cards .data-card:last-child {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.2) 0%, var(--card-bg) 100%);
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .new-product-banner {
+            background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+            border-radius: 8px;
+            padding: 15px 20px;
+        }
+        
+        .new-product-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .new-product-info {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .filter-item {
+            padding: 8px 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-item:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .filter-item.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .kpi-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .kpi-title {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        .kpi-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .kpi-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .kpi-change.positive {
+            color: var(--success-color);
+        }
+        
+        .kpi-change.negative {
+            color: var(--danger-color);
+        }
+        
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .summary-text {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .kpi-charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-chart-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .kpi-chart-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .kpi-chart {
+            width: 100%;
+            height: 250px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin: 0;
+        }
+        
+        .table-filters {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .table-filter-item {
+            padding: 6px 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .table-filter-item:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .table-filter-item.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 400px;
+        }
+        
+        .chart-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .chart {
+            width: 100%;
+            height: 350px;
+        }
+        
+        .data-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .data-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .data-card-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .data-item:last-child {
+            border-bottom: none;
+        }
+        
+        .data-label {
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .data-value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .business-analysis {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .analysis-section {
+            margin-bottom: 20px;
+        }
+        
+        .analysis-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .analysis-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .positive-change {
+            color: var(--success-color);
+        }
+        
+        .negative-change {
+            color: var(--danger-color);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .tag.hot {
+            background-color: var(--danger-color);
+        }
+        
+        .tag.good {
+            background-color: var(--success-color);
+        }
+        
+        .tag.warning {
+            background-color: var(--warning-color);
+        }
+        
+        .tag.normal {
+            background-color: var(--primary-color);
+        }
+        
+        .sku-reason-row {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .sku-reason-cell {
+            padding: 15px;
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        
+        .sku-reason-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .sku-share-chart-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .sku-share-chart-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .sku-share-chart {
+            width: 100%;
+            height: 500px;
+        }
+        
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .competitor-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .competitor-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .competitor-name {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .competitor-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .competitor-save {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .inventory-warning {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .warning-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .warning-item:last-child {
+            border-bottom: none;
+        }
+        
+        .ca-value {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .ca-value.low {
+            background-color: var(--danger-color);
+        }
+        
+        .ca-value.medium {
+            background-color: var(--warning-color);
+        }
+        
+        .ca-value.high {
+            background-color: var(--success-color);
+        }
+        
+        .sku-analysis-all {
+            display: block;
+        }
+        
+        .sku-analysis-bone {
+            display: none;
+        }
+        
+        .sku-analysis-air {
+            display: none;
+        }
+        
+        .product-line-bone {
+            display: none;
+        }
+        
+        .product-line-air {
+            display: none;
+        }
+        
+        .product-line-all {
+            display: table-row;
+        }
+        
+        .sku-reason-bone {
+            display: none;
+        }
+        
+        .sku-reason-air {
+            display: none;
+        }
+        
+        .sku-reason-all {
+            display: table-row;
+        }
+        
+        /* SKU选择器 */
+        .sku-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .sku-selector-btn {
+            padding: 8px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .sku-selector-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .sku-selector-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .sku-selector-btn.hot {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .sku-selector-btn.hot.active {
+            background: var(--danger-color);
+        }
+        
+        .sku-selector-btn.good {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .sku-selector-btn.good.active {
+            background: var(--success-color);
+        }
+        
+        /* 多选模式指示器 */
+        .multi-select-hint {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        /* 细分SKU周趋势图表容器 */
+        .detail-sku-trend-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: none; /* 默认隐藏 */
+        }
+        
+        .detail-sku-trend-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .detail-sku-trend-chart {
+            width: 100%;
+            height: 400px;
+        }
+        
+        @media (max-width: 768px) {
+            .top-banner {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-container, .data-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpi-charts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sku-share-chart {
+                height: 400px;
+            }
+            
+            .detail-sku-trend-chart {
+                height: 350px;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filters {
+                margin-top: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .table-filters {
+                align-self: flex-start;
+            }
+            
+            .sku-selector {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部横幅区域 -->
+        <div class="top-banner">
+            <!-- 活动消息 -->
+            <div class="activity-banner">
+                <div class="activity-title">📊 Week-5 销售数据</div>
+                <div class="activity-date">日期：2026.1.25 | 整体销量环比微降0.68%，气导线占比回升至39.39%</div>
+            </div>
+            
+            <!-- 新品上市信息 -->
+            <div class="new-product-banner">
+                <div class="new-product-title">📉 T010 新品表现</div>
+                <div class="new-product-info">上市第四周：销量525条，占比5.42%，环比大幅下降63%</div>
+                <div class="new-product-info">市场调整期持续，需关注库存和渠道表现</div>
+            </div>
+        </div>
+        
+        <header>
+            <div class="logo">BBY销售数据智能平台 - Week 5</div>
+            <div class="filters">
+                <div class="filter-item active" data-filter="all">全部产品线</div>
+                <div class="filter-item" data-filter="bone">骨导线</div>
+                <div class="filter-item" data-filter="air">气导线</div>
+            </div>
+        </header>
+        
+        <!-- 核心KPI指标 -->
+        <div class="kpi-cards">
+            <div class="kpi-card">
+                <div class="kpi-title">本周总销量</div>
+                <div class="kpi-value">9,680</div>
+                <div class="kpi-change negative">↓ 同比 -8.02%</div>
+                <div class="kpi-change negative">↓ 环比 -0.68%</div>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="kpi-title">YTD累计销量</div>
+                    <div class="kpi-value" style="font-size: 22px;">52,414</div>
+                    <div class="kpi-change positive">↑ +11.73%</div>
+                    <div class="kpi-change" style="color: #aaa; font-size: 12px;">累计同比 +5,503</div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">本周总销售额</div>
+                <div class="kpi-value">$1.65M</div>
+                <div class="kpi-change negative">↓ 同比 -0.96%</div>
+                <div class="kpi-change negative">↓ 环比 -7.26%</div>
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="kpi-title">YTD累计销售额</div>
+                    <div class="kpi-value" style="font-size: 22px;">$9.42M</div>
+                    <div class="kpi-change positive">↑ +28.07%</div>
+                    <div class="kpi-change" style="color: #aaa; font-size: 12px;">累计同比 +$2.06M</div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">线上销售占比</div>
+                <div class="kpi-value">34.89%</div>
+                <div class="kpi-change positive">↑ 环比 +5.40%</div>
+                <div class="kpi-change">本周线上销量3,161条</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">POP门店表现 - 单店单周</div>
+                <div class="kpi-value">7.22</div>
+                <div class="kpi-change">上周 7.22</div>
+                <div class="kpi-change">环比 持平</div>
+            </div>
+        </div>
+        
+        <!-- KPI八周趋势图 -->
+        <div class="kpi-charts-container">
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">本周总销量 - 八周趋势 (W1-W8)</div>
+                <div id="totalSalesChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">本周总销售额 - 八周趋势 (W1-W8)</div>
+                <div id="totalRevenueChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">线上销售占比 - 八周趋势 (W1-W8)</div>
+                <div id="onlineSalesChart" class="kpi-chart"></div>
+            </div>
+            <div class="kpi-chart-card">
+                <div class="kpi-chart-title">POP单店单周销量 - 八周趋势 (W1-W8)</div>
+                <div id="popSalesChart" class="kpi-chart"></div>
+            </div>
+        </div>
+        
+        <!-- 一句话总结 -->
+        <div class="summary-card">
+            <div class="summary-text">
+                📊 <strong>Week-5关键表现：</strong>市场调整期持续，整体销量环比微降0.68%。S820表现强劲，销量3,016条，占比31.16%，环比增长25%。气导线占比回升至39.39%，环比增长44.12%。骨导线占比57.98%，环比下降31.81%。新品T010第四周销量525条，占比5.42%，环比大幅下降63%。线上销售占比回升至34.89%，线上销量3,161条。<strong>S803表现突出，销量1,823条，占比18.83%，环比大幅增长199%。</strong>市场呈现分化特征，低价产品表现稳健。
+            </div>
+        </div>
+        
+        <h2 class="section-title">业务线表现对比</h2>
+        <div class="charts-container">
+            <div class="chart-card">
+                <div class="chart-title">销量占比分布 (Week 5)</div>
+                <div id="salesVolumeChart" class="chart"></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title">销售额占比分布 (Week 5)</div>
+                <div id="salesAmountChart" class="chart"></div>
+            </div>
+        </div>
+
+        <div class="data-cards">
+            <div class="data-card">
+                <div class="data-card-title">骨导线表现 (Week 5)</div>
+                <div class="data-item">
+                    <div class="data-label">本周销量</div>
+                    <div class="data-value">5,612</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量占比</div>
+                    <div class="data-value">57.98%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量同比</div>
+                    <div class="data-value negative-change">↓ -10.52%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量环比</div>
+                    <div class="data-value positive-change">↑ +44.12%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销量</div>
+                    <div class="data-value">24,208</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销量同比</div>
+                    <div class="data-value negative-change">↓ -9.62%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本周销售额</div>
+                    <div class="data-value">$899,029</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额占比</div>
+                    <div class="data-value">54.39%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额同比</div>
+                    <div class="data-value negative-change">↓ -10.54%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额环比</div>
+                    <div class="data-value positive-change">↑ +38.50%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销售额</div>
+                    <div class="data-value">$4.04M</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销售额同比</div>
+                    <div class="data-value negative-change">↓ -6.55%</div>
+                </div>
+            </div>
+            
+            <div class="data-card">
+                <div class="data-card-title">气导线表现 (Week 5)</div>
+                <div class="data-item">
+                    <div class="data-label">本周销量</div>
+                    <div class="data-value">3,813</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量占比</div>
+                    <div class="data-value">39.39%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量同比</div>
+                    <div class="data-value negative-change">↓ -4.05%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销量环比</div>
+                    <div class="data-value negative-change">↓ -31.81%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销量</div>
+                    <div class="data-value">26,920</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销量同比</div>
+                    <div class="data-value positive-change">↑ +44.80%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本周销售额</div>
+                    <div class="data-value">$710,040</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额占比</div>
+                    <div class="data-value">42.96%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额同比</div>
+                    <div class="data-value positive-change">↑ +16.10%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">销售额环比</div>
+                    <div class="data-value negative-change">↓ -34.83%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本年累计销售额</div>
+                    <div class="data-value">$5.16M</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销售额同比</div>
+                    <div class="data-value positive-change">↑ +88.02%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 业务线表现分析 -->
+        <div class="business-analysis">
+            <div class="analysis-section">
+                <div class="analysis-title">📊 业务线表现深度分析 (Week 5)</div>
+                <div class="analysis-content">
+                    <p><strong>骨导线分析：</strong>销量环比大幅增长44.12%，占比升至57.98%。S820表现强劲，销量3,016条，占比31.16%，环比增长25%。S803表现突出，销量1,823条，占比18.83%，环比大幅增长199%。骨导线整体表现强劲，成为本周增长主力。</p>
+                    <p><strong>气导线分析：</strong>销量环比大幅下降31.81%，占比降至39.39%。新品T010第四周销量525条，占比5.42%，环比大幅下降63%。E310销量981条，环比下降23%。T921销量1,069条，环比下降13%。气导线整体仍在调整期。</p>
+                    <p><strong>S803亮眼表现：</strong>S803销量1,823条，占比18.83%，环比大幅增长199%。成为本周最大亮点，显示中端产品市场潜力。</p>
+                    <p><strong>市场分化特征：</strong>整体市场环比微降0.68%，但产品表现分化明显。骨导线强势增长，气导线持续调整。线上渠道占比回升至34.89%。市场进入结构性调整阶段。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新品上市模块 -->
+        <h2 class="section-title">🎯 新品上市表现追踪</h2>
+        <div class="data-cards" style="margin-top: 20px;">
+            <div class="data-card">
+                <div class="data-card-title">T010 新品上市表现</div>
+                <div class="data-item">
+                    <div class="data-label">本周销量</div>
+                    <div class="data-value">525</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">本周占比</div>
+                    <div class="data-value">5.42%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">上市第四周环比</div>
+                    <div class="data-value negative-change">↓ -63%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销量</div>
+                    <div class="data-value">4,286</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">累计销售额</div>
+                    <div class="data-value">$1,071,500</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">市场份额</div>
+                    <div class="data-value">持续调整</div>
+                </div>
+            </div>
+            
+            <div class="data-card">
+                <div class="data-card-title">市场调整期影响分析</div>
+                <div class="data-item">
+                    <div class="data-label">整体市场环比</div>
+                    <div class="data-value negative-change">↓ -0.68%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">气导线整体环比</div>
+                    <div class="data-value negative-change">↓ -31.81%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">T010环比</div>
+                    <div class="data-value negative-change">↓ -63%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">E310环比</div>
+                    <div class="data-value negative-change">↓ -23%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">T921环比</div>
+                    <div class="data-value negative-change">↓ -13%</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">市场阶段</div>
+                    <div class="data-value">结构性调整</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新品上市趋势分析 -->
+        <div class="business-analysis" style="margin-top: 20px;">
+            <div class="analysis-section">
+                <div class="analysis-title">📈 T010新品上市趋势分析</div>
+                <div class="analysis-content">
+                    <p><strong>上市表现：</strong>T010上市第四周销量525条，占总销量5.42%，环比大幅下降63%。上市四周累计销量4,286条，销售额$1,071,500。新品效应明显减弱，进入深度调整期。</p>
+                    
+                    <p><strong>市场影响：</strong>市场整体进入结构性调整期，环比微降0.68%。T010作为高端新品，下降幅度远超市场整体，显示新品在市场调整期面临较大压力。</p>
+                    
+                    <p><strong>竞争格局：</strong>气导线整体下降31.81%，T010表现弱于气导线平均水平。E310下降23%，T921下降13%。新品T010在市场调整期表现疲软。</p>
+                    
+                    <p><strong>价格定位：</strong>作为目前最高端产品（$249.99），T010在市场调整期市场份额大幅下滑至5.42%，证明高端产品在市场波动期面临更大挑战。</p>
+                    
+                    <p><strong>后续预测：</strong>市场结构性调整预计将持续。T010需要重新审视市场策略，关注库存管理和渠道激励。建议加强促销活动以刺激需求。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新品上市周趋势图容器 -->
+        <div class="chart-card" style="margin-bottom: 30px;">
+            <div class="chart-title">T010新品上市周趋势</div>
+            <div id="newProductTrendChart" class="chart" style="height: 300px;"></div>
+        </div>
+        
+        <!-- SKU销量排行榜标题和筛选按钮 -->
+        <div class="section-header">
+            <h2 class="section-title">SKU销量排行榜 (Week 5)</h2>
+        </div>
+        
+        <!-- SKU八周占比图表容器 -->
+        <div class="sku-share-chart-container">
+            <div class="section-header" style="border-bottom: none; margin: 0 0 20px 0;">
+                <h2 class="sku-share-chart-title">📈 八周各SKU趋势 (W1-W8)</h2>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <div class="chart-toggle">
+                        <button id="showPercentage" class="toggle-btn active">显示占比</button>
+                        <button id="showVolume" class="toggle-btn">显示销量</button>
+                    </div>
+                    <div style="margin-left: 10px; font-size: 12px; color: #aaa;">
+                        <span>💡 提示：W1=2025-12-7 ~ W8=2026-1-25，点击下方SKU按钮查看细分SKU八周趋势</span>
+                    </div>
+                </div>
+            </div>
+            <div id="skuShareChart" class="sku-share-chart"></div>
+        </div>
+        
+        <!-- SKU选择器 -->
+        <div class="sku-selector">
+            <div class="sku-selector-btn active" data-sku="all">全部SKU</div>
+            <div class="sku-selector-btn" data-sku="S820">S820</div>
+            <div class="sku-selector-btn good" data-sku="S803">S803</div>
+            <div class="sku-selector-btn" data-sku="T921">T921</div>
+            <div class="sku-selector-btn" data-sku="E310">E310</div>
+            <div class="sku-selector-btn" data-sku="T511">T511</div>
+            <div class="sku-selector-btn" data-sku="S710">S710</div>
+            <div class="sku-selector-btn" data-sku="T010">T010</div>
+            <div class="sku-selector-btn" data-sku="C120">C120</div>
+            <div class="sku-selector-btn" data-sku="T920">T920</div>
+            <div class="sku-selector-btn" data-sku="S661">S661</div>
+            <div class="sku-selector-btn" data-sku="S810">S810</div>
+            <div class="sku-selector-btn" data-sku="T910">T910</div>
+            <div class="sku-selector-btn" data-sku="Other">Other</div>
+        </div>
+        
+        <!-- 多选提示 -->
+        <div class="multi-select-hint">
+            💡 提示：按住Ctrl键可以多选SKU进行对比分析，最多支持同时对比8个SKU
+        </div>
+        
+        <!-- 细分SKU周趋势图表容器 -->
+        <div id="detailSkuTrendContainer" class="detail-sku-trend-container">
+            <div class="detail-sku-trend-title">
+                <span id="detailSkuTrendTitle">细分SKU八周趋势 (W1-W8)</span>
+                <div style="font-size: 14px; color: #aaa; margin-top: 5px;">
+                    时间轴：W1=2025-12-7，W2=2025-12-14，W3=2025-12-21，W4=2025-12-28，W5=2026-1-4，W6=2026-1-11，W7=2026-1-18，W8=2026-1-25
+                </div>
+            </div>
+            <div id="detailSkuTrendChart" class="detail-sku-trend-chart"></div>
+        </div>
+        
+        <div class="table-filters">
+                <div class="table-filter-item active" data-filter="all">全部产品线</div>
+                <div class="table-filter-item" data-filter="bone">骨导线</div>
+                <div class="table-filter-item" data-filter="air">气导线</div>
+        </div>
+
+        <div class="table-container">
+            <table id="skuTable">
+                <thead>
+                    <tr>
+                        <th>型号</th>
+                        <th>本周销量</th>
+                        <th>周涨幅</th>
+                        <th>MSRP</th>
+                        <th>折后价</th>
+                        <th>价格带</th>
+                        <th>打折天数</th>
+                        <th>打折力度</th>
+                        <th>节省金额</th>
+                        <th>关键表现</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- S820 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S820</td>
+                        <td>3,016</td>
+                        <td class="positive-change">↑ 25%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$179.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>主力增长 <span class="tag good">强劲</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S820 - 骨导高端主力</div>
+                            销量3,016条，占比31.16%，环比增长25%。骨导线增长主力，无促销活动。
+                        </td>
+                    </tr>
+                    
+                    <!-- S803 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S803</td>
+                        <td>1,823</td>
+                        <td class="positive-change">↑ 199%</td>
+                        <td class="price-msrp">$129.95</td>
+                        <td class="price-discounted">$129.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅增长 <span class="tag hot">爆发</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S803 - 中端产品爆发</div>
+                            销量1,823条，占比18.83%，环比大幅增长199%。本周最大亮点，显示中端产品市场潜力。
+                        </td>
+                    </tr>
+                    
+                    <!-- T921 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T921</td>
+                        <td>1,069</td>
+                        <td class="negative-change">↓ -13%</td>
+                        <td class="price-msrp">$199.95</td>
+                        <td class="price-discounted">$199.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>相对稳健 <span class="tag normal">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T921 - 气导高端产品</div>
+                            销量1,069条，占比11.04%，环比下降13%。在市场调整期表现相对稳健。
+                        </td>
+                    </tr>
+                    
+                    <!-- E310 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>E310</td>
+                        <td>981</td>
+                        <td class="negative-change">↓ -23%</td>
+                        <td class="price-msrp">$199.99</td>
+                        <td class="price-discounted">$199.99</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>持续调整 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">E310 - 气导支柱产品</div>
+                            销量981条，占比10.13%，环比下降23%。市场调整期持续受影响。
+                        </td>
+                    </tr>
+                    
+                    <!-- T511 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T511</td>
+                        <td>883</td>
+                        <td class="negative-change">↓ -20%</td>
+                        <td class="price-msrp">$119.95</td>
+                        <td class="price-discounted">$119.95</td>
+                        <td>低端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>小幅调整 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T511 - 低价段产品</div>
+                            销量883条，占比9.12%，环比下降20%。市场调整期正常波动。
+                        </td>
+                    </tr>
+                    
+                    <!-- S710 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S710</td>
+                        <td>468</td>
+                        <td class="negative-change">↓ -13%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$179.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>小幅调整 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S710 - 高端骨导</div>
+                            销量468条，占比4.83%，环比下降13%。市场调整期正常波动。
+                        </td>
+                    </tr>
+                    
+                    <!-- T010 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T010</td>
+                        <td>525</td>
+                        <td class="negative-change">↓ -63%</td>
+                        <td class="price-msrp">$249.99</td>
+                        <td class="price-discounted">$249.99</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>持续调整 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T010 - 新品上市第四周</div>
+                            销量525条，占比5.42%，环比大幅下降63%。市场调整期，新品表现疲软。
+                        </td>
+                    </tr>
+                    
+                    <!-- C120 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>C120</td>
+                        <td>252</td>
+                        <td class="negative-change">↓ -3%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>稳定表现 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">C120 - 稳定表现</div>
+                            销量252条，占比2.60%，环比微降3%。表现相对稳定。
+                        </td>
+                    </tr>
+                    
+                    <!-- T920 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T920</td>
+                        <td>310</td>
+                        <td class="negative-change">↓ -39%</td>
+                        <td class="price-msrp">$179.95</td>
+                        <td class="price-discounted">$179.95</td>
+                        <td>高端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>大幅调整 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T920 - 高端气导</div>
+                            销量310条，占比3.20%，环比大幅下降39%。市场调整期受影响较大。
+                        </td>
+                    </tr>
+                    
+                    <!-- S661 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S661</td>
+                        <td>164</td>
+                        <td class="negative-change">↓ -8%</td>
+                        <td class="price-msrp">$79.95</td>
+                        <td class="price-discounted">$79.95</td>
+                        <td>低端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>小幅调整 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S661 - 低价段产品</div>
+                            销量164条，占比1.69%，环比下降8%。市场调整期正常波动。
+                        </td>
+                    </tr>
+                    
+                    <!-- S810 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>S810</td>
+                        <td>125</td>
+                        <td class="negative-change">↓ -9%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>小幅下滑 <span class="tag normal">调整</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">S810 - 中端产品</div>
+                            销量125条，占比1.29%，环比下降9%。市场调整期正常波动。
+                        </td>
+                    </tr>
+                    
+                    <!-- T910 -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>T910</td>
+                        <td>45</td>
+                        <td class="negative-change">↓ -92%</td>
+                        <td class="price-msrp">$159.95</td>
+                        <td class="price-discounted">$159.95</td>
+                        <td>中端</td>
+                        <td>0天</td>
+                        <td class="discount-none">0.00%</td>
+                        <td class="savings">$0.00</td>
+                        <td>表现不佳 <span class="tag warning">下滑</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">T910 - 表现不佳</div>
+                            销量45条，占比0.46%，环比大幅下降92%。表现持续不佳。
+                        </td>
+                    </tr>
+                    
+                    <!-- Other -->
+                    <tr class="product-line-all sku-reason-all" data-line="all">
+                        <td>Other</td>
+                        <td>19</td>
+                        <td class="negative-change">↓ -17%</td>
+                        <td class="price-msrp">-</td>
+                        <td class="price-discounted">-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="discount-none">-</td>
+                        <td class="savings">-</td>
+                        <td>其他产品 <span class="tag normal">一般</span></td>
+                    </tr>
+                    <tr class="sku-reason-row sku-reason-all">
+                        <td colspan="10" class="sku-reason-cell">
+                            <div class="sku-reason-title">Other - 其他产品</div>
+                            销量19条，占比0.20%，环比下降17%。其他产品线表现。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 库存健康度监控 -->
+        <h2 class="section-title">库存健康度监控</h2>
+        <div class="inventory-warning">
+            <div class="warning-item">
+                <div>
+                    <strong>E310-SB</strong>
+                    <div style="font-size: 12px; color: #aaa;">E310-ST-NB-US-326-BBY</div>
+                </div>
+                <div class="ca-value low">CA 14</div>
+                <div style="color: var(--danger-color); font-weight: bold;">库存严重不足，急需补货</div>
+            </div>
+        </div>
+        
+        <!-- 竞品监控墙 -->
+        <h2 class="section-title">竞品监控墙</h2>
+        <div class="competitor-grid">
+            <!-- 竞品数据缺失，保持空白 -->
+        </div>
+    </div>
+
+    <script>
+        // 初始化所有ECharts实例
+        const salesVolumeChart = echarts.init(document.getElementById('salesVolumeChart'));
+        const salesAmountChart = echarts.init(document.getElementById('salesAmountChart'));
+        const popSalesChart = echarts.init(document.getElementById('popSalesChart'));
+        const totalSalesChart = echarts.init(document.getElementById('totalSalesChart'));
+        const totalRevenueChart = echarts.init(document.getElementById('totalRevenueChart'));
+        const onlineSalesChart = echarts.init(document.getElementById('onlineSalesChart'));
+        const skuShareChart = echarts.init(document.getElementById('skuShareChart'));
+        const newProductTrendChart = echarts.init(document.getElementById('newProductTrendChart'));
+        const detailSkuTrendChart = echarts.init(document.getElementById('detailSkuTrendChart'));
+        
+        // 销量占比饼图配置
+        const salesVolumeOption = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c}%'
+            },
+            legend: {
+                orient: 'vertical',
+                right: 10,
+                top: 'center',
+                textStyle: {
+                    color: '#ecf0f1'
+                }
+            },
+            series: [
+                {
+                    name: '销量占比',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#1a1a2e',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 18,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        { value: 57.98, name: '骨导销量 57.98%' },
+                        { value: 39.39, name: '气导销量 39.39%' },
+                        { value: 2.63, name: '其他 2.63%' }
+                    ],
+                    color: ['#3498db', '#2ecc71', '#f39c12']
+                }
+            ]
+        };
+
+        // 销售额占比饼图配置
+        const salesAmountOption = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c}%'
+            },
+            legend: {
+                orient: 'vertical',
+                right: 10,
+                top: 'center',
+                textStyle: {
+                    color: '#ecf0f1'
+                }
+            },
+            series: [
+                {
+                    name: '销售额占比',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#1a1a2e',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 18,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        { value: 54.39, name: '骨导销售额 54.39%' },
+                        { value: 42.96, name: '气导销售额 42.96%' },
+                        { value: 2.65, name: '其他 2.65%' }
+                    ],
+                    color: ['#3498db', '#2ecc71', '#f39c12']
+                }
+            ]
+        };
+        
+        // 八周数据
+        const eightWeekData = {
+            popSales: {
+                weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25'],
+                values: [11.01, 21.62, 28.05, 9.59, 7.93, 8.59, 7.48, 7.22],
+                title: 'POP单店单周销量 - 八周趋势 (W1-W8)'
+            },
+            totalSales: {
+                weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25'],
+                values: [14862, 27114, 33426, 11009, 9090, 12889, 9746, 9680],
+                title: '本周总销量 - 八周趋势 (W1-W8)'
+            },
+            totalRevenue: {
+                weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25'],
+                values: [2491526.9, 4648504.3, 5771218.7, 1918759.55, 1602892.38, 2459581.71, 1782330.1, 1652877],
+                title: '本周总销售额 - 八周趋势 (W1-W8)'
+            },
+            onlineSales: {
+                weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25'],
+                values: [5449, 8633, 9584, 2428, 1946, 4155, 2341, 3161],
+                percentages: [36.90, 32.13, 28.85, 23.10, 22.63, 39.47, 29.09, 34.89],
+                title: '线上销售占比 - 八周趋势 (W1-W8)'
+            }
+        };
+
+        // SKU八周占比数据
+        const skuShareData = {
+            weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+            dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25'],
+            series: [
+                { name: 'T511', data: [9.85, 9.77, 11.67, 10.36, 9.45, 5.19, 11.29, 9.12] },
+                { name: 'T910', data: [2.09, 0.24, 0.11, 0.31, 0.50, 0.33, 0.58, 0.46] },
+                { name: 'T920', data: [6.30, 7.10, 7.47, 6.45, 8.92, 5.27, 5.23, 3.20] },
+                { name: 'T921', data: [9.99, 11.31, 11.44, 13.16, 10.22, 11.91, 12.48, 11.04] },
+                { name: 'E310', data: [11.33, 13.19, 15.67, 16.02, 11.49, 26.98, 13.07, 10.13] },
+                { name: 'S710', data: [6.26, 6.25, 5.40, 7.07, 7.32, 4.86, 5.51, 4.83] },
+                { name: 'S661', data: [1.49, 1.59, 0.47, 0.56, 0.56, 0.54, 1.84, 1.69] },
+                { name: 'S803', data: [15.37, 10.24, 7.93, 6.13, 4.16, 4.50, 6.26, 18.83] },
+                { name: 'S810', data: [2.54, 1.69, 4.85, 6.36, 11.88, 4.88, 1.41, 1.29] },
+                { name: 'S820', data: [31.78, 36.17, 33.13, 31.16, 27.82, 18.52, 24.85, 31.16] },
+                { name: 'C120', data: [2.46, 2.08, 1.69, 2.22, 2.81, 2.09, 2.67, 2.60] },
+                { name: 'T010', data: [0.00, 0.00, 0.00, 0.00, 4.64, 14.77, 14.72, 5.42] },
+                { name: 'Other', data: [0.54, 0.37, 0.18, 0.21, 0.24, 0.15, 0.09, 0.20] }
+            ]
+        };
+
+        // SKU八周销量数据
+        const skuVolumeData = {
+            weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
+            dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25'],
+            series: [
+                { name: 'T511', data: [1464, 2649, 3900, 1140, 859, 669, 1100, 883] },
+                { name: 'T910', data: [311, 66, 36, 34, 45, 43, 57, 45] },
+                { name: 'T920', data: [936, 1925, 2498, 710, 811, 679, 510, 310] },
+                { name: 'T921', data: [1485, 3066, 3824, 1449, 929, 1535, 1216, 1069] },
+                { name: 'E310', data: [1684, 3575, 5237, 1764, 1044, 3478, 1274, 981] },
+                { name: 'S710', data: [930, 1694, 1804, 778, 665, 626, 537, 468] },
+                { name: 'S661', data: [221, 431, 158, 62, 51, 70, 179, 164] },
+                { name: 'S803', data: [2284, 2777, 2651, 675, 378, 580, 610, 1823] },
+                { name: 'S810', data: [378, 459, 1621, 700, 1080, 629, 137, 125] },
+                { name: 'S820', data: [4723, 9808, 11074, 3430, 2529, 2387, 2422, 3016] },
+                { name: 'C120', data: [366, 565, 564, 244, 255, 270, 260, 252] },
+                { name: 'T010', data: [0, 0, 0, 0, 422, 1904, 1435, 525] },
+                { name: 'Other', data: [80, 99, 59, 23, 22, 19, 9, 19] }
+            ]
+        };
+
+        // 细分SKU的八周数据
+        const subSkuData = {
+            '2025/12/7': {
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 32 },
+                    { name: 'S661-ST-GY-US', value: 138 },
+                    { name: 'S661-ST-PK-US', value: 31 },
+                    { name: 'S661-ST-WT-US', value: 20 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 1185 },
+                    { name: 'S803-ST-GY-US', value: 6 },
+                    { name: 'S803-ST-RD-US', value: 115 },
+                    { name: 'S803-ST-BL-US', value: 110 },
+                    { name: 'S805-ST-BK-US', value: 32 },
+                    { name: 'S806-MN-BK-US', value: 21 },
+                    { name: 'S803-MN-BL-US', value: 94 },
+                    { name: 'S803-MN-BK-US', value: 774 },
+                    { name: 'S805-ST-BL-US', value: 26 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 7 },
+                    { name: 'S810-ST-BK-US', value: 70 },
+                    { name: 'S810-ST-PK-US', value: 14 },
+                    { name: 'S810-ST-BL-US', value: 14 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 221 },
+                    { name: 'S811-MN-BK-US', value: 42 },
+                    { name: 'S811-MN-BG-US', value: 10 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 1658 },
+                    { name: 'S820-ST-OR-US', value: 126 },
+                    { name: 'S820-ST-BY-US-326', value: 1041 },
+                    { name: 'S820-ST-SR-US-326', value: 50 },
+                    { name: 'S820-ST-BL-US', value: 95 },
+                    { name: 'S821-MN-BL-US', value: 22 },
+                    { name: 'S821-MN-BK-US', value: 1569 },
+                    { name: 'S821-MN-OR-US', value: 82 },
+                    { name: 'S821-MN-SR-US-326', value: 80 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 864 },
+                    { name: 'S710-ST-RD-US', value: 66 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 222 },
+                    { name: 'T910-ST-BG-US', value: 89 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 715 },
+                    { name: 'T511-ST-PK-US', value: 46 },
+                    { name: 'T511-ST-WT-US', value: 121 },
+                    { name: 'T511-ST-SB-US-326', value: 582 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 668 },
+                    { name: 'T920-ST-BG-US', value: 268 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 821 },
+                    { name: 'T921-ST-GY-US', value: 65 },
+                    { name: 'T921-ST-SB-US-326', value: 566 },
+                    { name: 'T921-ST-PR-US', value: 33 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 926 },
+                    { name: 'E310-ST-GY-US', value: 552 },
+                    { name: 'E310-ST-PK-US', value: 145 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 61 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 12 },
+                    { name: 'C120-AC-BK-US', value: 60 },
+                    { name: 'C120-AN-BK-US', value: 294 }
+                ]
+            },
+            '2025/12/14': {
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 83 },
+                    { name: 'S661-ST-GY-US', value: 255 },
+                    { name: 'S661-ST-PK-US', value: 51 },
+                    { name: 'S661-ST-WT-US', value: 42 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 1255 },
+                    { name: 'S803-ST-GY-US', value: 7 },
+                    { name: 'S803-ST-RD-US', value: 62 },
+                    { name: 'S803-ST-BL-US', value: 91 },
+                    { name: 'S805-ST-BK-US', value: 38 },
+                    { name: 'S806-MN-BK-US', value: 34 },
+                    { name: 'S803-MN-BL-US', value: 104 },
+                    { name: 'S803-MN-BK-US', value: 1258 },
+                    { name: 'S805-ST-BL-US', value: 23 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 13 },
+                    { name: 'S810-ST-BK-US', value: 74 },
+                    { name: 'S810-ST-PK-US', value: 8 },
+                    { name: 'S810-ST-BL-US', value: 8 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 316 },
+                    { name: 'S811-MN-BK-US', value: 28 },
+                    { name: 'S811-MN-BG-US', value: 12 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 3359 },
+                    { name: 'S820-ST-OR-US', value: 137 },
+                    { name: 'S820-ST-BY-US-326', value: 2483 },
+                    { name: 'S820-ST-SR-US-326', value: 134 },
+                    { name: 'S820-ST-BL-US', value: 165 },
+                    { name: 'S821-MN-BL-US', value: 82 },
+                    { name: 'S821-MN-BK-US', value: 3156 },
+                    { name: 'S821-MN-OR-US', value: 136 },
+                    { name: 'S821-MN-SR-US-326', value: 156 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 1615 },
+                    { name: 'S710-ST-RD-US', value: 79 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 54 },
+                    { name: 'T910-ST-BG-US', value: 12 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 1452 },
+                    { name: 'T511-ST-PK-US', value: 73 },
+                    { name: 'T511-ST-WT-US', value: 200 },
+                    { name: 'T511-ST-SB-US-326', value: 924 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 1352 },
+                    { name: 'T920-ST-BG-US', value: 573 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 1347 },
+                    { name: 'T921-ST-GY-US', value: 100 },
+                    { name: 'T921-ST-SB-US-326', value: 1513 },
+                    { name: 'T921-ST-PR-US', value: 106 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 2036 },
+                    { name: 'E310-ST-GY-US', value: 1102 },
+                    { name: 'E310-ST-PK-US', value: 301 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 136 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 27 },
+                    { name: 'C120-AC-BK-US', value: 68 },
+                    { name: 'C120-AN-BK-US', value: 470 }
+                ]
+            },
+            '2025/12/21': {
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 19 },
+                    { name: 'S661-ST-GY-US', value: 33 },
+                    { name: 'S661-ST-PK-US', value: 51 },
+                    { name: 'S661-ST-WT-US', value: 55 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 994 },
+                    { name: 'S803-ST-GY-US', value: 11 },
+                    { name: 'S803-ST-RD-US', value: 88 },
+                    { name: 'S803-ST-BL-US', value: 90 },
+                    { name: 'S805-ST-BK-US', value: 20 },
+                    { name: 'S806-MN-BK-US', value: 24 },
+                    { name: 'S803-MN-BL-US', value: 51 },
+                    { name: 'S803-MN-BK-US', value: 1417 },
+                    { name: 'S805-ST-BL-US', value: 8 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 7 },
+                    { name: 'S810-ST-BK-US', value: 50 },
+                    { name: 'S810-ST-PK-US', value: 11 },
+                    { name: 'S810-ST-BL-US', value: 4 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 1519 },
+                    { name: 'S811-MN-BK-US', value: 22 },
+                    { name: 'S811-MN-BG-US', value: 8 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 3261 },
+                    { name: 'S820-ST-OR-US', value: 156 },
+                    { name: 'S820-ST-BY-US-326', value: 2947 },
+                    { name: 'S820-ST-SR-US-326', value: 52 },
+                    { name: 'S820-ST-BL-US', value: 100 },
+                    { name: 'S821-MN-BL-US', value: 178 },
+                    { name: 'S821-MN-BK-US', value: 4191 },
+                    { name: 'S821-MN-OR-US', value: 123 },
+                    { name: 'S821-MN-SR-US-326', value: 66 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 1704 },
+                    { name: 'S710-ST-RD-US', value: 100 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 28 },
+                    { name: 'T910-ST-BG-US', value: 8 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 2081 },
+                    { name: 'T511-ST-PK-US', value: 82 },
+                    { name: 'T511-ST-WT-US', value: 315 },
+                    { name: 'T511-ST-SB-US-326', value: 1422 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 1703 },
+                    { name: 'T920-ST-BG-US', value: 795 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 1657 },
+                    { name: 'T921-ST-GY-US', value: 56 },
+                    { name: 'T921-ST-SB-US-326', value: 2004 },
+                    { name: 'T921-ST-PR-US', value: 107 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 3317 },
+                    { name: 'E310-ST-GY-US', value: 1598 },
+                    { name: 'E310-ST-PK-US', value: 219 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 103 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 24 },
+                    { name: 'C120-AC-BK-US', value: 78 },
+                    { name: 'C120-AN-BK-US', value: 462 }
+                ]
+            },
+            '2025/12/28': {
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 8 },
+                    { name: 'S661-ST-GY-US', value: 43 },
+                    { name: 'S661-ST-PK-US', value: 11 },
+                    { name: 'S661-ST-WT-US', value: 0 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 256 },
+                    { name: 'S803-ST-GY-US', value: 3 },
+                    { name: 'S803-ST-RD-US', value: 11 },
+                    { name: 'S803-ST-BL-US', value: 22 },
+                    { name: 'S805-ST-BK-US', value: 9 },
+                    { name: 'S806-MN-BK-US', value: 10 },
+                    { name: 'S803-MN-BL-US', value: 4 },
+                    { name: 'S803-MN-BK-US', value: 379 },
+                    { name: 'S805-ST-BL-US', value: 3 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 13 },
+                    { name: 'S810-ST-BK-US', value: 76 },
+                    { name: 'S810-ST-PK-US', value: 8 },
+                    { name: 'S810-ST-BL-US', value: 13 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 507 },
+                    { name: 'S811-MN-BK-US', value: 63 },
+                    { name: 'S811-MN-BG-US', value: 20 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 1020 },
+                    { name: 'S820-ST-OR-US', value: 37 },
+                    { name: 'S820-ST-BY-US-326', value: 630 },
+                    { name: 'S820-ST-SR-US-326', value: 24 },
+                    { name: 'S820-ST-BL-US', value: 26 },
+                    { name: 'S821-MN-BL-US', value: 68 },
+                    { name: 'S821-MN-BK-US', value: 1531 },
+                    { name: 'S821-MN-OR-US', value: 68 },
+                    { name: 'S821-MN-SR-US-326', value: 26 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 748 },
+                    { name: 'S710-ST-RD-US', value: 30 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 23 },
+                    { name: 'T910-ST-BG-US', value: 11 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 640 },
+                    { name: 'T511-ST-PK-US', value: 29 },
+                    { name: 'T511-ST-WT-US', value: 82 },
+                    { name: 'T511-ST-SB-US-326', value: 389 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 516 },
+                    { name: 'T920-ST-BG-US', value: 194 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 612 },
+                    { name: 'T921-ST-GY-US', value: 30 },
+                    { name: 'T921-ST-SB-US-326', value: 759 },
+                    { name: 'T921-ST-PR-US', value: 48 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 829 },
+                    { name: 'E310-ST-GY-US', value: 426 },
+                    { name: 'E310-ST-PK-US', value: 61 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 448 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 0 },
+                    { name: 'C120-AC-BK-US', value: 60 },
+                    { name: 'C120-AN-BK-US', value: 184 }
+                ]
+            },
+            '2026/1/4': {
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 8 },
+                    { name: 'S661-ST-GY-US', value: 39 },
+                    { name: 'S661-ST-PK-US', value: 4 },
+                    { name: 'S661-ST-WT-US', value: 0 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 130 },
+                    { name: 'S803-ST-GY-US', value: 7 },
+                    { name: 'S803-ST-RD-US', value: 4 },
+                    { name: 'S803-ST-BL-US', value: 7 },
+                    { name: 'S805-ST-BK-US', value: 10 },
+                    { name: 'S806-MN-BK-US', value: 5 },
+                    { name: 'S803-MN-BL-US', value: 3 },
+                    { name: 'S803-MN-BK-US', value: 227 },
+                    { name: 'S805-ST-BL-US', value: 6 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 24 },
+                    { name: 'S810-ST-BK-US', value: 174 },
+                    { name: 'S810-ST-PK-US', value: 23 },
+                    { name: 'S810-ST-BL-US', value: 23 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 694 },
+                    { name: 'S811-MN-BK-US', value: 99 },
+                    { name: 'S811-MN-BG-US', value: 43 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 748 },
+                    { name: 'S820-ST-OR-US', value: 42 },
+                    { name: 'S820-ST-BY-US-326', value: 566 },
+                    { name: 'S820-ST-SR-US-326', value: 8 },
+                    { name: 'S820-ST-BL-US', value: 19 },
+                    { name: 'S821-MN-BL-US', value: 42 },
+                    { name: 'S821-MN-BK-US', value: 1042 },
+                    { name: 'S821-MN-OR-US', value: 40 },
+                    { name: 'S821-MN-SR-US-326', value: 22 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 640 },
+                    { name: 'S710-ST-RD-US', value: 25 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 33 },
+                    { name: 'T910-ST-BG-US', value: 12 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 471 },
+                    { name: 'T511-ST-PK-US', value: 18 },
+                    { name: 'T511-ST-WT-US', value: 66 },
+                    { name: 'T511-ST-SB-US-326', value: 304 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 584 },
+                    { name: 'T920-ST-BG-US', value: 227 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 553 },
+                    { name: 'T921-ST-GY-US', value: 17 },
+                    { name: 'T921-ST-SB-US-326', value: 327 },
+                    { name: 'T921-ST-PR-US', value: 32 }
+                ],
+                'T010': [
+                    { name: 'T010-ST-BK-US', value: 341 },
+                    { name: 'T010-ST-WT-US', value: 81 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 570 },
+                    { name: 'E310-ST-GY-US', value: 398 },
+                    { name: 'E310-ST-PK-US', value: 39 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 37 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 1 },
+                    { name: 'C120-AC-BK-US', value: 56 },
+                    { name: 'C120-AN-BK-US', value: 198 }
+                ]
+            },
+            '2026/1/11': {
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 15 },
+                    { name: 'S661-ST-GY-US', value: 46 },
+                    { name: 'S661-ST-PK-US', value: 7 },
+                    { name: 'S661-ST-WT-US', value: 2 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 223 },
+                    { name: 'S803-ST-GY-US', value: 3 },
+                    { name: 'S803-ST-RD-US', value: 2 },
+                    { name: 'S803-ST-BL-US', value: 5 },
+                    { name: 'S805-ST-BK-US', value: 13 },
+                    { name: 'S806-MN-BK-US', value: 5 },
+                    { name: 'S803-MN-BL-US', value: 20 },
+                    { name: 'S803-MN-BK-US', value: 327 },
+                    { name: 'S805-ST-BL-US', value: 1 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 18 },
+                    { name: 'S810-ST-BK-US', value: 161 },
+                    { name: 'S810-ST-PK-US', value: 19 },
+                    { name: 'S810-ST-BL-US', value: 11 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 336 },
+                    { name: 'S811-MN-BK-US', value: 69 },
+                    { name: 'S811-MN-BG-US', value: 15 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 685 },
+                    { name: 'S820-ST-OR-US', value: 45 },
+                    { name: 'S820-ST-BY-US-326', value: 591 },
+                    { name: 'S820-ST-SR-US-326', value: 10 },
+                    { name: 'S820-ST-BL-US', value: 18 },
+                    { name: 'S821-MN-BL-US', value: 26 },
+                    { name: 'S821-MN-BK-US', value: 952 },
+                    { name: 'S821-MN-OR-US', value: 29 },
+                    { name: 'S821-MN-SR-US-326', value: 31 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 596 },
+                    { name: 'S710-ST-RD-US', value: 30 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 32 },
+                    { name: 'T910-ST-BG-US', value: 11 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 376 },
+                    { name: 'T511-ST-PK-US', value: 13 },
+                    { name: 'T511-ST-WT-US', value: 52 },
+                    { name: 'T511-ST-SB-US-326', value: 228 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 494 },
+                    { name: 'T920-ST-BG-US', value: 185 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 444 },
+                    { name: 'T921-ST-GY-US', value: 17 },
+                    { name: 'T921-ST-SB-US-326', value: 1061 },
+                    { name: 'T921-ST-PR-US', value: 13 }
+                ],
+                'T010': [
+                    { name: 'T010-ST-BK-US', value: 1310 },
+                    { name: 'T010-ST-WT-US', value: 594 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 1515 },
+                    { name: 'E310-ST-GY-US', value: 1478 },
+                    { name: 'E310-ST-PK-US', value: 41 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 444 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 1 },
+                    { name: 'C120-AC-BK-US', value: 62 },
+                    { name: 'C120-AN-BK-US', value: 207 }
+                ]
+            },
+            '2026/1/18': {
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 8 },
+                    { name: 'S661-ST-GY-US', value: 161 },
+                    { name: 'S661-ST-PK-US', value: 9 },
+                    { name: 'S661-ST-WT-US', value: 1 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 251 },
+                    { name: 'S803-ST-GY-US', value: 6 },
+                    { name: 'S803-ST-RD-US', value: 10 },
+                    { name: 'S803-ST-BL-US', value: 6 },
+                    { name: 'S805-ST-BK-US', value: 3 },
+                    { name: 'S806-MN-BK-US', value: 2 },
+                    { name: 'S803-MN-BL-US', value: 15 },
+                    { name: 'S803-MN-BK-US', value: 322 },
+                    { name: 'S805-ST-BL-US', value: 4 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 6 },
+                    { name: 'S810-ST-BK-US', value: 30 },
+                    { name: 'S810-ST-PK-US', value: 1 },
+                    { name: 'S810-ST-BL-US', value: 6 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 84 },
+                    { name: 'S811-MN-BK-US', value: 9 },
+                    { name: 'S811-MN-BG-US', value: 1 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 752 },
+                    { name: 'S820-ST-OR-US', value: 31 },
+                    { name: 'S820-ST-BY-US-326', value: 569 },
+                    { name: 'S820-ST-SR-US-326', value: 15 },
+                    { name: 'S820-ST-BL-US', value: 22 },
+                    { name: 'S821-MN-BL-US', value: 21 },
+                    { name: 'S821-MN-BK-US', value: 962 },
+                    { name: 'S821-MN-OR-US', value: 28 },
+                    { name: 'S821-MN-SR-US-326', value: 22 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 514 },
+                    { name: 'S710-ST-RD-US', value: 23 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 43 },
+                    { name: 'T910-ST-BG-US', value: 14 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 803 },
+                    { name: 'T511-ST-PK-US', value: 14 },
+                    { name: 'T511-ST-WT-US', value: 97 },
+                    { name: 'T511-ST-SB-US-326', value: 186 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 367 },
+                    { name: 'T920-ST-BG-US', value: 143 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 596 },
+                    { name: 'T921-ST-GY-US', value: 14 },
+                    { name: 'T921-ST-SB-US-326', value: 591 },
+                    { name: 'T921-ST-PR-US', value: 15 }
+                ],
+                'T010': [
+                    { name: 'T010-ST-BK-US', value: 1025 },
+                    { name: 'T010-ST-WT-US', value: 410 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 643 },
+                    { name: 'E310-ST-GY-US', value: 331 },
+                    { name: 'E310-ST-PK-US', value: 52 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 248 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 4 },
+                    { name: 'C120-AC-BK-US', value: 50 },
+                    { name: 'C120-AN-BK-US', value: 206 }
+                ]
+            },
+            '2026/1/25': {
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 484 },
+                    { name: 'T511-ST-PK-US', value: 25 },
+                    { name: 'T511-ST-WT-US', value: 104 },
+                    { name: 'T511-ST-SB-US-326', value: 270 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 35 },
+                    { name: 'T910-ST-BG-US', value: 10 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 226 },
+                    { name: 'T920-ST-BG-US', value: 84 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 704 },
+                    { name: 'T921-ST-GY-US', value: 15 },
+                    { name: 'T921-ST-SB-US-326', value: 326 },
+                    { name: 'T921-ST-PR-US', value: 24 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 578 },
+                    { name: 'E310-ST-GY-US', value: 289 },
+                    { name: 'E310-ST-PK-US', value: 43 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 71 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 452 },
+                    { name: 'S710-ST-RD-US', value: 16 }
+                ],
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 34 },
+                    { name: 'S661-ST-GY-US', value: 104 },
+                    { name: 'S661-ST-PK-US', value: 25 },
+                    { name: 'S661-ST-WT-US', value: 1 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 1507 },
+                    { name: 'S803-ST-GY-US', value: 5 },
+                    { name: 'S803-ST-RD-US', value: 11 },
+                    { name: 'S803-ST-BL-US', value: 8 },
+                    { name: 'S805-ST-BK-US', value: 4 },
+                    { name: 'S806-MN-BK-US', value: 8 },
+                    { name: 'S803-MN-BL-US', value: 7 },
+                    { name: 'S803-MN-BK-US', value: 285 },
+                    { name: 'S805-ST-BL-US', value: 4 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 5 },
+                    { name: 'S810-ST-BK-US', value: 37 },
+                    { name: 'S810-ST-PK-US', value: 4 },
+                    { name: 'S810-ST-BL-US', value: 1 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 62 },
+                    { name: 'S811-MN-BK-US', value: 13 },
+                    { name: 'S811-MN-BG-US', value: 3 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 723 },
+                    { name: 'S820-ST-OR-US', value: 26 },
+                    { name: 'S820-ST-BY-US-326', value: 1171 },
+                    { name: 'S820-ST-SR-US-326', value: 12 },
+                    { name: 'S820-ST-BL-US', value: 12 },
+                    { name: 'S821-MN-BL-US', value: 25 },
+                    { name: 'S821-MN-BK-US', value: 1008 },
+                    { name: 'S821-MN-OR-US', value: 24 },
+                    { name: 'S821-MN-SR-US-326', value: 15 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 7 },
+                    { name: 'C120-AC-BK-US', value: 64 },
+                    { name: 'C120-AN-BK-US', value: 181 }
+                ],
+                'T010': [
+                    { name: 'T010-ST-BK-US', value: 297 },
+                    { name: 'T010-ST-WT-US', value: 228 }
+                ]
+            }
+        };
+
+        // 颜色配置
+        const skuColors = [
+            '#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6',
+            '#1abc9c', '#d35400', '#c0392b', '#8e44ad', '#27ae60',
+            '#16a085', '#2980b9', '#8e44ad'
+        ];
+
+        // 细分SKU颜色池
+        const subSkuColors = [
+            '#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6',
+            '#1abc9c', '#d35400', '#c0392b', '#8e44ad', '#27ae60',
+            '#16a085', '#2980b9', '#8e44ad', '#f1c40f', '#e67e22',
+            '#2c3e50', '#7f8c8d', '#95a5a6', '#bdc3c7', '#34495e'
+        ];
+
+        // 图表状态
+        let currentChartType = 'percentage';
+        let selectedSkus = new Set(['all']);
+        let isCtrlPressed = false;
+
+        // 创建占比图表配置
+        function createPercentageOption() {
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function(params) {
+                        const weekIndex = params[0].dataIndex;
+                        const weekLabel = skuShareData.weeks[weekIndex];
+                        const weekDate = skuShareData.dates[weekIndex];
+                        
+                        let result = `${weekLabel} (${weekDate})<br/>`;
+                        let total = 0;
+                        params.forEach(function(item) {
+                            if (item.value > 0) {
+                                result += '<span style="display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + '"></span>' + 
+                                        item.seriesName + ': ' + item.value.toFixed(1) + '%<br/>';
+                                total += item.value;
+                            }
+                        });
+                        result += '<hr style="margin:5px 0;border:none;border-top:1px solid #2c3e50">';
+                        result += '<strong>总计: ' + total.toFixed(1) + '%</strong>';
+                        return result;
+                    }
+                },
+                legend: {
+                    data: skuShareData.series.map(item => item.name),
+                    textStyle: { color: '#ecf0f1', fontSize: 12 },
+                    type: 'scroll',
+                    orient: 'horizontal',
+                    top: 30,
+                    left: 'center',
+                    width: '90%',
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 5,
+                    pageIconColor: '#3498db',
+                    pageIconInactiveColor: '#666',
+                    pageTextStyle: { color: '#ecf0f1' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '80px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: skuShareData.weeks,
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    axisLabel: { 
+                        rotate: 0, 
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: { 
+                        formatter: '{value}%'
+                    },
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    splitLine: { lineStyle: { color: '#2c3e50' } },
+                    max: 100
+                },
+                series: skuShareData.series.map((item, index) => ({
+                    name: item.name,
+                    type: 'bar',
+                    stack: '总量',
+                    data: item.data,
+                    itemStyle: {
+                        color: skuColors[index % skuColors.length],
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    emphasis: { 
+                        focus: 'series',
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function(params) {
+                            return params.value > 3 ? params.value.toFixed(1) + '%' : '';
+                        },
+                        fontSize: 10,
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textShadowBlur: 2,
+                        textShadowColor: 'rgba(0,0,0,0.8)'
+                    },
+                    barWidth: '70%'
+                }))
+            };
+        }
+
+        // 创建销量图表配置
+        function createVolumeOption() {
+            let maxTotalVolume = 0;
+            for (let i = 0; i < skuVolumeData.weeks.length; i++) {
+                let weeklyTotal = 0;
+                skuVolumeData.series.forEach(series => {
+                    weeklyTotal += series.data[i];
+                });
+                if (weeklyTotal > maxTotalVolume) {
+                    maxTotalVolume = weeklyTotal;
+                }
+            }
+            
+            maxTotalVolume = Math.ceil(maxTotalVolume / 1000) * 1000;
+            
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function(params) {
+                        const weekIndex = params[0].dataIndex;
+                        const weekLabel = skuVolumeData.weeks[weekIndex];
+                        const weekDate = skuVolumeData.dates[weekIndex];
+                        
+                        let result = `${weekLabel} (${weekDate})<br/>`;
+                        let total = 0;
+                        params.forEach(function(item) {
+                            if (item.value > 0) {
+                                result += '<span style="display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + '"></span>' + 
+                                        item.seriesName + ': ' + item.value.toLocaleString() + ' 条<br/>';
+                                total += item.value;
+                            }
+                        });
+                        result += '<hr style="margin:5px 0;border:none;border-top:1px solid #2c3e50">';
+                        result += '<strong>总计: ' + total.toLocaleString() + ' 条</strong>';
+                        return result;
+                    }
+                },
+                legend: {
+                    data: skuVolumeData.series.map(item => item.name),
+                    textStyle: { color: '#ecf0f1', fontSize: 12 },
+                    type: 'scroll',
+                    orient: 'horizontal',
+                    top: 30,
+                    left: 'center',
+                    width: '90%',
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 5,
+                    pageIconColor: '#3498db',
+                    pageIconInactiveColor: '#666',
+                    pageTextStyle: { color: '#ecf0f1' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '80px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: skuVolumeData.weeks,
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    axisLabel: { 
+                        rotate: 0, 
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '销量(条)',
+                    min: 0,
+                    max: maxTotalVolume,
+                    axisLabel: { 
+                        formatter: function(value) {
+                            if (value >= 10000) {
+                                return (value/10000).toFixed(0) + '万';
+                            } else if (value >= 1000) {
+                                return (value/1000).toFixed(0) + 'k';
+                            }
+                            return value;
+                        }
+                    },
+                    axisLine: { 
+                        lineStyle: { color: '#ecf0f1' } 
+                    },
+                    splitLine: { 
+                        lineStyle: { color: '#2c3e50' } 
+                    }
+                },
+                series: skuVolumeData.series.map((item, index) => ({
+                    name: item.name,
+                    type: 'bar',
+                    stack: '总量',
+                    data: item.data,
+                    itemStyle: {
+                        color: skuColors[index % skuColors.length],
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    emphasis: { 
+                        focus: 'series',
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function(params) {
+                            if (params.value >= 500) {
+                                if (params.value >= 1000) {
+                                    return (params.value/1000).toFixed(1) + 'k';
+                                }
+                                return params.value.toLocaleString();
+                            }
+                            return '';
+                        },
+                        fontSize: 9,
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textShadowBlur: 2,
+                        textShadowColor: 'rgba(0,0,0,0.8)',
+                        rotate: 0
+                    },
+                    barWidth: '70%'
+                }))
+            };
+        }
+
+        // 创建细分SKU周趋势图表配置 - 完全重新设计
+        function createDetailSkuTrendOption(selectedSkusArray) {
+            // 过滤掉"all"
+            const skus = selectedSkusArray.filter(sku => sku !== 'all');
+            
+            if (skus.length === 0) {
+                return null;
+            }
+            
+            // 限制最多选择8个SKU
+            const maxSkus = 8;
+            const displaySkus = skus.slice(0, maxSkus);
+            
+            // 周数和对应的日期（W1-W8）
+            const weeks = [
+                { label: 'W1', date: '2025/12/7' },
+                { label: 'W2', date: '2025/12/14' },
+                { label: 'W3', date: '2025/12/21' },
+                { label: 'W4', date: '2025/12/28' },
+                { label: 'W5', date: '2026/1/4' },
+                { label: 'W6', date: '2026/1/11' },
+                { label: 'W7', date: '2026/1/18' },
+                { label: 'W8', date: '2026/1/25' }
+            ];
+            
+            // 准备X轴数据：每个大类SKU在每个周都有一个独立的柱子
+            const xAxisData = [];
+            
+            displaySkus.forEach(sku => {
+                weeks.forEach(week => {
+                    xAxisData.push(`${sku}\n${week.label}`);
+                });
+            });
+            
+            // 为每个SKU创建一个系列
+            const seriesData = [];
+            const legendData = [];
+            
+            // SKU颜色映射
+            const skuColorMap = {};
+            displaySkus.forEach((sku, index) => {
+                skuColorMap[sku] = subSkuColors[index % subSkuColors.length];
+            });
+            
+            // 计算最大Y值
+            let maxYValue = 0;
+            
+            displaySkus.forEach(sku => {
+                const series = {
+                    name: sku,
+                    type: 'bar',
+                    data: [],
+                    itemStyle: {
+                        color: skuColorMap[sku],
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value > 0 ? params.value.toLocaleString() : '';
+                        },
+                        fontSize: 10,
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        textShadowBlur: 3,
+                        textShadowColor: 'rgba(0,0,0,0.8)'
+                    }
+                };
+                
+                // 为每个周添加数据
+                displaySkus.forEach(mainSku => {
+                    weeks.forEach(week => {
+                        if (mainSku === sku) {
+                            let total = 0;
+                            if (subSkuData[week.date] && subSkuData[week.date][sku]) {
+                                subSkuData[week.date][sku].forEach(item => {
+                                    total += item.value;
+                                });
+                            }
+                            series.data.push(total);
+                            
+                            // 更新最大Y值
+                            if (total > maxYValue) {
+                                maxYValue = total;
+                            }
+                        } else {
+                            series.data.push(0);
+                        }
+                    });
+                });
+                
+                seriesData.push(series);
+                legendData.push(sku);
+            });
+            
+            maxYValue = Math.ceil(maxYValue / 100) * 100;
+            
+            // 辅助函数：获取某个SKU在某周的细分SKU详情
+            function getSubSkuDetails(sku, weekDate) {
+                if (subSkuData[weekDate] && subSkuData[weekDate][sku]) {
+                    return subSkuData[weekDate][sku];
+                }
+                return [];
+            }
+            
+            return {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: function(params) {
+                        const index = params[0].dataIndex;
+                        const skuIndex = Math.floor(index / weeks.length);
+                        const weekIndex = index % weeks.length;
+                        
+                        const skuName = displaySkus[skuIndex];
+                        const week = weeks[weekIndex];
+                        
+                        let result = `<div style="font-weight: bold; margin-bottom: 10px; color: ${skuColorMap[skuName]}; font-size: 14px;">
+                            ${skuName} - ${week.label} (${week.date})
+                        </div>`;
+                        
+                        let total = 0;
+                        const subSkuDetails = getSubSkuDetails(skuName, week.date);
+                        
+                        subSkuDetails.forEach(item => {
+                            total += item.value;
+                        });
+                        
+                        if (total > 0) {
+                            result += `<div style="margin: 8px 0; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                                <strong>总计: ${total.toLocaleString()} 条</strong>
+                            </div>`;
+                            
+                            // 显示主要细分SKU（按销量排序）
+                            const sortedDetails = [...subSkuDetails].sort((a, b) => b.value - a.value);
+                            const topDetails = sortedDetails.slice(0, 6);
+                            
+                            topDetails.forEach((detail, idx) => {
+                                const percent = total > 0 ? ((detail.value / total) * 100).toFixed(1) : 0;
+                                const color = subSkuColors[idx % subSkuColors.length];
+                                result += `<div style="margin: 4px 0; padding: 3px 6px; display: flex; align-items: center; background: rgba(255,255,255,0.05); border-radius: 2px;">
+                                    <span style="display:inline-block;margin-right:6px;border-radius:50%;width:8px;height:8px;background-color:${color}"></span>
+                                    <span style="flex: 1; font-size: 11px;">${detail.name}:</span>
+                                    <span style="margin-left: 8px; font-weight: bold; font-size: 11px;">${detail.value.toLocaleString()} 条</span>
+                                    <span style="margin-left: 8px; color: #aaa; font-size: 10px;">(${percent}%)</span>
+                                </div>`;
+                            });
+                            
+                            if (sortedDetails.length > 6) {
+                                result += `<div style="margin-top: 6px; padding: 4px 8px; color: #aaa; font-size: 10px; text-align: center;">
+                                    + ${sortedDetails.length - 6} 个其他细分SKU
+                                </div>`;
+                            }
+                        } else {
+                            result += `<div style="color: #aaa; font-style: italic;">该周无销售数据</div>`;
+                        }
+                        
+                        return result;
+                    }
+                },
+                legend: {
+                    data: legendData,
+                    textStyle: { color: '#ecf0f1', fontSize: 11 },
+                    type: 'scroll',
+                    orient: 'horizontal',
+                    top: 10,
+                    left: 'center',
+                    width: '95%',
+                    height: displaySkus.length > 4 ? '60px' : 'auto',
+                    itemWidth: 12,
+                    itemHeight: 12,
+                    itemGap: 5,
+                    pageIconColor: '#3498db',
+                    pageIconInactiveColor: '#666',
+                    pageTextStyle: { color: '#ecf0f1' },
+                    selected: {}
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    top: displaySkus.length > 4 ? '100px' : '80px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: xAxisData,
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#ecf0f1',
+                        fontSize: 10,
+                        lineHeight: 16,
+                        interval: 0,
+                        formatter: function(value) {
+                            const parts = value.split('\n');
+                            return parts.join('\n');
+                        }
+                    },
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '销量(条)',
+                    nameTextStyle: {
+                        color: '#ecf0f1',
+                        fontSize: 12
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#ecf0f1',
+                        fontSize: 11
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#2c3e50'
+                        }
+                    },
+                    min: 0,
+                    max: maxYValue
+                },
+                series: seriesData,
+                // 数据区域选择器
+                dataZoom: [
+                    {
+                        type: 'slider',
+                        show: true,
+                        xAxisIndex: [0],
+                        left: '3%',
+                        right: '4%',
+                        bottom: 0,
+                        height: 20,
+                        borderColor: 'transparent',
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        fillerColor: 'rgba(52, 152, 219, 0.2)',
+                        handleStyle: {
+                            color: '#3498db',
+                            borderColor: '#3498db'
+                        },
+                        textStyle: {
+                            color: '#ecf0f1'
+                        },
+                        start: 0,
+                        end: 100
+                    }
+                ]
+            };
+        }
+
+        // 初始渲染SKU占比图表
+        skuShareChart.setOption(createPercentageOption());
+
+        // 其他图表配置
+        const popSalesOption = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: function(params) {
+                    const weekIndex = params[0].dataIndex;
+                    const weekLabel = eightWeekData.popSales.weeks[weekIndex];
+                    const weekDate = eightWeekData.popSales.dates[weekIndex];
+                    return `${weekLabel} (${weekDate})<br/>单店销量: ${params[0].value} 条`;
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.popSales.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '销量(条)',
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#2c3e50'
+                    }
+                }
+            },
+            series: [{
+                data: eightWeekData.popSales.values,
+                type: 'line',
+                smooth: true,
+                lineStyle: {
+                    width: 3,
+                    color: '#3498db'
+                },
+                itemStyle: {
+                    color: '#3498db'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: 'rgba(52, 152, 219, 0.5)' },
+                        { offset: 1, color: 'rgba(52, 152, 219, 0.1)' }
+                    ])
+                }
+            }]
+        };
+        
+        const totalSalesOption = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: function(params) {
+                    const weekIndex = params[0].dataIndex;
+                    const weekLabel = eightWeekData.totalSales.weeks[weekIndex];
+                    const weekDate = eightWeekData.totalSales.dates[weekIndex];
+                    return `${weekLabel} (${weekDate})<br/>销量: ${params[0].value.toLocaleString()} 条`;
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.totalSales.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '销量(条)',
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#2c3e50'
+                    }
+                }
+            },
+            series: [{
+                data: eightWeekData.totalSales.values,
+                type: 'bar',
+                itemStyle: {
+                    color: function(params) {
+                        return params.dataIndex === 7 ? '#3498db' : '#2ecc71';
+                    }
+                },
+                barWidth: '60%'
+            }]
+        };
+        
+        const totalRevenueOption = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: function(params) {
+                    const weekIndex = params[0].dataIndex;
+                    const weekLabel = eightWeekData.totalRevenue.weeks[weekIndex];
+                    const weekDate = eightWeekData.totalRevenue.dates[weekIndex];
+                    return `${weekLabel} (${weekDate})<br/>销售额: $${(params[0].value / 1000000).toFixed(2)}M`;
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.totalRevenue.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '销售额($)',
+                axisLabel: {
+                    formatter: function(value) {
+                        return '$' + (value / 1000000).toFixed(1) + 'M';
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#2c3e50'
+                    }
+                }
+            },
+            series: [{
+                data: eightWeekData.totalRevenue.values,
+                type: 'bar',
+                itemStyle: {
+                    color: function(params) {
+                        return params.dataIndex === 7 ? '#3498db' : '#f39c12';
+                    }
+                },
+                barWidth: '60%'
+            }]
+        };
+
+        // 新品趋势数据
+        const newProductTrendData = {
+            weeks: ['上市前', '第1周', '第2周', '第3周', '第4周'],
+            sales: [0, 422, 1904, 1435, 525],
+            share: [0, 4.64, 14.77, 14.72, 5.42]
+        };
+
+        const newProductTrendOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                },
+                formatter: function(params) {
+                    let result = params[0].name + '<br/>';
+                    params.forEach(function(item) {
+                        if (item.seriesName === '销量') {
+                            result += item.marker + item.seriesName + ': ' + item.value.toLocaleString() + ' 条<br/>';
+                        } else {
+                            result += item.marker + item.seriesName + ': ' + item.value + '%<br/>';
+                        }
+                    });
+                    return result;
+                }
+            },
+            legend: {
+                data: ['销量', '市场份额'],
+                textStyle: {
+                    color: '#ecf0f1'
+                },
+                top: 5
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '20%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: newProductTrendData.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                axisLabel: {
+                    color: '#ecf0f1',
+                    fontSize: 14
+                }
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '销量(条)',
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#ecf0f1'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#2c3e50'
+                        }
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '市场份额(%)',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value}%',
+                        color: '#ecf0f1'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    min: 0,
+                    max: 20
+                }
+            ],
+            series: [
+                {
+                    name: '销量',
+                    type: 'bar',
+                    data: newProductTrendData.sales,
+                    yAxisIndex: 0,
+                    itemStyle: {
+                        color: '#3498db',
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    barWidth: '40%',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toLocaleString();
+                        },
+                        fontSize: 12,
+                        color: '#ecf0f1',
+                        fontWeight: 'bold'
+                    }
+                },
+                {
+                    name: '市场份额',
+                    type: 'line',
+                    data: newProductTrendData.share,
+                    yAxisIndex: 1,
+                    itemStyle: {
+                        color: '#f39c12'
+                    },
+                    lineStyle: {
+                        width: 4,
+                        color: '#f39c12'
+                    },
+                    symbol: 'circle',
+                    symbolSize: 10,
+                    smooth: true,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value + '%';
+                        },
+                        fontSize: 12,
+                        color: '#f39c12',
+                        fontWeight: 'bold'
+                    }
+                }
+            ]
+        };
+
+        const onlineSalesOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                },
+                formatter: function(params) {
+                    const weekIndex = params[0].dataIndex;
+                    const weekLabel = eightWeekData.onlineSales.weeks[weekIndex];
+                    const weekDate = eightWeekData.onlineSales.dates[weekIndex];
+                    
+                    let result = `${weekLabel} (${weekDate})<br/>`;
+                    params.forEach(function(item) {
+                        if (item.seriesName === '线上销量') {
+                            result += item.marker + item.seriesName + ': ' + item.value.toLocaleString() + ' 条<br/>';
+                        } else {
+                            result += item.marker + item.seriesName + ': ' + item.value + '%<br/>';
+                        }
+                    });
+                    return result;
+                }
+            },
+            legend: {
+                data: ['线上销量', '线上占比'],
+                textStyle: {
+                    color: '#ecf0f1'
+                },
+                top: 5
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '20%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: eightWeekData.onlineSales.weeks,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ecf0f1'
+                    }
+                },
+                axisLabel: {
+                    color: '#ecf0f1'
+                }
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '线上销量(条)',
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#ecf0f1'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#2c3e50'
+                        }
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '线上占比(%)',
+                    position: 'right',
+                    axisLabel: {
+                        formatter: '{value}%',
+                        color: '#ecf0f1'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    min: 0,
+                    max: 100
+                }
+            ],
+            series: [
+                {
+                    name: '线上销量',
+                    type: 'bar',
+                    data: eightWeekData.onlineSales.values,
+                    yAxisIndex: 0,
+                    itemStyle: {
+                        color: '#3498db',
+                        borderRadius: [2, 2, 0, 0]
+                    },
+                    barWidth: '60%',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toLocaleString();
+                        },
+                        fontSize: 11,
+                        color: '#ecf0f1'
+                    }
+                },
+                {
+                    name: '线上占比',
+                    type: 'line',
+                    data: eightWeekData.onlineSales.percentages,
+                    yAxisIndex: 1,
+                    itemStyle: {
+                        color: '#f39c12'
+                    },
+                    lineStyle: {
+                        width: 3,
+                        color: '#f39c12'
+                    },
+                    symbol: 'circle',
+                    symbolSize: 8,
+                    smooth: true,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: function(params) {
+                            return params.value.toFixed(1) + '%';
+                        },
+                        fontSize: 10,
+                        color: '#f39c12'
+                    }
+                }
+            ]
+        };
+        
+        // 渲染所有图表
+        salesVolumeChart.setOption(salesVolumeOption);
+        salesAmountChart.setOption(salesAmountOption);
+        popSalesChart.setOption(popSalesOption);
+        totalSalesChart.setOption(totalSalesOption);
+        totalRevenueChart.setOption(totalRevenueOption);
+        onlineSalesChart.setOption(onlineSalesOption);
+        newProductTrendChart.setOption(newProductTrendOption);
+        
+        // 响应窗口大小变化
+        window.addEventListener('resize', function() {
+            salesVolumeChart.resize();
+            salesAmountChart.resize();
+            popSalesChart.resize();
+            totalSalesChart.resize();
+            totalRevenueChart.resize();
+            onlineSalesChart.resize();
+            skuShareChart.resize();
+            newProductTrendChart.resize();
+            detailSkuTrendChart.resize();
+        });
+        
+        // 产品线筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterItems = document.querySelectorAll('.filter-item, .table-filter-item');
+            const skuSelectorBtns = document.querySelectorAll('.sku-selector-btn');
+            const detailSkuTrendContainer = document.getElementById('detailSkuTrendContainer');
+            const detailSkuTrendTitle = document.getElementById('detailSkuTrendTitle');
+            const showPercentageBtn = document.getElementById('showPercentage');
+            const showVolumeBtn = document.getElementById('showVolume');
+            
+            // 监听Ctrl键
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Control' || e.key === 'Meta') {
+                    isCtrlPressed = true;
+                }
+            });
+            
+            document.addEventListener('keyup', function(e) {
+                if (e.key === 'Control' || e.key === 'Meta') {
+                    isCtrlPressed = false;
+                }
+            });
+            
+            // 处理产品线筛选
+            function handleFilterClick(item) {
+                const filter = item.getAttribute('data-filter');
+                
+                filterItems.forEach(i => i.classList.remove('active'));
+                filterItems.forEach(i => {
+                    if (i.getAttribute('data-filter') === filter) {
+                        i.classList.add('active');
+                    }
+                });
+                
+                const allRows = document.querySelectorAll('#skuTable tbody tr');
+                allRows.forEach(row => {
+                    if (filter === 'all') {
+                        if (row.classList.contains('product-line-all') || 
+                            row.classList.contains('sku-reason-all')) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    } else if (filter === 'bone') {
+                        if (row.classList.contains('product-line-bone') || 
+                            row.classList.contains('sku-reason-bone')) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    } else if (filter === 'air') {
+                        if (row.classList.contains('product-line-air') || 
+                            row.classList.contains('sku-reason-air')) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            }
+            
+            filterItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    handleFilterClick(this);
+                });
+            });
+            
+            // 处理SKU选择器点击
+            function handleSkuSelectorClick(btn) {
+                const skuName = btn.getAttribute('data-sku');
+                
+                if (skuName === 'all') {
+                    // 选择"全部"时清除其他选择
+                    selectedSkus = new Set(['all']);
+                    skuSelectorBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    detailSkuTrendContainer.style.display = 'none';
+                } else if (isCtrlPressed) {
+                    // Ctrl多选模式
+                    if (selectedSkus.has('all')) {
+                        selectedSkus.delete('all');
+                        document.querySelector('.sku-selector-btn[data-sku="all"]').classList.remove('active');
+                    }
+                    
+                    if (selectedSkus.has(skuName)) {
+                        selectedSkus.delete(skuName);
+                        btn.classList.remove('active');
+                    } else {
+                        selectedSkus.add(skuName);
+                        btn.classList.add('active');
+                    }
+                    
+                    // 限制最多选择8个SKU
+                    if (selectedSkus.size > 8) {
+                        selectedSkus.delete(skuName);
+                        btn.classList.remove('active');
+                        alert('最多只能选择8个SKU进行对比');
+                        return;
+                    }
+                    
+                    if (selectedSkus.size === 0) {
+                        selectedSkus.add('all');
+                        document.querySelector('.sku-selector-btn[data-sku="all"]').classList.add('active');
+                        detailSkuTrendContainer.style.display = 'none';
+                    } else {
+                        // 更新细分SKU趋势图表
+                        updateDetailSkuTrendChart();
+                        detailSkuTrendContainer.style.display = 'block';
+                    }
+                } else {
+                    // 单选模式
+                    selectedSkus = new Set([skuName]);
+                    skuSelectorBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // 更新细分SKU趋势图表
+                    updateDetailSkuTrendChart();
+                    detailSkuTrendContainer.style.display = 'block';
+                }
+            }
+            
+            skuSelectorBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    handleSkuSelectorClick(this);
+                });
+            });
+            
+            // 更新细分SKU趋势图表
+            function updateDetailSkuTrendChart() {
+                const selectedSkusArray = Array.from(selectedSkus).filter(sku => sku !== 'all');
+                
+                if (selectedSkusArray.length === 0) {
+                    detailSkuTrendContainer.style.display = 'none';
+                } else {
+                    // 更新标题
+                    if (selectedSkusArray.length === 1) {
+                        detailSkuTrendTitle.textContent = selectedSkusArray[0] + ' - 细分SKU八周趋势 (W1-W8)';
+                    } else {
+                        const skusText = selectedSkusArray.slice(0, 3).join(', ');
+                        const moreText = selectedSkusArray.length > 3 ? ` 等 ${selectedSkusArray.length} 个SKU` : '';
+                        detailSkuTrendTitle.textContent = skusText + moreText + ' - 细分SKU八周趋势 (W1-W8)';
+                    }
+                    
+                    const trendOption = createDetailSkuTrendOption(selectedSkusArray);
+                    if (trendOption) {
+                        detailSkuTrendChart.setOption(trendOption, true);
+                    }
+                }
+            }
+            
+            // SKU图表切换功能
+            showPercentageBtn.addEventListener('click', function() {
+                if (currentChartType !== 'percentage') {
+                    currentChartType = 'percentage';
+                    showPercentageBtn.classList.add('active');
+                    showVolumeBtn.classList.remove('active');
+                    skuShareChart.setOption(createPercentageOption());
+                }
+            });
+            
+            showVolumeBtn.addEventListener('click', function() {
+                if (currentChartType !== 'volume') {
+                    currentChartType = 'volume';
+                    showVolumeBtn.classList.add('active');
+                    showPercentageBtn.classList.remove('active');
+                    skuShareChart.setOption(createVolumeOption());
+                }
+            });
+            
+            // 初始化：默认选择全部SKU
+            selectedSkus = new Set(['all']);
+            document.querySelector('.sku-selector-btn[data-sku="all"]').classList.add('active');
+            detailSkuTrendContainer.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

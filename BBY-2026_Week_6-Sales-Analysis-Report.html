@@ -732,7 +732,6 @@
             <div class="kpi-card">
                 <div class="kpi-title">本周总销量</div>
                 <div class="kpi-value">12,179</div>
-                <div class="kpi-change positive">↑ 同比 +38.74%</div>
                 <div class="kpi-change positive">↑ 环比 +25.82%</div>
                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div class="kpi-title">YTD累计销量</div>
@@ -744,7 +743,6 @@
             <div class="kpi-card">
                 <div class="kpi-title">本周总销售额</div>
                 <div class="kpi-value">$2.17M</div>
-                <div class="kpi-change positive">↑ 同比 +56.31%</div>
                 <div class="kpi-change positive">↑ 环比 +31.49%</div>
                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div class="kpi-title">YTD累计销售额</div>
@@ -1485,223 +1483,75 @@
         const eightWeekData = {
             popSales: {
                 weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
-                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/2/1'],
-                values: [11.01, 21.62, 28.05, 9.59, 7.93, 8.59, 7.48, 9.57],
+                dates: ['2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25','2026/2/1'],
+                values: [ 21.62, 28.05, 9.59, 7.93, 8.59, 7.48,7.22, 9.57],
                 title: 'POP单店单周销量 - 八周趋势 (W1-W8)'
             },
             totalSales: {
                 weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
-                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/2/1'],
-                values: [14862, 27114, 33426, 11009, 9090, 12889, 9746, 12179],
+                dates: ['2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25','2026/2/1'],
+                values: [27114, 33426, 11009, 9090, 12889, 9746, 9680,12179],
                 title: '本周总销量 - 八周趋势 (W1-W8)'
             },
             totalRevenue: {
                 weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
-                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/2/1'],
-                values: [2491526.9, 4648504.3, 5771218.7, 1918759.55, 1602892.38, 2459581.71, 1782330.1, 2173320.25],
+                dates: ['2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25','2026/2/1'],
+                values: [4648504.3, 5771218.7, 1918759.55, 1602892.38, 2459581.71, 1782330.1,1656666.6 ,2173320.25],
                 title: '本周总销售额 - 八周趋势 (W1-W8)'
             },
             onlineSales: {
                 weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
-                dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/2/1'],
-                values: [5449, 8633, 9584, 2428, 1946, 4155, 2341, 3312],
-                percentages: [36.90, 32.13, 28.85, 23.10, 22.63, 39.47, 29.09, 30.95],
+                dates: ['2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25','2026/2/1'],
+                values: [8633, 9584, 2428, 1946, 4155, 2341, 3161,3312],
+                percentages: [ 32.13, 28.85, 23.10, 22.63, 39.47, 29.09, 34.89 ,30.95],
                 title: '线上销售占比 - 八周趋势 (W1-W8)'
             }
         };
 
-        // SKU八周占比数据 (W1-W8)
+        // SKU八周占比数据 (W1-W8) - 更新了W7(2026/1/25)的数据
         const skuShareData = {
             weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
-            dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/2/1'],
+            dates: ['2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25','2026/2/1'],
             series: [
-                { name: 'T511', data: [9.85, 9.77, 11.67, 10.36, 9.45, 5.19, 11.29, 6.88] },
-                { name: 'T910', data: [2.09, 0.24, 0.11, 0.31, 0.50, 0.33, 0.58, 0.22] },
-                { name: 'T920', data: [6.30, 7.10, 7.47, 6.45, 8.92, 5.27, 5.23, 4.22] },
-                { name: 'T921', data: [9.99, 11.31, 11.44, 13.16, 10.22, 11.91, 12.48, 10.58] },
-                { name: 'E310', data: [11.33, 13.19, 15.67, 16.02, 11.49, 26.98, 13.07, 11.63] },
-                { name: 'S710', data: [6.26, 6.25, 5.40, 7.07, 7.32, 4.86, 5.51, 5.59] },
-                { name: 'S661', data: [1.49, 1.59, 0.47, 0.56, 0.56, 0.54, 1.84, 1.55] },
-                { name: 'S803', data: [15.37, 10.24, 7.93, 6.13, 4.16, 4.50, 6.26, 13.34] },
-                { name: 'S810', data: [2.54, 1.69, 4.85, 6.36, 11.88, 4.88, 1.41, 0.96] },
-                { name: 'S820', data: [31.78, 36.17, 33.13, 31.16, 27.82, 18.52, 24.85, 31.79] },
-                { name: 'C120', data: [2.46, 2.08, 1.69, 2.22, 2.81, 2.09, 2.67, 2.80] },
-                { name: 'T010', data: [0.00, 0.00, 0.00, 0.00, 4.64, 14.77, 14.72, 10.10] },
-                { name: 'Other', data: [0.54, 0.37, 0.18, 0.21, 0.24, 0.15, 0.09, 0.34] }
+                { name: 'T511', data: [9.77, 11.67, 10.36, 9.45, 5.19, 11.29, 9.12, 6.88] },
+                { name: 'T910', data: [0.24, 0.11, 0.31, 0.50, 0.33, 0.58, 0.46, 0.22] },
+                { name: 'T920', data: [7.10, 7.47, 6.45, 8.92, 5.27, 5.23, 3.20, 4.22] },
+                { name: 'T921', data: [11.31, 11.44, 13.16, 10.22, 11.91, 12.48, 11.04, 10.58] },
+                { name: 'E310', data: [13.19, 15.67, 16.02, 11.49, 26.98, 13.07, 10.13, 11.63] },
+                { name: 'S710', data: [6.25, 5.40, 7.07, 7.32, 4.86, 5.51, 4.83, 5.59] },
+                { name: 'S661', data: [1.59, 0.47, 0.56, 0.56, 0.54, 1.84, 1.69, 1.55] },
+                { name: 'S803', data: [10.24, 7.93, 6.13, 4.16, 4.50, 6.26, 18.83, 13.34] },
+                { name: 'S810', data: [1.69, 4.85, 6.36, 11.88, 4.88, 1.41, 1.29, 0.96] },
+                { name: 'S820', data: [36.17, 33.13, 31.16, 27.82, 18.52, 24.85, 31.16, 31.79] },
+                { name: 'C120', data: [2.08, 1.69, 2.22, 2.81, 2.09, 2.67, 2.60, 2.80] },
+                { name: 'T010', data: [0.00, 0.00, 0.00, 4.64, 14.77, 14.72, 5.42, 10.10] },
+                { name: 'Other', data: [0.37, 0.18, 0.21, 0.24, 0.15, 0.09, 0.20, 0.34] }
             ]
         };
 
-        // SKU八周销量数据 (W1-W8)
+        // SKU八周销量数据 (W1-W8) - 更新了W7(2026/1/25)的数据
         const skuVolumeData = {
             weeks: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
-            dates: ['2025/12/7', '2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/2/1'],
+            dates: ['2025/12/14', '2025/12/21', '2025/12/28', '2026/1/4', '2026/1/11', '2026/1/18', '2026/1/25','2026/2/1'],
             series: [
-                { name: 'T511', data: [1464, 2649, 3900, 1140, 859, 669, 1100, 838] },
-                { name: 'T910', data: [311, 66, 36, 34, 45, 43, 57, 27] },
-                { name: 'T920', data: [936, 1925, 2498, 710, 811, 679, 510, 514] },
-                { name: 'T921', data: [1485, 3066, 3824, 1449, 929, 1535, 1216, 1288] },
-                { name: 'E310', data: [1684, 3575, 5237, 1764, 1044, 3478, 1274, 1416] },
-                { name: 'S710', data: [930, 1694, 1804, 778, 665, 626, 537, 681] },
-                { name: 'S661', data: [221, 431, 158, 62, 51, 70, 179, 189] },
-                { name: 'S803', data: [2284, 2777, 2651, 675, 378, 580, 610, 1625] },
-                { name: 'S810', data: [378, 459, 1621, 700, 1080, 629, 137, 117] },
-                { name: 'S820', data: [4723, 9808, 11074, 3430, 2529, 2387, 2422, 3872] },
-                { name: 'C120', data: [366, 565, 564, 244, 255, 270, 260, 341] },
-                { name: 'T010', data: [0, 0, 0, 0, 422, 1904, 1435, 1230] },
-                { name: 'Other', data: [80, 99, 59, 23, 22, 19, 9, 41] }
+                { name: 'T511', data: [2649, 3900, 1140, 859, 669, 1100, 883, 838] },
+                { name: 'T910', data: [66, 36, 34, 45, 43, 57, 45, 27] },
+                { name: 'T920', data: [1925, 2498, 710, 811, 679, 510, 310, 514] },
+                { name: 'T921', data: [3066, 3824, 1449, 929, 1535, 1216, 1069, 1288] },
+                { name: 'E310', data: [3575, 5237, 1764, 1044, 3478, 1274, 981, 1416] },
+                { name: 'S710', data: [1694, 1804, 778, 665, 626, 537, 468, 681] },
+                { name: 'S661', data: [431, 158, 62, 51, 70, 179, 164, 189] },
+                { name: 'S803', data: [2777, 2651, 675, 378, 580, 610, 1823, 1625] },
+                { name: 'S810', data: [459, 1621, 700, 1080, 629, 137, 125, 117] },
+                { name: 'S820', data: [9808, 11074, 3430, 2529, 2387, 2422, 3016, 3872] },
+                { name: 'C120', data: [565, 564, 244, 255, 270, 260, 252, 341] },
+                { name: 'T010', data: [0, 0, 0, 422, 1904, 1435, 525, 1230] },
+                { name: 'Other', data: [99, 59, 23, 22, 19, 9, 19, 41] }
             ]
         };
 
-        // 细分SKU的八周数据 (仅W8数据，其他周使用原有数据)
+        // 细分SKU的八周数据 - 更新了W7(2026/1/25)的数据
         const subSkuData = {
-            '2025/12/7': {
-                'S661': [
-                    { name: 'S661-ST-BL-US', value: 32 },
-                    { name: 'S661-ST-GY-US', value: 138 },
-                    { name: 'S661-ST-PK-US', value: 31 },
-                    { name: 'S661-ST-WT-US', value: 20 }
-                ],
-                'S803': [
-                    { name: 'S803-ST-BK-US', value: 1185 },
-                    { name: 'S803-ST-GY-US', value: 6 },
-                    { name: 'S803-ST-RD-US', value: 115 },
-                    { name: 'S803-ST-BL-US', value: 110 },
-                    { name: 'S805-ST-BK-US', value: 32 },
-                    { name: 'S806-MN-BK-US', value: 21 },
-                    { name: 'S803-MN-BL-US', value: 94 },
-                    { name: 'S803-MN-BK-US', value: 774 },
-                    { name: 'S805-ST-BL-US', value: 26 }
-                ],
-                'S810': [
-                    { name: 'S810-ST-BG-US', value: 7 },
-                    { name: 'S810-ST-BK-US', value: 70 },
-                    { name: 'S810-ST-PK-US', value: 14 },
-                    { name: 'S810-ST-BL-US', value: 14 },
-                    { name: 'S810-ST-SB-US-153-BBY', value: 221 },
-                    { name: 'S811-MN-BK-US', value: 42 },
-                    { name: 'S811-MN-BG-US', value: 10 }
-                ],
-                'S820': [
-                    { name: 'S820-ST-BK-US', value: 1658 },
-                    { name: 'S820-ST-OR-US', value: 126 },
-                    { name: 'S820-ST-BY-US-326', value: 1041 },
-                    { name: 'S820-ST-SR-US-326', value: 50 },
-                    { name: 'S820-ST-BL-US', value: 95 },
-                    { name: 'S821-MN-BL-US', value: 22 },
-                    { name: 'S821-MN-BK-US', value: 1569 },
-                    { name: 'S821-MN-OR-US', value: 82 },
-                    { name: 'S821-MN-SR-US-326', value: 80 }
-                ],
-                'S710': [
-                    { name: 'S710-ST-GY-US', value: 864 },
-                    { name: 'S710-ST-RD-US', value: 66 }
-                ],
-                'T910': [
-                    { name: 'T910-ST-BK-US', value: 222 },
-                    { name: 'T910-ST-BG-US', value: 89 }
-                ],
-                'T511': [
-                    { name: 'T511-ST-BK-US', value: 715 },
-                    { name: 'T511-ST-PK-US', value: 46 },
-                    { name: 'T511-ST-WT-US', value: 121 },
-                    { name: 'T511-ST-SB-US-326', value: 582 }
-                ],
-                'T920': [
-                    { name: 'T920-ST-BK-US', value: 668 },
-                    { name: 'T920-ST-BG-US', value: 268 }
-                ],
-                'T921': [
-                    { name: 'T921-ST-BK-US', value: 821 },
-                    { name: 'T921-ST-GY-US', value: 65 },
-                    { name: 'T921-ST-SB-US-326', value: 566 },
-                    { name: 'T921-ST-PR-US', value: 33 }
-                ],
-                'E310': [
-                    { name: 'E310-ST-BK-US', value: 926 },
-                    { name: 'E310-ST-GY-US', value: 552 },
-                    { name: 'E310-ST-PK-US', value: 145 },
-                    { name: 'E310-ST-NB-US-326-BBY', value: 61 }
-                ],
-                'C120': [
-                    { name: 'C120-AA-BK-US', value: 12 },
-                    { name: 'C120-AC-BK-US', value: 60 },
-                    { name: 'C120-AN-BK-US', value: 294 }
-                ]
-            },
-            '2025/12/14': {
-                'S661': [
-                    { name: 'S661-ST-BL-US', value: 83 },
-                    { name: 'S661-ST-GY-US', value: 255 },
-                    { name: 'S661-ST-PK-US', value: 51 },
-                    { name: 'S661-ST-WT-US', value: 42 }
-                ],
-                'S803': [
-                    { name: 'S803-ST-BK-US', value: 1255 },
-                    { name: 'S803-ST-GY-US', value: 7 },
-                    { name: 'S803-ST-RD-US', value: 62 },
-                    { name: 'S803-ST-BL-US', value: 91 },
-                    { name: 'S805-ST-BK-US', value: 38 },
-                    { name: 'S806-MN-BK-US', value: 34 },
-                    { name: 'S803-MN-BL-US', value: 104 },
-                    { name: 'S803-MN-BK-US', value: 1258 },
-                    { name: 'S805-ST-BL-US', value: 23 }
-                ],
-                'S810': [
-                    { name: 'S810-ST-BG-US', value: 13 },
-                    { name: 'S810-ST-BK-US', value: 74 },
-                    { name: 'S810-ST-PK-US', value: 8 },
-                    { name: 'S810-ST-BL-US', value: 8 },
-                    { name: 'S810-ST-SB-US-153-BBY', value: 316 },
-                    { name: 'S811-MN-BK-US', value: 28 },
-                    { name: 'S811-MN-BG-US', value: 12 }
-                ],
-                'S820': [
-                    { name: 'S820-ST-BK-US', value: 3359 },
-                    { name: 'S820-ST-OR-US', value: 137 },
-                    { name: 'S820-ST-BY-US-326', value: 2483 },
-                    { name: 'S820-ST-SR-US-326', value: 134 },
-                    { name: 'S820-ST-BL-US', value: 165 },
-                    { name: 'S821-MN-BL-US', value: 82 },
-                    { name: 'S821-MN-BK-US', value: 3156 },
-                    { name: 'S821-MN-OR-US', value: 136 },
-                    { name: 'S821-MN-SR-US-326', value: 156 }
-                ],
-                'S710': [
-                    { name: 'S710-ST-GY-US', value: 1615 },
-                    { name: 'S710-ST-RD-US', value: 79 }
-                ],
-                'T910': [
-                    { name: 'T910-ST-BK-US', value: 54 },
-                    { name: 'T910-ST-BG-US', value: 12 }
-                ],
-                'T511': [
-                    { name: 'T511-ST-BK-US', value: 1452 },
-                    { name: 'T511-ST-PK-US', value: 73 },
-                    { name: 'T511-ST-WT-US', value: 200 },
-                    { name: 'T511-ST-SB-US-326', value: 924 }
-                ],
-                'T920': [
-                    { name: 'T920-ST-BK-US', value: 1352 },
-                    { name: 'T920-ST-BG-US', value: 573 }
-                ],
-                'T921': [
-                    { name: 'T921-ST-BK-US', value: 1347 },
-                    { name: 'T921-ST-GY-US', value: 100 },
-                    { name: 'T921-ST-SB-US-326', value: 1513 },
-                    { name: 'T921-ST-PR-US', value: 106 }
-                ],
-                'E310': [
-                    { name: 'E310-ST-BK-US', value: 2036 },
-                    { name: 'E310-ST-GY-US', value: 1102 },
-                    { name: 'E310-ST-PK-US', value: 301 },
-                    { name: 'E310-ST-NB-US-326-BBY', value: 136 }
-                ],
-                'C120': [
-                    { name: 'C120-AA-BK-US', value: 27 },
-                    { name: 'C120-AC-BK-US', value: 68 },
-                    { name: 'C120-AN-BK-US', value: 470 }
-                ]
-            },
             '2025/12/21': {
                 'S661': [
                     { name: 'S661-ST-BL-US', value: 19 },
@@ -2082,6 +1932,85 @@
                     { name: 'C120-AA-BK-US', value: 4 },
                     { name: 'C120-AC-BK-US', value: 50 },
                     { name: 'C120-AN-BK-US', value: 206 }
+                ]
+            },
+            '2026/1/25': {
+                // 更新了2026/1/25的数据
+                'S661': [
+                    { name: 'S661-ST-BL-US', value: 34 },
+                    { name: 'S661-ST-GY-US', value: 104 },
+                    { name: 'S661-ST-PK-US', value: 25 },
+                    { name: 'S661-ST-WT-US', value: 1 }
+                ],
+                'S803': [
+                    { name: 'S803-ST-BK-US', value: 1507 },
+                    { name: 'S803-ST-GY-US', value: 5 },
+                    { name: 'S803-ST-RD-US', value: 11 },
+                    { name: 'S803-ST-BL-US', value: 8 },
+                    { name: 'S805-ST-BK-US', value: 4 },
+                    { name: 'S806-MN-BK-US', value: 8 },
+                    { name: 'S803-MN-BL-US', value: 7 },
+                    { name: 'S803-MN-BK-US', value: 285 },
+                    { name: 'S805-ST-BL-US', value: 4 }
+                ],
+                'S810': [
+                    { name: 'S810-ST-BG-US', value: 5 },
+                    { name: 'S810-ST-BK-US', value: 37 },
+                    { name: 'S810-ST-PK-US', value: 4 },
+                    { name: 'S810-ST-BL-US', value: 1 },
+                    { name: 'S810-ST-SB-US-153-BBY', value: 62 },
+                    { name: 'S811-MN-BK-US', value: 13 },
+                    { name: 'S811-MN-BG-US', value: 3 }
+                ],
+                'S820': [
+                    { name: 'S820-ST-BK-US', value: 723 },
+                    { name: 'S820-ST-OR-US', value: 26 },
+                    { name: 'S820-ST-BY-US-326', value: 1171 },
+                    { name: 'S820-ST-SR-US-326', value: 12 },
+                    { name: 'S820-ST-BL-US', value: 12 },
+                    { name: 'S821-MN-BL-US', value: 25 },
+                    { name: 'S821-MN-BK-US', value: 1008 },
+                    { name: 'S821-MN-OR-US', value: 24 },
+                    { name: 'S821-MN-SR-US-326', value: 15 }
+                ],
+                'S710': [
+                    { name: 'S710-ST-GY-US', value: 452 },
+                    { name: 'S710-ST-RD-US', value: 16 }
+                ],
+                'T910': [
+                    { name: 'T910-ST-BK-US', value: 35 },
+                    { name: 'T910-ST-BG-US', value: 10 }
+                ],
+                'T511': [
+                    { name: 'T511-ST-BK-US', value: 484 },
+                    { name: 'T511-ST-PK-US', value: 25 },
+                    { name: 'T511-ST-WT-US', value: 104 },
+                    { name: 'T511-ST-SB-US-326', value: 270 }
+                ],
+                'T920': [
+                    { name: 'T920-ST-BK-US', value: 226 },
+                    { name: 'T920-ST-BG-US', value: 84 }
+                ],
+                'T921': [
+                    { name: 'T921-ST-BK-US', value: 704 },
+                    { name: 'T921-ST-GY-US', value: 15 },
+                    { name: 'T921-ST-SB-US-326', value: 326 },
+                    { name: 'T921-ST-PR-US', value: 24 }
+                ],
+                'T010': [
+                    { name: 'T010-ST-BK-US', value: 297 },
+                    { name: 'T010-ST-WT-US', value: 228 }
+                ],
+                'E310': [
+                    { name: 'E310-ST-BK-US', value: 578 },
+                    { name: 'E310-ST-GY-US', value: 289 },
+                    { name: 'E310-ST-PK-US', value: 43 },
+                    { name: 'E310-ST-NB-US-326-BBY', value: 71 }
+                ],
+                'C120': [
+                    { name: 'C120-AA-BK-US', value: 7 },
+                    { name: 'C120-AC-BK-US', value: 64 },
+                    { name: 'C120-AN-BK-US', value: 181 }
                 ]
             },
             '2026/2/1': {
@@ -2578,7 +2507,6 @@
         }
 
         // 创建细分SKU周趋势图表配置
-        // 创建细分SKU周趋势图表配置
         function createDetailSkuTrendOption(selectedSkusArray) {
             const skus = selectedSkusArray.filter(sku => sku !== 'all');
             
@@ -2586,19 +2514,17 @@
                 return null;
             }
 
-            
-            
             const maxSkus = 8;
             const displaySkus = skus.slice(0, maxSkus);
             
             const weeks = [
-                { label: 'W1', date: '2025/12/7' },
-                { label: 'W2', date: '2025/12/14' },
-                { label: 'W3', date: '2025/12/21' },
-                { label: 'W4', date: '2025/12/28' },
-                { label: 'W5', date: '2026/1/4' },
-                { label: 'W6', date: '2026/1/11' },
-                { label: 'W7', date: '2026/1/18' },
+                { label: 'W1', date: '2025/12/14' },
+                { label: 'W2', date: '2025/12/21' },
+                { label: 'W3', date: '2025/12/28' },
+                { label: 'W4', date: '2026/1/4' },
+                { label: 'W5', date: '2026/1/11' },
+                { label: 'W6', date: '2026/1/18' },
+                { label: 'W7', date: '2026/1/25' },
                 { label: 'W8', date: '2026/2/1' }
             ];
             
@@ -2992,6 +2918,61 @@
                     'C120-AA-BK-US': { online: 4, offline: 0 },
                     'C120-AC-BK-US': { online: 29, offline: 21 },
                     'C120-AN-BK-US': { online: 35, offline: 171 }
+                },
+                '2026/1/25': {
+                    // 更新了2026/1/25的渠道数据
+                    'S661-ST-BL-US': { online: 33, offline: 1 },
+                    'S661-ST-GY-US': { online: 98, offline: 6 },
+                    'S661-ST-PK-US': { online: 24, offline: 1 },
+                    'S661-ST-WT-US': { online: 1, offline: 0 },
+                    'S803-ST-BK-US': { online: 980, offline: 527 },
+                    'S803-ST-GY-US': { online: 4, offline: 1 },
+                    'S803-ST-RD-US': { online: 10, offline: 1 },
+                    'S803-ST-BL-US': { online: 7, offline: 1 },
+                    'S805-ST-BK-US': { online: 4, offline: 0 },
+                    'S806-MN-BK-US': { online: 8, offline: 0 },
+                    'S803-MN-BL-US': { online: 4, offline: 3 },
+                    'S803-MN-BK-US': { online: 36, offline: 249 },
+                    'S805-ST-BL-US': { online: 3, offline: 1 },
+                    'S810-ST-BG-US': { online: 5, offline: 0 },
+                    'S810-ST-BK-US': { online: 31, offline: 6 },
+                    'S810-ST-PK-US': { online: 4, offline: 0 },
+                    'S810-ST-BL-US': { online: 1, offline: 0 },
+                    'S810-ST-SB-US-153-BBY': { online: 13, offline: 49 },
+                    'S811-MN-BK-US': { online: 9, offline: 4 },
+                    'S811-MN-BG-US': { online: 2, offline: 1 },
+                    'S820-ST-BK-US': { online: 120, offline: 603 },
+                    'S820-ST-OR-US': { online: 15, offline: 11 },
+                    'S820-ST-BY-US-326': { online: 517, offline: 654 },
+                    'S820-ST-SR-US-326': { online: 8, offline: 4 },
+                    'S820-ST-BL-US': { online: 9, offline: 3 },
+                    'S821-MN-BL-US': { online: 19, offline: 6 },
+                    'S821-MN-BK-US': { online: 123, offline: 885 },
+                    'S821-MN-OR-US': { online: 12, offline: 12 },
+                    'S821-MN-SR-US-326': { online: 7, offline: 8 },
+                    'S710-ST-GY-US': { online: 45, offline: 407 },
+                    'S710-ST-RD-US': { online: 7, offline: 9 },
+                    'T910-ST-BK-US': { online: 27, offline: 8 },
+                    'T910-ST-BG-US': { online: 8, offline: 2 },
+                    'T511-ST-BK-US': { online: 208, offline: 276 },
+                    'T511-ST-PK-US': { online: 24, offline: 1 },
+                    'T511-ST-WT-US': { online: 71, offline: 33 },
+                    'T511-ST-SB-US-326': { online: 59, offline: 211 },
+                    'T920-ST-BK-US': { online: 110, offline: 116 },
+                    'T920-ST-BG-US': { online: 24, offline: 60 },
+                    'T921-ST-BK-US': { online: 102, offline: 602 },
+                    'T921-ST-GY-US': { online: 8, offline: 7 },
+                    'T921-ST-SB-US-326': { online: 29, offline: 297 },
+                    'T921-ST-PR-US': { online: 22, offline: 2 },
+                    'T010-ST-BK-US': { online: 195, offline: 102 },
+                    'T010-ST-WT-US': { online: 137, offline: 91 },
+                    'E310-ST-BK-US': { online: 132, offline: 446 },
+                    'E310-ST-GY-US': { online: 75, offline: 214 },
+                    'E310-ST-PK-US': { online: 28, offline: 15 },
+                    'E310-ST-NB-US-326-BBY': { online: 16, offline: 55 },
+                    'C120-AA-BK-US': { online: 7, offline: 0 },
+                    'C120-AC-BK-US': { online: 47, offline: 17 },
+                    'C120-AN-BK-US': { online: 40, offline: 141 }
                 },
                 '2026/2/1': {
                     'S661-ST-BL-US': { online: 27, offline: 1 },

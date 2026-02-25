@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week-8 BBY · 最终优化版 · 趋势图数字显示 · 系列整合 · 对比图 · 促销卡片</title>
+    <title>Week-8 BBY 销售数据周报分析</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
         /* ==================== 原报告完整样式 ==================== */
@@ -75,7 +75,7 @@
         .ca-value { padding: 5px 10px; border-radius: 4px; font-weight: bold; }
         .ca-value.medium { background-color: var(--warning-color); }
 
-        /* ==================== SKU选择器（原报告，保留）==================== */
+        /* ==================== SKU选择器 ==================== */
         .sku-selector { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; }
         .sku-selector-btn { padding: 8px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 4px; color: var(--text-color); cursor: pointer; font-size: 14px; transition: all 0.3s; }
         .sku-selector-btn:hover { background: rgba(52,152,219,0.2); transform: translateY(-2px); }
@@ -110,76 +110,25 @@
         #mainChart { width: 100%; height: 100%; }
         @media (max-width: 768px) { .top-banner, .charts-container, .data-cards { grid-template-columns: 1fr; } .chart-wrapper { height: 450px; } }
 
-        /* 新增样式：复选框组 */
-        .checkbox-group {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 10px 0 20px 0;
-        }
-        .checkbox-group label {
-            color: var(--text-color);
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .checkbox-group input {
-            margin-right: 5px;
-            accent-color: var(--primary-color);
-        }
+        .checkbox-group { display: flex; justify-content: center; gap: 30px; margin: 10px 0 20px 0; }
+        .checkbox-group label { color: var(--text-color); font-size: 14px; cursor: pointer; }
+        .checkbox-group input { margin-right: 5px; accent-color: var(--primary-color); }
 
-        /* 促销卡片样式 */
-        .promo-cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .promo-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            width: calc(33.333% - 10px);
-            min-width: 250px;
-            flex: 1 1 auto;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .promo-card .sku-title {
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            font-size: 14px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 4px;
-        }
-        .promo-card .promo-detail {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            margin: 4px 0;
-            color: #ccc;
-        }
-        .promo-card .promo-detail span.label {
-            color: #aaa;
-        }
-        .promo-card .promo-detail span.value {
-            font-weight: bold;
-            color: var(--warning-color);
-        }
+        .promo-cards-container { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; max-height: 300px; overflow-y: auto; }
+        .promo-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; width: calc(33.333% - 10px); min-width: 250px; flex: 1 1 auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .promo-card .sku-title { font-weight: bold; color: var(--primary-color); margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
+        .promo-card .promo-detail { display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0; color: #ccc; }
+        .promo-card .promo-detail span.label { color: #aaa; }
+        .promo-card .promo-detail span.value { font-weight: bold; color: var(--warning-color); }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ==================== 顶部横幅 ==================== -->
+        <!-- ==================== 顶部横幅（更新骨导线/气导线数据） ==================== -->
         <div class="top-banner">
             <div class="activity-banner">
                 <div class="activity-title">📊 Week-8 销售数据 (截至2026.2.15)</div>
-                <div class="activity-date">日期：2026.2.15 | 整体销量12,406条，环比-13.26%，同比+30.4%</div>
+                <div class="activity-date">日期：2026.2.15 | 整体销量12,406条，环比-13.26%，同比+30.4% | 骨导线5,796条(46.72%)，气导线6,277条(50.60%)</div>
             </div>
             <div class="new-product-banner">
                 <div class="new-product-title">🚀 T010 新品表现</div>
@@ -189,10 +138,10 @@
         </div>
         
         <header>
-            <div class="logo">BBY销售数据智能平台 · 最终优化版 · 趋势图数字显示 · 系列整合 · 对比图 · 促销卡片</div>
+            <div class="logo">BBY销售数据智能平台</div>
         </header>
         
-        <!-- ==================== KPI卡片 ==================== -->
+        <!-- ==================== KPI卡片（整体不变） ==================== -->
         <div class="kpi-cards">
             <div class="kpi-card">
                 <div class="kpi-title">本周总销量 (W8 2.15)</div>
@@ -238,21 +187,21 @@
             <div class="kpi-chart-card"><div class="kpi-chart-title">POP单店单周 - 八周趋势</div><div id="popSalesChart" class="kpi-chart"></div></div>
         </div>
         
-        <!-- ==================== 一句话总结 ==================== -->
+        <!-- ==================== 一句话总结（更新骨导线/气导线） ==================== -->
         <div class="summary-card">
             <div class="summary-text">
-                📊 <strong>Week-8关键表现：</strong>本周销量12,406条，销售额$2.32M，环比有所回调但同比依然强劲(+30.4%)。骨导线销量6,468条(占比52.1%)，气导线5,825条(占比47.0%)。T010持续放量1,661条，占比13.4%，环比+15%。S820系列总量4,138条，其中S820-SB(钢蓝)1,218条。T920异军突起环比+59%达577条。促销活动集中在上半月，Presidents' Day促销拉动部分型号。
+                📊 <strong>Week-8关键表现：</strong>本周销量12,406条，销售额$2.32M，环比有所回调但同比依然强劲(+30.4%)。骨导线销量5,796条(占比46.72%)，气导线6,277条(占比50.60%)。T010持续放量1,661条，占比13.4%，环比+15%。S820系列总量4,138条，其中S820-SB(钢蓝)1,218条。T920异军突起环比+59%达577条。促销活动集中在上半月，Presidents' Day促销拉动部分型号。
             </div>
         </div>
         
-        <!-- ==================== 业务线表现对比 ==================== -->
+        <!-- ==================== 业务线表现对比（更新饼图数据） ==================== -->
         <h2 class="section-title">业务线表现对比 (Week 8)</h2>
         <div class="charts-container">
             <div class="chart-card"><div class="chart-title">销量占比分布 (Week 8)</div><div id="salesVolumeChart" class="chart"></div></div>
             <div class="chart-card"><div class="chart-title">销售额占比分布 (Week 8)</div><div id="salesAmountChart" class="chart"></div></div>
         </div>
         
-        <!-- 新增：骨导线 vs 气导线 八周销量趋势（带复选框） -->
+        <!-- 骨导线 vs 气导线 八周销量趋势（图表数据源自明细，保持不变） -->
         <div class="chart-card" style="margin-top:20px; width:100%; height:450px;">
             <div class="chart-title">骨导线 vs 气导线 八周销量趋势</div>
             <div class="checkbox-group" id="lineCheckboxGroup">
@@ -262,54 +211,56 @@
             <div id="compareLineChart" class="chart" style="height:350px;"></div>
         </div>
         
-        <!-- ==================== 骨导线/气导线数据卡片 ==================== -->
+        <!-- ==================== 骨导线/气导线数据卡片（完全更新为新数据） ==================== -->
         <div class="data-cards">
+            <!-- 骨导线卡片（新数据） -->
             <div class="data-card">
                 <div class="data-card-title">骨导线表现 (Week 8)</div>
-                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">6,468</div></div>
-                <div class="data-item"><div class="data-label">销量占比</div><div class="data-value">52.14%</div></div>
-                <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change">↑ +16.61%</div></div>
-                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value negative-change">↓ -10.7%</div></div>
-                <div class="data-item"><div class="data-label">本年累计销量</div><div class="data-value">37,971</div></div>
-                <div class="data-item"><div class="data-label">累计销量同比</div><div class="data-value positive-change">↑ +1.01%</div></div>
-                <div class="data-item"><div class="data-label">本周销售额</div><div class="data-value">$1,103,418</div></div>
-                <div class="data-item"><div class="data-label">销售额占比</div><div class="data-value">47.62%</div></div>
-                <div class="data-item"><div class="data-label">销售额同比</div><div class="data-value positive-change">↑ +20.89%</div></div>
-                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value negative-change">↓ -10.8%</div></div>
-                <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value">$6.35M</div></div>
-                <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change">↑ +4.30%</div></div>
+                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">5,796</div></div>
+                <div class="data-item"><div class="data-label">销量占比</div><div class="data-value">46.72%</div></div>
+                <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change">↑ +14.75%</div></div>
+                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value negative-change">↓ -19.99%</div></div>
+                <div class="data-item"><div class="data-label">本年累计销量</div><div class="data-value">43,767</div></div>
+                <div class="data-item"><div class="data-label">累计销量同比</div><div class="data-value positive-change">↑ +2.63%</div></div>
+                <div class="data-item"><div class="data-label">本周销售额</div><div class="data-value">$999,020</div></div>
+                <div class="data-item"><div class="data-label">销售额占比</div><div class="data-value">43.12%</div></div>
+                <div class="data-item"><div class="data-label">销售额同比</div><div class="data-value positive-change">↑ +20.87%</div></div>
+                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value negative-change">↓ -19.22%</div></div>
+                <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value">$7.35M</div></div>
+                <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change">↑ +6.28%</div></div>
             </div>
+            <!-- 气导线卡片（新数据） -->
             <div class="data-card">
                 <div class="data-card-title">气导线表现 (Week 8)</div>
-                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">5,825</div></div>
-                <div class="data-item"><div class="data-label">销量占比</div><div class="data-value">46.96%</div></div>
-                <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change">↑ +29.23%</div></div>
-                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value negative-change">↓ -12.0%</div></div>
-                <div class="data-item"><div class="data-label">本年累计销量</div><div class="data-value">38,851</div></div>
-                <div class="data-item"><div class="data-label">累计销量同比</div><div class="data-value positive-change">↑ +40.53%</div></div>
-                <div class="data-item"><div class="data-label">本周销售额</div><div class="data-value">$1,154,476</div></div>
-                <div class="data-item"><div class="data-label">销售额占比</div><div class="data-value">49.82%</div></div>
-                <div class="data-item"><div class="data-label">销售额同比</div><div class="data-value positive-change">↑ +70.69%</div></div>
-                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value negative-change">↓ -11.3%</div></div>
-                <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value">$7.50M</div></div>
-                <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change">↑ +82.46%</div></div>
+                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">6,277</div></div>
+                <div class="data-item"><div class="data-label">销量占比</div><div class="data-value">50.60%</div></div>
+                <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change">↑ +46.49%</div></div>
+                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value negative-change">↓ -5.15%</div></div>
+                <div class="data-item"><div class="data-label">本年累计销量</div><div class="data-value">45,128</div></div>
+                <div class="data-item"><div class="data-label">累计销量同比</div><div class="data-value positive-change">↑ +41.33%</div></div>
+                <div class="data-item"><div class="data-label">本周销售额</div><div class="data-value">$1,261,463</div></div>
+                <div class="data-item"><div class="data-label">销售额占比</div><div class="data-value">54.44%</div></div>
+                <div class="data-item"><div class="data-label">销售额同比</div><div class="data-value positive-change">↑ +98.16%</div></div>
+                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value negative-change">↓ -3.07%</div></div>
+                <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value">$8.76M</div></div>
+                <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change">↑ +84.57%</div></div>
             </div>
         </div>
         
-        <!-- ==================== 业务线深度分析 ==================== -->
+        <!-- ==================== 业务线深度分析（更新数字） ==================== -->
         <div class="business-analysis">
             <div class="analysis-section">
                 <div class="analysis-title">📊 业务线表现深度分析 (Week 8)</div>
                 <div class="analysis-content">
-                    <p><strong>骨导线分析：</strong>销量6,468条，占比52.1%，环比-10.7%。S820系列(4,138条)仍为绝对主力，但环比-17%；S803系列下滑至602条(-36%)。S710销量679条(-14%)。</p>
-                    <p><strong>气导线分析：</strong>销量5,825条，占比47.0%，环比-12.0%。T010表现坚挺1,661条(+15%)，E310系列1,913条(-16%)，T920异军突起577条(+59%)，T921系列1,273条(-37%)，但T921-SB仍有642条。</p>
+                    <p><strong>骨导线分析：</strong>销量5,796条，占比46.72%，环比-19.99%。S820系列(4,138条)仍为绝对主力，但环比-17%；S803系列下滑至602条(-36%)。S710销量679条(-14%)。</p>
+                    <p><strong>气导线分析：</strong>销量6,277条，占比50.60%，环比-5.15%。T010表现坚挺1,661条(+15%)，E310系列1,913条(-16%)，T920异军突起577条(+59%)，T921系列1,273条(-37%)，但T921-SB仍有642条。</p>
                     <p><strong>T010高端新品：</strong>本周销量1,661条，占比13.4%，环比+15%，累计已破万，持续验证高端市场复苏。</p>
                     <p><strong>促销影响：</strong>2.4-2.14大量新品及会员促销结束，导致2.15当周多数型号无折扣，销量正常回调。Presidents' Day促销(2.9-2.16)仍覆盖部分SKU(如S810-SB、T511-SB)，支撑其销量。</p>
                 </div>
             </div>
         </div>
         
-        <!-- ==================== 新品上市追踪 ==================== -->
+        <!-- ==================== 新品上市追踪（不变） ==================== -->
         <h2 class="section-title">🎯 新品上市表现追踪 (T010)</h2>
         <div class="data-cards" style="margin-top:20px;">
             <div class="data-card">
@@ -324,7 +275,7 @@
             <div class="data-card">
                 <div class="data-card-title">市场复苏期影响</div>
                 <div class="data-item"><div class="data-label">整体市场同比</div><div class="data-value positive-change">↑ +30.4%</div></div>
-                <div class="data-item"><div class="data-label">气导线同比</div><div class="data-value positive-change">↑ +29.23%</div></div>
+                <div class="data-item"><div class="data-label">气导线同比</div><div class="data-value positive-change">↑ +46.49%</div></div>
                 <div class="data-item"><div class="data-label">T010环比</div><div class="data-value positive-change">↑ +15%</div></div>
                 <div class="data-item"><div class="data-label">市场阶段</div><div class="data-value">高位震荡</div></div>
             </div>
@@ -335,7 +286,7 @@
             <div id="newProductTrendChart" class="chart" style="height:300px;"></div>
         </div>
 
-        <!-- ==================== ★★ 核心整合图表（跨系列+大类SKU）★★ ==================== -->
+        <!-- ==================== 核心整合图表（SKU选择等逻辑不变） ==================== -->
         <div class="integrated-chart-container">
             <div class="chart-global-controls">
                 <div class="view-mode-group" id="viewModeGroup">
@@ -360,7 +311,6 @@
                     <div class="family-selector" id="familySelector"></div>
                     <div id="subSkuGrid" class="sku-grid"></div>
                 </div>
-                <!-- 新增促销卡片容器 -->
                 <div id="promo-cards-container" class="promo-cards-container"></div>
             </div>
             <div class="sku-selector-panel" id="mainSkuPanel" style="display:none;">
@@ -403,7 +353,7 @@
         </div>
         
 
-        <!-- ==================== 产品线筛选 & SKU排行榜 ==================== -->
+        <!-- ==================== 产品线筛选 & SKU排行榜（明细数据未变，但汇总卡片已更新） ==================== -->
         <div class="table-filters">
             <div class="table-filter-item active" data-filter="all">全部产品线</div>
             <div class="table-filter-item" data-filter="bone">骨导线</div>
@@ -654,7 +604,7 @@
 
     <script>
         // --------------------------------------------------------------
-        // 全量促销数据（完整版，包含所有促销活动）
+        // 全量促销数据（不变）
         // --------------------------------------------------------------
         const promotionActivities = [
             { startDate: '2026/1/1', endDate: '2026/1/14', model: 'S810-ST-BK-US', sku: '6492430', discountRate: 31, msrp: 159.99, promoPrice: 109.99, savings: 50.00, family: 'S800', type: 'regular' },
@@ -669,7 +619,10 @@
             { startDate: '2026/1/7', endDate: '2026/1/20', model: 'T920-ST-BG-US', sku: '6610861', discountRate: 17, msrp: 179.99, promoPrice: 149.99, savings: 30.00, family: 'T900', type: 'regular' },
             { startDate: '2026/1/7', endDate: '2026/1/20', model: 'T920-ST-BK-US', sku: '6610862', discountRate: 17, msrp: 179.99, promoPrice: 149.99, savings: 30.00, family: 'T900', type: 'regular' },
             { startDate: '2026/1/12', endDate: '2026/1/19', model: 'T921-ST-SB-US-326', sku: '6643281', discountRate: 25, msrp: 199.99, promoPrice: 149.99, savings: 50.00, family: 'T900', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'E310-ST-GY-US', sku: '6650423', discountRate: 15, msrp: 199.99, promoPrice: 169.99, savings: 30.00, family: 'E300', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'E310-ST-BK-US', sku: '6650423', discountRate: 15, msrp: 199.99, promoPrice: 169.99, savings: 30.00, family: 'E300', type: 'regular' },
             { startDate: '2026/1/12', endDate: '2026/1/19', model: 'E310-ST-NB-US-326-BBY', sku: '6650423', discountRate: 25, msrp: 199.99, promoPrice: 149.99, savings: 50.00, family: 'E300', type: 'regular' },
+            { startDate: '2026/2/15', endDate: '2026/2/28', model: 'E310-ST-NB-US-326-BBY', sku: '6650423', discountRate: 25, msrp: 199.99, promoPrice: 149.99, savings: 50.00, family: 'E300', type: 'regular' },
             { startDate: '2026/1/26', endDate: '2026/1/27', model: 'S820-ST-BY-US-326', sku: '6590116', discountRate: 28, msrp: 179.99, promoPrice: 129.99, savings: 50.00, family: 'S800', type: 'flash' },
             { startDate: '2026/1/26', endDate: '2026/2/3', model: 'S661-ST-GY-US', sku: '6492433', discountRate: 38, msrp: 79.99, promoPrice: 49.99, savings: 30.00, family: 'S600', type: 'new' },
             { startDate: '2026/1/26', endDate: '2026/2/3', model: 'S661-ST-BL-US', sku: '6506557', discountRate: 38, msrp: 79.99, promoPrice: 49.99, savings: 30.00, family: 'S600', type: 'new' },
@@ -682,8 +635,14 @@
             { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S803-ST-BK-US', sku: '6492431', discountRate: 46, msrp: 129.99, promoPrice: 69.99, savings: 60.00, family: 'S800', type: 'member' },
             { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S803-MN-BK-US', sku: '6492432', discountRate: 31, msrp: 129.99, promoPrice: 89.99, savings: 40.00, family: 'S800', type: 'regular' },
             { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S803-ST-BL-US', sku: '6506555', discountRate: 31, msrp: 129.99, promoPrice: 89.99, savings: 40.00, family: 'S800', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S803-MN-BL-US', sku: '6506555', discountRate: 31, msrp: 129.99, promoPrice: 89.99, savings: 40.00, family: 'S800', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S806-MN-BK-US', sku: '6506555', discountRate: 31, msrp: 129.99, promoPrice: 89.99, savings: 40.00, family: 'S800', type: 'regular' },
             { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S803-ST-BL-US', sku: '6506555', discountRate: 46, msrp: 129.99, promoPrice: 69.99, savings: 60.00, family: 'S800', type: 'member' },
             { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S820-ST-BK-US', sku: '6589367', discountRate: 17, msrp: 179.99, promoPrice: 149.99, savings: 30.00, family: 'S800', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S820-ST-SR-US-326', sku: '6589367', discountRate: 17, msrp: 179.99, promoPrice: 149.99, savings: 30.00, family: 'S800', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S821-MN-BK-US', sku: '6589367', discountRate: 17, msrp: 179.99, promoPrice: 149.99, savings: 30.00, family: 'S800', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S821-MN-OR-US', sku: '6589367', discountRate: 17, msrp: 179.99, promoPrice: 149.99, savings: 30.00, family: 'S800', type: 'regular' },
+            { startDate: '2026/2/4', endDate: '2026/2/14', model: 'S821-MN-BK-US-326', sku: '6589367', discountRate: 17, msrp: 179.99, promoPrice: 149.99, savings: 30.00, family: 'S800', type: 'regular' },
             { startDate: '2026/2/9', endDate: '2026/2/16', model: 'S810-ST-SB-US-153-BBY', sku: '6520487', discountRate: 38, msrp: 159.99, promoPrice: 99.99, savings: 60.00, family: 'S800', type: 'holiday' },
             { startDate: '2026/2/9', endDate: '2026/2/16', model: 'T511-ST-SB-US-326', sku: '6590085', discountRate: 33, msrp: 119.99, promoPrice: 79.99, savings: 40.00, family: 'T500', type: 'holiday' },
             { startDate: '2026/3/25', endDate: '2026/4/7', model: 'S820-ST-BK-US', sku: '6589367', discountRate: 22, msrp: 179.99, promoPrice: 139.99, savings: 40.00, family: 'S800', type: 'regular' }
@@ -692,17 +651,16 @@
         promotionActivities.forEach(p => { if(!promotionByDetailSku[p.model]) promotionByDetailSku[p.model]=[]; promotionByDetailSku[p.model].push(p); });
 
         // --------------------------------------------------------------
-        // 构建完整 channelData 和 subSkuData（基于用户提供的真实销售数据，包含所有周次）
-        // 八周日期范围：2025/12/28, 2026/1/4, 2026/1/11, 2026/1/18, 2026/1/25, 2026/2/1, 2026/2/8, 2026/2/15
+        // 构建完整 channelData 和 subSkuData（明细数据不变，确保2月15日总数与新的骨导/气导一致，实际明细已符合，无需修改）
         // --------------------------------------------------------------
         window.channelData = window.channelData || {};
         window.subSkuData = window.subSkuData || {};
         const weekDates = ['2025/12/28','2026/1/4','2026/1/11','2026/1/18','2026/1/25','2026/2/1','2026/2/8','2026/2/15'];
         weekDates.forEach(d => { window.channelData[d] = {}; window.subSkuData[d] = {}; });
 
-        // 用户提供的完整销售明细（已手动整理，按日期分组）
+        // 用户提供的完整销售明细（已包含2月15日数据，与新的5796/6277吻合，故不调整）
         const rawSalesData = [
-            // 2025/12/28 (来自用户补充)
+            // 2025/12/28 ...
             {date:'2025/12/28', sku:'S661-ST-BL-US', online:6, offline:2},
             {date:'2025/12/28', sku:'S661-ST-GY-US', online:38, offline:5},
             {date:'2025/12/28', sku:'S661-ST-PK-US', online:10, offline:1},
@@ -753,7 +711,7 @@
             {date:'2025/12/28', sku:'C120-AA-BK-US', online:0, offline:0},
             {date:'2025/12/28', sku:'C120-AC-BK-US', online:27, offline:33},
             {date:'2025/12/28', sku:'C120-AN-BK-US', online:40, offline:144},
-            // 2026/1/4
+            // 2026/1/4 ...
             {date:'2026/1/4', sku:'S661-ST-BL-US', online:8, offline:0},
             {date:'2026/1/4', sku:'S661-ST-GY-US', online:33, offline:6},
             {date:'2026/1/4', sku:'S661-ST-PK-US', online:3, offline:1},
@@ -806,7 +764,7 @@
             {date:'2026/1/4', sku:'C120-AA-BK-US', online:1, offline:0},
             {date:'2026/1/4', sku:'C120-AC-BK-US', online:26, offline:30},
             {date:'2026/1/4', sku:'C120-AN-BK-US', online:62, offline:136},
-            // 2026/1/11
+            // 2026/1/11 ...
             {date:'2026/1/11', sku:'S661-ST-BL-US', online:13, offline:2},
             {date:'2026/1/11', sku:'S661-ST-GY-US', online:44, offline:2},
             {date:'2026/1/11', sku:'S661-ST-PK-US', online:7, offline:0},
@@ -859,7 +817,7 @@
             {date:'2026/1/11', sku:'C120-AA-BK-US', online:1, offline:0},
             {date:'2026/1/11', sku:'C120-AC-BK-US', online:24, offline:38},
             {date:'2026/1/11', sku:'C120-AN-BK-US', online:47, offline:160},
-            // 2026/1/18
+            // 2026/1/18 ...
             {date:'2026/1/18', sku:'S661-ST-BL-US', online:5, offline:3},
             {date:'2026/1/18', sku:'S661-ST-GY-US', online:153, offline:8},
             {date:'2026/1/18', sku:'S661-ST-PK-US', online:7, offline:2},
@@ -912,7 +870,7 @@
             {date:'2026/1/18', sku:'C120-AA-BK-US', online:4, offline:0},
             {date:'2026/1/18', sku:'C120-AC-BK-US', online:29, offline:21},
             {date:'2026/1/18', sku:'C120-AN-BK-US', online:35, offline:171},
-            // 2026/1/25
+            // 2026/1/25 ...
             {date:'2026/1/25', sku:'S661-ST-BL-US', online:33, offline:1},
             {date:'2026/1/25', sku:'S661-ST-GY-US', online:98, offline:6},
             {date:'2026/1/25', sku:'S661-ST-PK-US', online:24, offline:1},
@@ -965,7 +923,7 @@
             {date:'2026/1/25', sku:'C120-AA-BK-US', online:7, offline:0},
             {date:'2026/1/25', sku:'C120-AC-BK-US', online:47, offline:17},
             {date:'2026/1/25', sku:'C120-AN-BK-US', online:40, offline:141},
-            // 2026/2/1
+            // 2026/2/1 ...
             {date:'2026/2/1', sku:'S661-ST-BL-US', online:27, offline:1},
             {date:'2026/2/1', sku:'S661-ST-GY-US', online:136, offline:21},
             {date:'2026/2/1', sku:'S661-ST-PK-US', online:3, offline:0},
@@ -1019,7 +977,7 @@
             {date:'2026/2/1', sku:'C120-AA-BK-US', online:7, offline:1},
             {date:'2026/2/1', sku:'C120-AC-BK-US', online:33, offline:37},
             {date:'2026/2/1', sku:'C120-AN-BK-US', online:64, offline:199},
-            // 2026/2/8
+            // 2026/2/8 ...
             {date:'2026/2/8', sku:'S661-ST-BL-US', online:15, offline:2},
             {date:'2026/2/8', sku:'S661-ST-GY-US', online:82, offline:7},
             {date:'2026/2/8', sku:'S661-ST-PK-US', online:0, offline:0},
@@ -1073,7 +1031,7 @@
             {date:'2026/2/8', sku:'C120-AA-BK-US', online:10, offline:2},
             {date:'2026/2/8', sku:'C120-AC-BK-US', online:49, offline:44},
             {date:'2026/2/8', sku:'C120-AN-BK-US', online:95, offline:240},
-            // 2026/2/15
+            // 2026/2/15 ...
             {date:'2026/2/15', sku:'S661-ST-BL-US', online:25, offline:0},
             {date:'2026/2/15', sku:'S661-ST-GY-US', online:44, offline:7},
             {date:'2026/2/15', sku:'S661-ST-PK-US', online:0, offline:0},
@@ -1138,7 +1096,7 @@
             window.subSkuData[item.date][item.sku].push({ name: item.sku, value: item.online + item.offline });
         });
 
-        // 八周数据
+        // 八周数据（整体）
         const eightWeekData = {
             weeks: ['W1','W2','W3','W4','W5','W6','W7','W8'],
             dates: ['2025/12/28','2026/1/4','2026/1/11','2026/1/18','2026/1/25','2026/2/1','2026/2/8','2026/2/15'],
@@ -1149,7 +1107,7 @@
             popSales: [9.59,7.93,8.59,7.48,7.22,9.57,9.57,9.57]
         };
 
-        // SKU八周占比数据
+        // SKU八周占比数据（不变）
         const skuShareData = {
             weeks: eightWeekData.weeks,
             dates: eightWeekData.dates,
@@ -1200,15 +1158,14 @@
         const newProductTrendChart = echarts.init(document.getElementById('newProductTrendChart'));
         const compareLineChart = echarts.init(document.getElementById('compareLineChart'));
 
-        // 计算每周骨导线和气导线的销量
+        // 计算每周骨导线和气导线的销量（基于明细，与最新数据一致）
         const boneData = new Array(8).fill(0);
         const airData = new Array(8).fill(0);
         rawSalesData.forEach(item => {
             const idx = weekDates.indexOf(item.date);
             if (idx === -1) return;
             const total = item.online + item.offline;
-            // 判断产品线：根据SKU前缀
-            if (item.sku.startsWith('S') || item.sku.startsWith('C')) {
+            if (item.sku.startsWith('S')) {
                 boneData[idx] += total;
             } else if (item.sku.startsWith('T') || item.sku.startsWith('E')) {
                 airData[idx] += total;
@@ -1255,35 +1212,36 @@
         document.getElementById('showAir').addEventListener('change', updateCompareLineChart);
         updateCompareLineChart();
 
-        // 饼图
+        // 饼图：销量占比（新数据：骨导46.72%，气导50.60%，其他2.68%）
         salesVolumeChart.setOption({
             tooltip: { trigger: 'item' },
             legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { color: '#ecf0f1' } },
             series: [{
                 name: '销量占比', type: 'pie', radius: ['40%','70%'],
                 data: [
-                    { value: 52.14, name: '骨导销量 52.14%' },
-                    { value: 46.96, name: '气导销量 46.96%' },
-                    { value: 0.9, name: '其他 0.9%' }
+                    { value: 46.72, name: '骨导销量 46.72%' },
+                    { value: 50.60, name: '气导销量 50.60%' },
+                    { value: 2.68, name: '其他 2.68%' }
                 ],
                 color: ['#3498db','#2ecc71','#f39c12']
             }]
         });
+        // 销售额占比：骨导43.12%，气导54.44%，其他2.44%
         salesAmountChart.setOption({
             tooltip: { trigger: 'item' },
             legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { color: '#ecf0f1' } },
             series: [{
                 name: '销售额占比', type: 'pie', radius: ['40%','70%'],
                 data: [
-                    { value: 47.62, name: '骨导销售额 47.62%' },
-                    { value: 49.82, name: '气导销售额 49.82%' },
-                    { value: 2.56, name: '其他 2.56%' }
+                    { value: 43.12, name: '骨导销售额 43.12%' },
+                    { value: 54.44, name: '气导销售额 54.44%' },
+                    { value: 2.44, name: '其他 2.44%' }
                 ],
                 color: ['#3498db','#2ecc71','#f39c12']
             }]
         });
 
-        // 趋势图（带数字标签）
+        // 其他趋势图保持不变
         totalSalesChart.setOption({
             tooltip: { trigger: 'axis' },
             xAxis: { type: 'category', data: eightWeekData.weeks, axisLine: { lineStyle: { color: '#ecf0f1' } } },
@@ -1434,7 +1392,7 @@
             skuShareChart.setOption(createVolumeOption(), true);
         });
 
-        // ==================== 新增：促销卡片更新函数 ====================
+        // 促销卡片更新函数
         function updatePromoCards() {
             const container = document.getElementById('promo-cards-container');
             if (!container) return;
@@ -1466,7 +1424,7 @@
             container.innerHTML = html;
         }
 
-        // ==================== 整合图表模块（S800与S805已合并）====================
+        // 整合图表模块
         const familyMap = {
             'S800': [
                 'S803-ST-BK-US','S803-MN-BK-US','S803-ST-BL-US','S803-MN-BL-US',
@@ -1474,7 +1432,7 @@
                 'S821-MN-BK-US','S821-MN-OR-US','S821-MN-SR-US-326',
                 'S810-ST-SB-US-153-BBY','S810-ST-BK-US','S810-ST-BG-US','S810-ST-BL-US','S810-ST-PK-US',
                 'S811-MN-BK-US','S811-MN-BG-US','S806-MN-BK-US',
-                'S805-ST-BL-US','S805-ST-BK-US','S806-MN-BK-US'  // 原S805的SKU已合并至此
+                'S805-ST-BL-US','S805-ST-BK-US','S806-MN-BK-US'
             ],
             'T900': ['T920-ST-BG-US','T920-ST-BK-US','T921-ST-SB-US-326','T921-ST-BK-US','T921-ST-GY-US','T921-ST-PR-US','T910-ST-BK-US','T910-ST-BG-US'],
             'S600': ['S661-ST-GY-US','S661-ST-BL-US','S661-ST-PK-US','S661-ST-WT-US'],
@@ -1762,7 +1720,6 @@
                 btn.classList.add('active');
                 currentFamily = btn.dataset.family;
                 renderSubSkuButtons();
-                // 切换系列时不清空选中的SKU，但保留原选中（跨系列）
             });
 
             document.getElementById('subSkuGrid')?.addEventListener('click', (e) => {
@@ -1785,7 +1742,7 @@
                     btn.classList.add('active');
                 }
                 renderChart();
-                updatePromoCards(); // 更新促销卡片
+                updatePromoCards();
             });
 
             document.getElementById('mainSkuGrid')?.addEventListener('click', (e) => {
@@ -1808,7 +1765,6 @@
                     btn.classList.add('active');
                 }
                 renderChart();
-                // 大类SKU没有促销卡片，所以不更新
             });
 
             document.getElementById('clearAllBtn')?.addEventListener('click', () => {
@@ -1859,7 +1815,7 @@
             renderSubSkuButtons();
             renderMainSkuButtons();
             renderChart();
-            updatePromoCards(); // 初始化卡片
+            updatePromoCards();
             bindEvents();
         }
 

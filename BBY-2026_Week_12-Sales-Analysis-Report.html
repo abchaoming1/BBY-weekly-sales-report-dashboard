@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week-11 BBY 销售数据周报分析（2026.3.8 全数据完整版）</title>
+    <title>Week-12 BBY 销售数据周报分析（2026.3.15 全数据完整版）</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
         /* ==================== 原报告完整样式 ==================== */
@@ -124,29 +124,27 @@
 </head>
 <body>
     <div class="container">
-        <!-- ==================== 顶部横幅（Week-11 2026.3.8） ==================== -->
         <div class="top-banner">
             <div class="activity-banner">
-                <div class="activity-title">📊 Week-11 销售数据 (截至2026.3.8)</div>
-                <div class="activity-date">日期：2026.3.8 | 整体销量<span id="totalSalesSpan"></span>条，环比<span id="wowSpan"></span>，同比<span id="yoySpan"></span> | 骨导线<span id="boneSalesSpan"></span>条(<span id="bonePctSpan"></span>%)，气导线<span id="airSalesSpan"></span>条(<span id="airPctSpan"></span>%)</div>
+                <div class="activity-title">📊 Week-12 销售数据 (截至2026.3.15)</div>
+                <div class="activity-date">日期：2026.3.15 | 整体销量<span id="totalSalesSpan"></span>条，环比<span id="wowSpan"></span>，同比<span id="yoySpan"></span> | 骨导线<span id="boneSalesSpan"></span>条(<span id="bonePctSpan"></span>%)，气导线<span id="airSalesSpan"></span>条(<span id="airPctSpan"></span>%)</div>
             </div>
             <div class="new-product-banner">
                 <div class="new-product-title">🚀 T010 新品表现</div>
-                <div class="new-product-info">本周销量1,555条，占比15.60%，环比+7.7%</div>
-                <div class="new-product-info">YTD累计销量15,485 (估算)，高端市场份额持续扩大</div>
+                <div class="new-product-info">本周销量1,624条，占比12.69%，环比+4.44%</div>
+                <div class="new-product-info">YTD全品类总销量134,962，高端市场份额持续稳健</div>
             </div>
         </div>
         
         <header>
-            <div class="logo">BBY销售数据智能平台 (Week-11 · 2026.3.8 全数据完整版)</div>
+            <div class="logo">BBY销售数据智能平台 (Week-12 · 2026.3.15 全数据完整版)</div>
         </header>
         
-        <!-- ==================== KPI卡片（Week11） ==================== -->
         <div class="kpi-cards">
             <div class="kpi-card">
-                <div class="kpi-title">本周总销量 (W11 3.8)</div>
+                <div class="kpi-title">本周总销量 (W12 3.15)</div>
                 <div class="kpi-value" id="kpiTotalSales"></div>
-                <div class="kpi-change negative" id="kpiWow"></div>
+                <div class="kpi-change positive" id="kpiWow"></div>
                 <div class="kpi-change positive" id="kpiYoy"></div>
                 <div style="margin-top:15px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.1);">
                     <div class="kpi-title">YTD累计销量</div>
@@ -156,9 +154,9 @@
                 </div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">本周总销售额 (W11 3.8)</div>
+                <div class="kpi-title">本周总销售额 (W12 3.15)</div>
                 <div class="kpi-value" id="kpiTotalRevenue"></div>
-                <div class="kpi-change negative" id="kpiRevenueWow"></div>
+                <div class="kpi-change positive" id="kpiRevenueWow"></div>
                 <div class="kpi-change positive" id="kpiRevenueYoy"></div>
                 <div style="margin-top:15px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.1);">
                     <div class="kpi-title">YTD累计销售额</div>
@@ -168,44 +166,40 @@
                 </div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">线上销售占比 (W11 3.8)</div>
+                <div class="kpi-title">线上销售占比 (W12 3.15)</div>
                 <div class="kpi-value" id="kpiOnlinePct"></div>
-                <div class="kpi-change negative" id="kpiOnlineWow"></div>
+                <div class="kpi-change positive" id="kpiOnlineWow"></div>
                 <div class="kpi-change" id="kpiOnlineSales"></div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-title">POP门店表现 - 单店单周</div>
                 <div class="kpi-value" id="kpiPop"></div>
-                <div class="kpi-change negative" id="kpiPopWow"></div>
-                <div class="kpi-change">线下门店平稳</div>
+                <div class="kpi-change positive" id="kpiPopWow"></div>
+                <div class="kpi-change">线下门店大幅提振</div>
             </div>
         </div>
         
-        <!-- ==================== KPI十一周趋势图 ==================== -->
         <div class="kpi-charts-container">
-            <div class="kpi-chart-card"><div class="kpi-chart-title">本周总销量 - 十一周趋势</div><div id="totalSalesChart" class="kpi-chart"></div></div>
-            <div class="kpi-chart-card"><div class="kpi-chart-title">本周总销售额 - 十一周趋势</div><div id="totalRevenueChart" class="kpi-chart"></div></div>
-            <div class="kpi-chart-card"><div class="kpi-chart-title">线上销售占比 - 十一周趋势</div><div id="onlineSalesChart" class="kpi-chart"></div></div>
-            <div class="kpi-chart-card"><div class="kpi-chart-title">POP单店单周 - 十一周趋势</div><div id="popSalesChart" class="kpi-chart"></div></div>
+            <div class="kpi-chart-card"><div class="kpi-chart-title">本周总销量 - 十二周趋势</div><div id="totalSalesChart" class="kpi-chart"></div></div>
+            <div class="kpi-chart-card"><div class="kpi-chart-title">本周总销售额 - 十二周趋势</div><div id="totalRevenueChart" class="kpi-chart"></div></div>
+            <div class="kpi-chart-card"><div class="kpi-chart-title">线上销售占比 - 十二周趋势</div><div id="onlineSalesChart" class="kpi-chart"></div></div>
+            <div class="kpi-chart-card"><div class="kpi-chart-title">POP单店单周 - 十二周趋势</div><div id="popSalesChart" class="kpi-chart"></div></div>
         </div>
         
-        <!-- ==================== 一句话总结（Week11） ==================== -->
         <div class="summary-card">
             <div class="summary-text">
-                📊 <strong>Week-11关键表现：</strong>本周销量<span id="summarySales"></span>条，销售额$<span id="summaryRevenue"></span>M，环比微降<span id="summaryWow"></span>%但同比稳健增长<span id="summaryYoy"></span>%。骨导线<span id="summaryBone"></span>条(<span id="summaryBonePct"></span>%)，气导线<span id="summaryAir"></span>条(<span id="summaryAirPct"></span>%)。T010销量1,555条环比+7.7%，份额升至15.6%。S820系列3,306条(占比33.2%)，E310回升至1,327条环比+8%，T921销量1,019条环比-8%。多数型号促销空窗期，S810因基数低环比+33%但绝对量仍低。
+                📊 <strong>Week-12关键表现：</strong>本周销量<span id="summarySales"></span>条，销售额$<span id="summaryRevenue"></span>M，环比大幅增长<span id="summaryWow"></span>%，同比大涨<span id="summaryYoy"></span>%。骨导线<span id="summaryBone"></span>条(<span id="summaryBonePct"></span>%)，气导线<span id="summaryAir"></span>条(<span id="summaryAirPct"></span>%)。T010销量1,624条环比微升，份额12.69%。S820系列大爆发至4,660条(占比36.4%)，其中S820-SB(BY)凭借$129.99促销达2,435条。T511系列受促销带动达到1,247条环比+151%，S710亦达1,035条环比+59%。本周迎来多款主力机型大促(S820-BY, S710, T511-SB)，带动整体业绩创下近期新高。
             </div>
         </div>
         
-        <!-- ==================== 业务线表现对比（Week11占比） ==================== -->
-        <h2 class="section-title">业务线表现对比 (Week 11)</h2>
+        <h2 class="section-title">业务线表现对比 (Week 12)</h2>
         <div class="charts-container">
-            <div class="chart-card"><div class="chart-title">销量占比分布 (Week 11)</div><div id="salesVolumeChart" class="chart"></div></div>
-            <div class="chart-card"><div class="chart-title">销售额占比分布 (Week 11)</div><div id="salesAmountChart" class="chart"></div></div>
+            <div class="chart-card"><div class="chart-title">销量占比分布 (Week 12)</div><div id="salesVolumeChart" class="chart"></div></div>
+            <div class="chart-card"><div class="chart-title">销售额占比分布 (Week 12)</div><div id="salesAmountChart" class="chart"></div></div>
         </div>
         
-        <!-- 骨导线 vs 气导线 十一周销量趋势 -->
         <div class="chart-card" style="margin-top:20px; width:100%; height:450px;">
-            <div class="chart-title">骨导线 vs 气导线 十一周销量趋势</div>
+            <div class="chart-title">骨导线 vs 气导线 十二周销量趋势</div>
             <div class="checkbox-group" id="lineCheckboxGroup">
                 <label><input type="checkbox" id="showBone" checked> 骨导线</label>
                 <label><input type="checkbox" id="showAir" checked> 气导线</label>
@@ -213,27 +207,24 @@
             <div id="compareLineChart" class="chart" style="height:350px;"></div>
         </div>
         
-        <!-- ==================== 骨导线/气导线数据卡片（Week11） ==================== -->
         <div class="data-cards">
-            <!-- 骨导线卡片 -->
             <div class="data-card">
-                <div class="data-card-title">骨导线表现 (Week 11)</div>
+                <div class="data-card-title">骨导线表现 (Week 12)</div>
                 <div class="data-item"><div class="data-label">本周销量</div><div class="data-value" id="boneCardSales"></div></div>
                 <div class="data-item"><div class="data-label">销量占比</div><div class="data-value" id="boneCardPct"></div></div>
                 <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change" id="boneCardYoY"></div></div>
-                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value negative-change" id="boneCardWoW"></div></div>
+                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value positive-change" id="boneCardWoW"></div></div>
                 <div class="data-item"><div class="data-label">本年累计销量</div><div class="data-value" id="boneCardYtd"></div></div>
                 <div class="data-item"><div class="data-label">累计销量同比</div><div class="data-value positive-change" id="boneCardYtdYoY"></div></div>
                 <div class="data-item"><div class="data-label">本周销售额</div><div class="data-value" id="boneCardRevenue"></div></div>
                 <div class="data-item"><div class="data-label">销售额占比</div><div class="data-value" id="boneCardRevPct"></div></div>
                 <div class="data-item"><div class="data-label">销售额同比</div><div class="data-value positive-change" id="boneCardRevYoY"></div></div>
-                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value negative-change" id="boneCardRevWoW"></div></div>
+                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value positive-change" id="boneCardRevWoW"></div></div>
                 <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value" id="boneCardRevYtd"></div></div>
                 <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change" id="boneCardRevYtdYoY"></div></div>
             </div>
-            <!-- 气导线卡片 -->
             <div class="data-card">
-                <div class="data-card-title">气导线表现 (Week 11)</div>
+                <div class="data-card-title">气导线表现 (Week 12)</div>
                 <div class="data-item"><div class="data-label">本周销量</div><div class="data-value" id="airCardSales"></div></div>
                 <div class="data-item"><div class="data-label">销量占比</div><div class="data-value" id="airCardPct"></div></div>
                 <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change" id="airCardYoY"></div></div>
@@ -249,46 +240,42 @@
             </div>
         </div>
         
-        <!-- ==================== 业务线深度分析（Week11） ==================== -->
         <div class="business-analysis">
             <div class="analysis-section">
-                <div class="analysis-title">📊 业务线表现深度分析 (Week 11)</div>
+                <div class="analysis-title">📊 业务线表现深度分析 (Week 12)</div>
                 <div class="analysis-content">
-                    <p><strong>骨导线分析：</strong>销量4,997条，占比50.12%，环比-0.95%。S820系列(3,306条)仍为绝对主力但环比-3%，其中S820-SB 651条(+12%)；S803系列销量647条(-6%)；S710销量650条(+6%)；S810因基数低回升至312条(+33%)，其中S810-SB 189条(+28%)。</p>
-                    <p><strong>气导线分析：</strong>销量4,665条，占比46.79%，环比+0.37%。T010增长至1,555条(+8%)，E310系列1,307条(+7%)，T921系列991条(-7%)，其中T921-SB 348条(-11%)，T920销量250条(-11%)，T511系列497条(-11%)，其中T511-SB 204条(-15%)，T910仅17条(-88.59%)。</p>
-                    <p><strong>T010高端新品：</strong>本周销量1,555条，占比15.6%，环比+7.7%，YTD累计约1.55万条，高端市场渗透持续。</p>
-                    <p><strong>促销影响：</strong>本周S810系列有7天促销（21.86%折扣），S710有1天促销（22.21%折扣）。</p>
+                    <p><strong>骨导线分析：</strong>销量6,803条，占比53.18%，环比猛增+36.14%。S820系列(4,660条)是核心增长引擎，其中S820-BY(2,435条)凭借$129.99超强促销带来巨额流量。S710销量1,035条同样受促销加持环比暴涨59%。</p>
+                    <p><strong>气导线分析：</strong>销量5,663条，占比44.27%，环比提升+21.39%。T511系列(1,247条)全面爆发环比增151%，主要由T511-SB(994条，折扣价$79.99)贡献。T010维持在1,624条(+4%)，E310系列坚挺在1,613条(+23%)。</p>
+                    <p><strong>T010高端新品：</strong>本周无折扣情况下销量1,624条，占比12.69%，环比+4.44%，展现了极强的产品力和自然复购率。</p>
+                    <p><strong>促销影响：</strong>本周迎来强劲的联合促销期：S820-BY(27.8%折扣), T511-SB(33.3%折扣), S710(22.2%折扣)及T921-SB(25%折扣)，带动全渠道显著上扬。</p>
                 </div>
             </div>
         </div>
         
-        <!-- ==================== 新品上市追踪（T010） ==================== -->
         <h2 class="section-title">🎯 新品上市表现追踪 (T010)</h2>
         <div class="data-cards" style="margin-top:20px;">
             <div class="data-card">
-                <div class="data-card-title">T010 最新表现 (Week 11)</div>
-                <div class="data-item"><div class="data-label">本周销量 (W11)</div><div class="data-value">1,555</div></div>
-                <div class="data-item"><div class="data-label">上周销量 (W10)</div><div class="data-value">1,444</div></div>
-                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +7.7%</div></div>
-                <div class="data-item"><div class="data-label">累计销量 (YTD)</div><div class="data-value">15,485</div></div>
-                <div class="data-item"><div class="data-label">累计销售额</div><div class="data-value">$3.87M</div></div>
-                <div class="data-item"><div class="data-label">库存(CA)</div><div class="data-value">3,149 (BK) / 1,370 (WT)</div></div>
+                <div class="data-card-title">T010 最新表现 (Week 12)</div>
+                <div class="data-item"><div class="data-label">本周销量 (W12)</div><div class="data-value">1,624</div></div>
+                <div class="data-item"><div class="data-label">上周销量 (W11)</div><div class="data-value">1,555</div></div>
+                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +4.44%</div></div>
+                <div class="data-item"><div class="data-label">累计销量 (YTD全品类)</div><div class="data-value">134,962</div></div>
+                <div class="data-item"><div class="data-label">累计销售额 (全品类)</div><div class="data-value">$24.63M</div></div>
+                <div class="data-item"><div class="data-label">库存(CA)</div><div class="data-value">2,477 (BK) / 1,643 (WT)</div></div>
             </div>
             <div class="data-card">
                 <div class="data-card-title">市场复苏期影响</div>
                 <div class="data-item"><div class="data-label">整体市场同比</div><div class="data-value positive-change" id="marketYoY"></div></div>
                 <div class="data-item"><div class="data-label">气导线同比</div><div class="data-value positive-change" id="airYoY"></div></div>
-                <div class="data-item"><div class="data-label">T010环比</div><div class="data-value positive-change">↑ +7.7%</div></div>
-                <div class="data-item"><div class="data-label">市场阶段</div><div class="data-value">高位震荡</div></div>
+                <div class="data-item"><div class="data-label">T010表现阶段</div><div class="data-value">稳定期高位</div></div>
+                <div class="data-item"><div class="data-label">产品段位</div><div class="data-value">MSRP $249.99 (高端)</div></div>
             </div>
         </div>
-        <!-- 新品上市周趋势图 (W1-W11) -->
         <div class="chart-card" style="margin-bottom:30px;">
-            <div class="chart-title">T010上市周趋势 (W1-W11)</div>
+            <div class="chart-title">T010上市周趋势 (W1-W12)</div>
             <div id="newProductTrendChart" class="chart" style="height:300px;"></div>
         </div>
 
-        <!-- ==================== 核心整合图表（完整交互，含所有细分SKU） ==================== -->
         <div class="integrated-chart-container">
             <div class="chart-global-controls">
                 <div class="view-mode-group" id="viewModeGroup">
@@ -336,14 +323,13 @@
                 <div id="mainChart"></div>
             </div>
             <div style="font-size:14px; color:#aaa; margin-top:15px; text-align:center;">
-                时间轴：2025/12/28 - 2026/3/8 (每周日)，促销标记覆盖完整周区间。
+                时间轴：2025/12/28 - 2026/3/15 (每周日)，促销标记覆盖完整周区间。
             </div>
         </div>
 
-        <!-- ==================== SKU十一周占比图表 ==================== -->
         <div class="sku-share-chart-container">
             <div class="section-header" style="border-bottom:none; margin:0 0 20px 0;">
-                <h2 class="sku-share-chart-title">📈 十一周各SKU趋势 (W1-W11, 至3.8) - 堆叠柱状图</h2>
+                <h2 class="sku-share-chart-title">📈 十二周各SKU趋势 (W1-W12, 至3.15) - 堆叠柱状图</h2>
                 <div style="display:flex; gap:10px; align-items:center;">
                     <div class="chart-toggle">
                         <button id="showPercentage" class="toggle-btn active">显示占比</button>
@@ -355,7 +341,6 @@
         </div>
         
 
-        <!-- ==================== 产品线筛选 & SKU排行榜（Week11数据）- 只展示您指定的汇总行 ==================== -->
         <div class="table-filters">
             <div class="table-filter-item active" data-filter="all">全部产品线</div>
             <div class="table-filter-item" data-filter="bone">骨导线</div>
@@ -369,34 +354,32 @@
                     </tr>
                 </thead>
                 <tbody id="skuTableBody">
-                    <!-- 动态生成 -->
-                </tbody>
+                    </tbody>
             </table>
         </div>
         
-        <!-- ==================== 库存健康度监控 ==================== -->
         <h2 class="section-title">库存健康度监控</h2>
         <div class="inventory-warning">
             <div class="warning-item">
-                <div><strong>E310-NB</strong><div style="font-size:12px;">E310-ST-NB-US-326-BBY</div></div>
-                <div class="ca-value medium">CA 2,684</div>
-                <div style="color: var(--warning-color);">库存中等，需关注补货</div>
+                <div><strong>S820-BY</strong><div style="font-size:12px;">S820-ST-BY-US-326</div></div>
+                <div class="ca-value medium">CA 3,849</div>
+                <div style="color: var(--success-color);">库存充足，支撑促销</div>
+            </div>
+            <div class="warning-item">
+                <div><strong>T511-SB</strong><div style="font-size:12px;">T511-ST-SB-US-326</div></div>
+                <div class="ca-value medium" style="background-color: var(--danger-color); color:white;">CA 1,913</div>
+                <div style="color: var(--danger-color);">库存偏低，周销近1K需紧急关注补货</div>
             </div>
             <div class="warning-item">
                 <div><strong>T010-BK</strong><div style="font-size:12px;">T010-ST-BK-US</div></div>
-                <div class="ca-value medium">CA 3,130</div>
-                <div style="color: var(--success-color);">库存充足</div>
-            </div>
-            <div class="warning-item">
-                <div><strong>S820-BK</strong><div style="font-size:12px;">S820-ST-BK-US</div></div>
-                <div class="ca-value medium">CA 4,077</div>
-                <div style="color: var(--success-color);">库存健康</div>
+                <div class="ca-value medium">CA 2,477</div>
+                <div style="color: var(--warning-color);">库存健康，稳定流转</div>
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== 1. 原始销售数据（基于您提供的完整数据） ====================
+        // ==================== 1. 原始销售数据（全数据完整版，包含Week 1 到 Week 12） ====================
         const rawSalesData = [
             // 2026/1/4
             {date:'2026/1/4', sku:'S661-ST-BL-US', online:8, offline:0},
@@ -1114,12 +1097,85 @@
             {date:'2026/3/8', sku:'C102-AN-BK-US', online:0, offline:0},
             {date:'2026/3/8', sku:'C102-AA-BK-US', online:0, offline:0},
             {date:'2026/3/8', sku:'S700-ST-BK-US', online:0, offline:0},
-            {date:'2026/3/8', sku:'S700-ST-BL-US', online:0, offline:0}
+            {date:'2026/3/8', sku:'S700-ST-BL-US', online:0, offline:0},
+            // 2026/3/15 (Week 12 最新加入)
+            {date:'2026/3/15', sku:'S661-ST-BL-US', online:15, offline:1},
+            {date:'2026/3/15', sku:'S661-ST-GY-US', online:36, offline:9},
+            {date:'2026/3/15', sku:'S661-ST-PK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'S661-ST-WT-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'S803-ST-BK-US', online:45, offline:179},
+            {date:'2026/3/15', sku:'S803-ST-GY-US', online:0, offline:1},
+            {date:'2026/3/15', sku:'S803-ST-RD-US', online:1, offline:0},
+            {date:'2026/3/15', sku:'S803-ST-BL-US', online:17, offline:1},
+            {date:'2026/3/15', sku:'S805-ST-BK-US', online:4, offline:0},
+            {date:'2026/3/15', sku:'S806-MN-BK-US', online:18, offline:2},
+            {date:'2026/3/15', sku:'S803-MN-BL-US', online:12, offline:1},
+            {date:'2026/3/15', sku:'S803-MN-BK-US', online:78, offline:294},
+            {date:'2026/3/15', sku:'S805-ST-BL-US', online:2, offline:0},
+            {date:'2026/3/15', sku:'S810-ST-BG-US', online:7, offline:0},
+            {date:'2026/3/15', sku:'S810-ST-BK-US', online:3, offline:1},
+            {date:'2026/3/15', sku:'S810-ST-PK-US', online:4, offline:0},
+            {date:'2026/3/15', sku:'S810-ST-BL-US', online:1, offline:0},
+            {date:'2026/3/15', sku:'S810-ST-SB-US-153-BBY', online:263, offline:58},
+            {date:'2026/3/15', sku:'S811-MN-BK-US', online:7, offline:2},
+            {date:'2026/3/15', sku:'S811-MN-BG-US', online:10, offline:0},
+            {date:'2026/3/15', sku:'S820-ST-BK-US', online:102, offline:710},
+            {date:'2026/3/15', sku:'S820-ST-OR-US', online:18, offline:4},
+            {date:'2026/3/15', sku:'S820-ST-BY-US-326', online:1227, offline:1208},
+            {date:'2026/3/15', sku:'S820-ST-SR-US-326', online:8, offline:3},
+            {date:'2026/3/15', sku:'S820-ST-BL-US', online:14, offline:4},
+            {date:'2026/3/15', sku:'S821-MN-BL-US', online:25, offline:11},
+            {date:'2026/3/15', sku:'S821-MN-BK-US', online:139, offline:1142},
+            {date:'2026/3/15', sku:'S821-MN-OR-US', online:13, offline:12},
+            {date:'2026/3/15', sku:'S821-MN-SR-US-326', online:13, offline:7},
+            {date:'2026/3/15', sku:'S710-ST-GY-US', online:145, offline:850},
+            {date:'2026/3/15', sku:'S710-ST-RD-US', online:33, offline:7},
+            {date:'2026/3/15', sku:'S710-ST-WT-US', online:31, offline:5},
+            {date:'2026/3/15', sku:'T910-ST-BK-US', online:12, offline:3},
+            {date:'2026/3/15', sku:'T910-ST-BG-US', online:5, offline:1},
+            {date:'2026/3/15', sku:'T511-ST-BK-US', online:23, offline:173},
+            {date:'2026/3/15', sku:'T511-ST-PK-US', online:14, offline:2},
+            {date:'2026/3/15', sku:'T511-ST-WT-US', online:11, offline:30},
+            {date:'2026/3/15', sku:'T511-ST-SB-US-326', online:511, offline:483},
+            {date:'2026/3/15', sku:'T920-ST-BK-US', online:112, offline:48},
+            {date:'2026/3/15', sku:'T920-ST-BG-US', online:39, offline:39},
+            {date:'2026/3/15', sku:'T921-ST-BK-US', online:71, offline:476},
+            {date:'2026/3/15', sku:'T921-ST-BG-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'T921-ST-GY-US', online:16, offline:5},
+            {date:'2026/3/15', sku:'T921-ST-SB-US-326', online:43, offline:283},
+            {date:'2026/3/15', sku:'T921-ST-PR-US', online:10, offline:6},
+            {date:'2026/3/15', sku:'T010-ST-BK-US', online:346, offline:1007},
+            {date:'2026/3/15', sku:'T010-ST-WT-US', online:60, offline:211},
+            {date:'2026/3/15', sku:'E310-ST-BK-US', online:100, offline:353},
+            {date:'2026/3/15', sku:'E310-ST-GY-US', online:56, offline:185},
+            {date:'2026/3/15', sku:'E310-ST-BG-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'E310-ST-PK-US', online:40, offline:61},
+            {date:'2026/3/15', sku:'E310-ST-RD-US', online:9, offline:1},
+            {date:'2026/3/15', sku:'E310-ST-NB-US-326-BBY', online:318, offline:500},
+            {date:'2026/3/15', sku:'C110-AA-BK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'C110-AC-BK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'C110-AN-BK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'C120-AA-BK-US', online:1, offline:1},
+            {date:'2026/3/15', sku:'C120-AC-BK-US', online:32, offline:38},
+            {date:'2026/3/15', sku:'C120-AN-BK-US', online:61, offline:192},
+            {date:'2026/3/15', sku:'C610-AN-BK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'C610-AN-BK-US-326-TB1', online:2, offline:0},
+            {date:'2026/3/15', sku:'AS600BK', online:0, offline:0},
+            {date:'2026/3/15', sku:'AS600SG', online:0, offline:0},
+            {date:'2026/3/15', sku:'AS650SG', online:0, offline:0},
+            {date:'2026/3/15', sku:'AS660SG', online:0, offline:0},
+            {date:'2026/3/15', sku:'AS800CB', online:0, offline:0},
+            {date:'2026/3/15', sku:'AS800-M-CB-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'ASC100SG', online:0, offline:0},
+            {date:'2026/3/15', sku:'C102-AN-BK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'C102-AA-BK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'S700-ST-BK-US', online:0, offline:0},
+            {date:'2026/3/15', sku:'S700-ST-BL-US', online:0, offline:0}
         ];
 
-        // ==================== 2. 构建 channelData（将原始数据按日期和SKU组织） ====================
-        const weekDates = ['2025/12/28','2026/1/4','2026/1/11','2026/1/18','2026/1/25','2026/2/1','2026/2/8','2026/2/15','2026/2/22','2026/3/1','2026/3/8'];
-        const weeks = ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11'];
+        // ==================== 2. 构建 channelData ====================
+        const weekDates = ['2025/12/28','2026/1/4','2026/1/11','2026/1/18','2026/1/25','2026/2/1','2026/2/8','2026/2/15','2026/2/22','2026/3/1','2026/3/8', '2026/3/15'];
+        const weeks = ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11', 'W12'];
 
         window.channelData = {};
         weekDates.forEach(d => { window.channelData[d] = {}; });
@@ -1131,8 +1187,6 @@
 
         // ==================== 3. 构建促销活动映射 ====================
         const promotionByDetailSku = {};
-        // 从原始数据中提取促销信息（这里根据原始数据中的注释手动构建）
-        // 为了简化，我们基于之前提供的信息构建促销数组
         const promoList = [
             { date: '2026/1/11', sku: 'S810-ST-BG-US', promoPrice: 109.99, days: 4, rate: 31.30, savings: 50 },
             { date: '2026/1/11', sku: 'S810-ST-BK-US', promoPrice: 109.99, days: 4, rate: 31.30, savings: 50 },
@@ -1176,12 +1230,25 @@
             { date: '2026/3/8', sku: 'S811-MN-BK-US', promoPrice: 124.99, days: 7, rate: 21.90, savings: 35 },
             { date: '2026/3/8', sku: 'S811-MN-BG-US', promoPrice: 124.99, days: 7, rate: 21.90, savings: 35 },
             { date: '2026/3/8', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 1, rate: 22.20, savings: 40 },
-            { date: '2026/3/8', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 1, rate: 22.20, savings: 40 }
+            { date: '2026/3/8', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 1, rate: 22.20, savings: 40 },
+            // 加入Week12
+            { date: '2026/3/15', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 1, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', sku: 'S811-MN-BK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', sku: 'S811-MN-BG-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 6, rate: 27.80, savings: 50 },
+            { date: '2026/3/15', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/15', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/15', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 6, rate: 33.30, savings: 40 },
+            { date: '2026/3/15', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 6, rate: 25.00, savings: 50 },
+            { date: '2026/3/15', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 6, rate: 25.00, savings: 50 }
         ];
 
         promoList.forEach(p => {
             if (!promotionByDetailSku[p.sku]) promotionByDetailSku[p.sku] = [];
-            // 为了简化，将促销开始日期设为当周的周一，结束日期根据天数计算
             const startDate = p.date;
             const endDate = new Date(new Date(p.date).getTime() + (p.days-1)*24*3600*1000).toLocaleDateString('en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g,'/');
             promotionByDetailSku[p.sku].push({
@@ -1194,7 +1261,7 @@
             });
         });
 
-        // ==================== 4. 构建 familyMap（包含所有出现的SKU） ====================
+        // ==================== 4. 构建 familyMap ====================
         const familyMap = {
             'S800': [
                 'S803-ST-BK-US','S803-ST-GY-US','S803-ST-RD-US','S803-ST-BL-US',
@@ -1214,52 +1281,40 @@
             'Other': ['C610-AN-BK-US-326-TB1','AS600BK','AS600SG','AS650SG','AS660SG','AS800CB','AS800-M-CB-US','ASC100SG','C102-AN-BK-US','C102-AA-BK-US','S700-ST-BK-US','S700-ST-BL-US']
         };
 
-        const allSkus = Object.values(familyMap).flat();
         const mainSkuList = ['S820','T010','E310','T921','S803','T511','S710','T920','C120','S661','S810','T910'];
 
-        // ==================== 5. 宏观KPI数据（从原始数据计算） ====================
-        // 计算每周总销量、总销售额、线上销量等
-        const weeklyTotals = new Array(11).fill(0);
-        const weeklyOnline = new Array(11).fill(0);
-        const weeklyRevenue = new Array(11).fill(0);
-        const weeklyOnlineRevenue = new Array(11).fill(0);
-        const boneWeekly = new Array(11).fill(0);
-        const airWeekly = new Array(11).fill(0);
+        // ==================== 5. 宏观KPI数据（包含Week12） ====================
+        const totalSales = [11009,9090,12889,9746,9680,12179,14302,12406,10817,10080,9971,12793];
+        const totalRevenue = [1918759.55,1602892.38,2459581.71,1782330.1,1656666.6,2173320.25,2612642,2317066,2023039,1875613.76,1871973.65,2341755.31];
+        const onlineSales = [2428,1946,4155,2341,3161,3312,4196,3722,3150,1966,1811,3409];
+        const onlinePercentages = [22.05,21.41,32.24,24.02,32.66,27.20,29.34,30.0,29.1,23.60,22.41,33.13];
+        const popSales = [9.59,7.93,8.59,7.48,7.22,9.57,9.57,9.57,9.57,9.02,8.97,10.13];
+        const boneData = [6532,5347,6859,5408,5672,7018,8476,7130,5922,5045,4997,6803];
+        const airData = [4226,3512,5791,4098,3798,4909,5606,5063,4723,4648,4665,5663];
 
-        // 简化的价格映射（用于估算销售额，实际销售额已在原始数据中提供，但为了简化，我们使用销量和MSRP估算）
-        // 由于我们已经有销售额，这里可以不用计算，直接使用之前的总Revenue数组
-        // 为了保持一致性，我们使用之前已有的宏观数组
-        const totalSales = [11009,9090,12889,9746,9680,12179,14302,12406,10817,10080,9971];
-        const totalRevenue = [1918759.55,1602892.38,2459581.71,1782330.1,1656666.6,2173320.25,2612642,2317066,2023039,1875613.76,1871973.65];
-        const onlineSales = [2428,1946,4155,2341,3161,3312,4196,3722,3150,1966,1811];
-        const onlinePercentages = [22.05,21.41,32.24,24.02,32.66,27.20,29.34,30.0,29.1,23.60,22.41];
-        const popSales = [9.59,7.93,8.59,7.48,7.22,9.57,9.57,9.57,9.57,9.02,8.97];
-        const boneData = [6532,5347,6859,5408,5672,7018,8476,7130,5922,5045,4997];
-        const airData = [4226,3512,5791,4098,3798,4909,5606,5063,4723,4648,4665];
-
-        // ==================== 6. 用户提供的大类汇总数据（用于表格） ====================
+        // ==================== 6. 大类汇总数据（Week12） ====================
         const summaryData = {
-            'T910': { sales: 17, changePercent: -88.59, changeRaw: -132, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0, savings: 0 },
-            'T511': { sales: 497, changePercent: -11, changeRaw: -64, priceTier: '低端', msrp: 119.95, finalPrice: 119.95, days: 0, discountRate: 0, savings: 0 },
-            'T511-SB': { sales: 204, changePercent: -15, changeRaw: -37, priceTier: '低端', msrp: 119.95, finalPrice: 119.95, days: 0, discountRate: 0, savings: 0 },
-            'S820-SB': { sales: 651, changePercent: 12, changeRaw: 71, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0, savings: 0 },
-            'S820': { sales: 3306, changePercent: -3, changeRaw: -96, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0, savings: 0 },
-            'S810-SB': { sales: 189, changePercent: 28, changeRaw: 41, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 21.86, savings: 34.96 },
-            'S810': { sales: 312, changePercent: 33, changeRaw: 77, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 21.86, savings: 34.96 },
-            'S803': { sales: 647, changePercent: -6, changeRaw: -38, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0, savings: 0 },
-            'S661': { sales: 59, changePercent: 0, changeRaw: 0, priceTier: '低端', msrp: 79.95, finalPrice: 79.95, days: 0, discountRate: 0, savings: 0 },
-            'C120-AN': { sales: 233, changePercent: -21, changeRaw: -61, priceTier: '高端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0, savings: 0 },
-            'C120-UC': { sales: 71, changePercent: -16, changeRaw: -14, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0, savings: 0 },
+            'T910': { sales: 21, changePercent: -87.50, changeRaw: -147, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0, savings: 0 },
+            'T511': { sales: 1247, changePercent: 151, changeRaw: 750, priceTier: '低端', msrp: 119.95, finalPrice: 119.95, days: 0, discountRate: 0, savings: 0 },
+            'T511-SB': { sales: 994, changePercent: 387, changeRaw: 790, priceTier: '低端', msrp: 119.95, finalPrice: 79.99, days: 6, discountRate: 33.31, savings: 39.96 },
+            'S820-SB': { sales: 2435, changePercent: 274, changeRaw: 1784, priceTier: '高端', msrp: 179.95, finalPrice: 129.99, days: 6, discountRate: 27.76, savings: 49.96 },
+            'S820': { sales: 4660, changePercent: 41, changeRaw: 1354, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0, savings: 0 },
+            'S810-SB': { sales: 321, changePercent: 70, changeRaw: 132, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 1, discountRate: 21.86, savings: 34.96 },
+            'S810': { sales: 356, changePercent: 14, changeRaw: 44, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 3, discountRate: 21.86, savings: 34.96 },
+            'S803': { sales: 629, changePercent: -3, changeRaw: -18, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0, savings: 0 },
+            'S661': { sales: 61, changePercent: 0, changeRaw: 0, priceTier: '低端', msrp: 79.95, finalPrice: 79.95, days: 0, discountRate: 0, savings: 0 },
+            'C120-AN': { sales: 253, changePercent: 9, changeRaw: 20, priceTier: '高端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0, savings: 0 },
+            'C120-UC': { sales: 72, changePercent: 1, changeRaw: 1, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0, savings: 0 },
             'S700': { sales: 0, changePercent: 0, changeRaw: 0, priceTier: '高端', msrp: 149.95, finalPrice: 149.95, days: 0, discountRate: 0, savings: 0 },
-            'S710': { sales: 664, changePercent: 6, changeRaw: 38, priceTier: '高端', msrp: 179.95, finalPrice: 139.99, days: 1, discountRate: 22.21, savings: 39.96 },
-            'T920': { sales: 250, changePercent: -11, changeRaw: -30, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0, savings: 0 },
-            'E310': { sales: 1327, changePercent: 7, changeRaw: 65, priceTier: '高端', msrp: 199.99, finalPrice: 199.99, days: 0, discountRate: 0, savings: 0 },
-            'T921': { sales: 1019, changePercent: -7, changeRaw: -80, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0, savings: 0 },
-            'T921-SB': { sales: 348, changePercent: -11, changeRaw: -44, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0, savings: 0 },
-            'T010': { sales: 1555, changePercent: 8, changeRaw: 111, priceTier: '高端', msrp: 249.99, finalPrice: 249.99, days: 0, discountRate: 0, savings: 0 }
+            'S710': { sales: 1035, changePercent: 59, changeRaw: 385, priceTier: '高端', msrp: 179.95, finalPrice: 139.99, days: 7, discountRate: 22.21, savings: 39.96 },
+            'T920': { sales: 238, changePercent: -5, changeRaw: -12, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0, savings: 0 },
+            'E310': { sales: 1613, changePercent: 23, changeRaw: -217, priceTier: '高端', msrp: 199.99, finalPrice: 199.99, days: 0, discountRate: 0, savings: 0 },
+            'T921': { sales: 894, changePercent: -10, changeRaw: -97, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0, savings: 0 },
+            'T921-SB': { sales: 326, changePercent: -6, changeRaw: -22, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 6, discountRate: 24.99, savings: 49.96 },
+            'T010': { sales: 1624, changePercent: 4, changeRaw: 69, priceTier: '高端', msrp: 249.99, finalPrice: 249.99, days: 0, discountRate: 0, savings: 0 }
         };
 
-        // ==================== 7. 动态生成表格行（只显示汇总行） ====================
+        // ==================== 7. 动态生成表格行 ====================
         function generateSummaryTableRows() {
             const tbody = document.getElementById('skuTableBody');
             if (!tbody) return;
@@ -1296,11 +1351,12 @@
                 }
 
                 let keyMsg = '平稳';
-                if (sales > 500) keyMsg = '主力';
+                if (sales > 1000) keyMsg = '火爆主力';
+                else if (sales > 500) keyMsg = '主力';
                 else if (sales > 200) keyMsg = '中等';
                 else if (sales > 0) keyMsg = '低量';
                 else keyMsg = '无销量';
-                if (days > 0) keyMsg += '促销';
+                if (days > 0) keyMsg += ' / 大促';
 
                 html += `<tr class="product-line-all product-line-${lineDisplay}" data-line="${lineDisplay}">`;
                 html += `<td>${sku}</td>`;
@@ -1331,12 +1387,12 @@
             tbody.innerHTML = html;
         }
 
-        // ==================== 8. 整合图表交互逻辑（与之前相同，此处为完整版） ====================
+        // ==================== 8. 整合图表交互逻辑 ====================
         let currentView = 'sub';
         let currentMode = 'stack';
-        let selectedSubSkus = new Set(['S810-ST-SB-US-153-BBY', 'T010-ST-BK-US']);
+        let selectedSubSkus = new Set(['S820-ST-BY-US-326', 'T010-ST-BK-US', 'T511-ST-SB-US-326']);
         let currentFamily = 'S800';
-        let selectedMainSkus = new Set(['S820','T010','E310']);
+        let selectedMainSkus = new Set(['S820','T010','E310','T511']);
 
         const weekTimestamps = weekDates.map(d => new Date(d).getTime());
         const skuColorList = ['#3498db','#2ecc71','#f39c12','#e74c3c','#9b59b6','#1abc9c','#d35400','#c0392b','#8e44ad','#27ae60','#16a085','#2980b9','#e67e22','#f1c40f','#e84342','#95a5a6','#7f8c8d','#34495e','#bdc3c7','#2c3e50'];
@@ -1409,19 +1465,19 @@
             weeks: weeks,
             dates: weekDates,
             series: [
-                { name: 'T511', data: [1140,859,669,1100,883,838,1073,794,494,561,497] },
-                { name: 'T910', data: [34,45,43,57,45,27,21,21,49,29,17] },
-                { name: 'T920', data: [710,811,679,510,310,514,362,577,707,280,250] },
-                { name: 'T921', data: [1449,929,1535,1216,1069,1288,2025,1273,1114,1107,1019] },
-                { name: 'E310', data: [1764,1044,3478,1274,981,1416,1645,1913,1936,1227,1327] },
-                { name: 'S710', data: [778,665,626,537,468,681,791,679,586,626,664] },
-                { name: 'S661', data: [62,51,70,179,164,189,106,76,76,84,59] },
-                { name: 'S803', data: [675,378,580,610,1823,1625,944,602,576,685,647] },
-                { name: 'S810', data: [700,1080,629,137,125,117,365,271,106,235,312] },
-                { name: 'S820', data: [3430,2529,2387,2422,3016,3872,4979,4138,3547,3402,3306] },
-                { name: 'C120', data: [244,255,270,260,252,341,440,329,317,379,295] },
-                { name: 'T010', data: [0,422,1904,1435,525,1230,1439,1661,1260,1444,1555] },
-                { name: 'Other', data: [23,22,19,9,19,41,41,41,2,21,14] }
+                { name: 'T511', data: [1140,859,669,1100,883,838,1073,794,494,561,497,1247] },
+                { name: 'T910', data: [34,45,43,57,45,27,21,21,49,29,17,21] },
+                { name: 'T920', data: [710,811,679,510,310,514,362,577,707,280,250,238] },
+                { name: 'T921', data: [1449,929,1535,1216,1069,1288,2025,1273,1114,1107,1019,910] },
+                { name: 'E310', data: [1764,1044,3478,1274,981,1416,1645,1913,1936,1227,1327,1623] },
+                { name: 'S710', data: [778,665,626,537,468,681,791,679,586,626,664,1071] },
+                { name: 'S661', data: [62,51,70,179,164,189,106,76,76,84,59,61] },
+                { name: 'S803', data: [675,378,580,610,1823,1625,944,602,576,685,647,629] },
+                { name: 'S810', data: [700,1080,629,137,125,117,365,271,106,235,312,356] },
+                { name: 'S820', data: [3430,2529,2387,2422,3016,3872,4979,4138,3547,3402,3306,4660] },
+                { name: 'C120', data: [244,255,270,260,252,341,440,329,317,379,295,325] },
+                { name: 'T010', data: [0,422,1904,1435,525,1230,1439,1661,1260,1444,1555,1624] },
+                { name: 'Other', data: [23,22,19,9,19,41,41,41,2,21,14,28] }
             ]
         };
 
@@ -1478,9 +1534,9 @@
                     const markAreaData = promotions.map(p => {
                         let startTime = new Date(p.startDate).getTime();
                         let endTime = new Date(p.endDate).getTime();
-                        if (endTime < weekTimestamps[0] || startTime > weekTimestamps[9]) return null;
+                        if (endTime < weekTimestamps[0] || startTime > weekTimestamps[weekTimestamps.length-1]) return null;
                         startTime = Math.max(startTime, weekTimestamps[0]);
-                        endTime = Math.min(endTime, weekTimestamps[9] + 6*24*3600*1000);
+                        endTime = Math.min(endTime, weekTimestamps[weekTimestamps.length-1] + 6*24*3600*1000);
                         return [{
                             xAxis: startTime,
                             yAxis: 'min',
@@ -1587,7 +1643,7 @@
                 xAxis: {
                     type: 'time',
                     min: weekTimestamps[0],
-                    max: weekTimestamps[9] + 6*24*3600*1000,
+                    max: weekTimestamps[weekTimestamps.length-1] + 6*24*3600*1000,
                     axisLine: { lineStyle: { color: '#ecf0f1' } },
                     axisLabel: {
                         color: '#ecf0f1', fontWeight: 'bold', fontSize: 12,
@@ -1747,9 +1803,9 @@
                 series: [{
                     type: 'pie', radius: ['40%','70%'],
                     data: [
-                        { value: 50.12, name: '骨导销量 50.12%' },
-                        { value: 46.79, name: '气导销量 46.79%' },
-                        { value: 3.09, name: '其他 3.09%' }
+                        { value: 53.18, name: '骨导销量 53.18%' },
+                        { value: 44.27, name: '气导销量 44.27%' },
+                        { value: 2.55, name: '其他 2.55%' }
                     ],
                     color: ['#3498db','#2ecc71','#f39c12'],
                     label: { color: '#ecf0f1', formatter: '{b}' }
@@ -1761,9 +1817,9 @@
                 series: [{
                     type: 'pie', radius: ['40%','70%'],
                     data: [
-                        { value: 45.63, name: '骨导销售额 45.63%' },
-                        { value: 51.56, name: '气导销售额 51.56%' },
-                        { value: 2.81, name: '其他 2.81%' }
+                        { value: 50.31, name: '骨导销售额 50.31%' },
+                        { value: 47.32, name: '气导销售额 47.32%' },
+                        { value: 2.37, name: '其他 2.37%' }
                     ],
                     color: ['#3498db','#2ecc71','#f39c12'],
                     label: { color: '#ecf0f1', formatter: '{b}' }
@@ -1829,11 +1885,11 @@
                 xAxis: { type: 'category', data: weeks, axisLine: { lineStyle: { color: '#ecf0f1' } } },
                 yAxis: [
                     { type: 'value', name: '销量(条)', axisLine: { lineStyle: { color: '#ecf0f1' } } },
-                    { type: 'value', name: '市场份额(%)', max: 20, axisLine: { lineStyle: { color: '#ecf0f1' } } }
+                    { type: 'value', name: '市场份额(%)', max: 25, axisLine: { lineStyle: { color: '#ecf0f1' } } }
                 ],
                 series: [
-                    { name: '销量', type: 'bar', data: [0,422,1904,1435,525,1230,1439,1661,1260,1444,1555], yAxisIndex: 0, itemStyle: { color: '#3498db' }, label: { show: true, position: 'top', color: '#ecf0f1', fontWeight: 'bold', fontSize: 11 } },
-                    { name: '市场份额', type: 'line', data: [0,4.64,14.77,14.72,5.42,10.10,10.1,13.4,11.6,14.33,15.60], yAxisIndex: 1, lineStyle: { color: '#f39c12', width: 3 }, symbol: 'circle', symbolSize: 8, label: { show: true, position: 'top', color: '#f39c12', fontWeight: 'bold', fontSize: 11, formatter: (params) => params.value + '%' } }
+                    { name: '销量', type: 'bar', data: skuVolumeData.series.find(s=>s.name==='T010').data, yAxisIndex: 0, itemStyle: { color: '#3498db' }, label: { show: true, position: 'top', color: '#ecf0f1', fontWeight: 'bold', fontSize: 11 } },
+                    { name: '市场份额', type: 'line', data: [0,4.64,14.77,14.72,5.42,10.10,10.1,13.4,11.6,14.33,15.60,12.69], yAxisIndex: 1, lineStyle: { color: '#f39c12', width: 3 }, symbol: 'circle', symbolSize: 8, label: { show: true, position: 'top', color: '#f39c12', fontWeight: 'bold', fontSize: 11, formatter: (params) => params.value + '%' } }
                 ]
             });
 
@@ -1894,65 +1950,65 @@
                 lineChart.setOption({ series: [{ name: '气导线', show: e.target.checked }] });
             });
 
-            // 更新动态文本
-            document.getElementById('totalSalesSpan').innerText = totalSales[10];
-            document.getElementById('wowSpan').innerText = '-1.08%';
-            document.getElementById('yoySpan').innerText = '+9.86%';
-            document.getElementById('boneSalesSpan').innerText = boneData[10];
-            document.getElementById('bonePctSpan').innerText = (boneData[10]/totalSales[10]*100).toFixed(2);
-            document.getElementById('airSalesSpan').innerText = airData[10];
-            document.getElementById('airPctSpan').innerText = (airData[10]/totalSales[10]*100).toFixed(2);
-            document.getElementById('kpiTotalSales').innerText = totalSales[10].toLocaleString();
-            document.getElementById('kpiWow').innerHTML = '↓ 环比 -1.08% (前周W10 10,080)';
-            document.getElementById('kpiYoy').innerHTML = '↑ 同比 +9.86% (去年W11 9,076)';
-            document.getElementById('kpiYtdSales').innerText = '122,169';
-            document.getElementById('kpiYtdPct').innerHTML = '↑ +16.77%';
-            document.getElementById('kpiYtdChange').innerText = '累计同比 +17,545';
-            document.getElementById('kpiTotalRevenue').innerText = '$1,871,974';
-            document.getElementById('kpiRevenueWow').innerHTML = '↓ 环比 -0.19%';
-            document.getElementById('kpiRevenueYoy').innerHTML = '↑ 同比 +30.04%';
-            document.getElementById('kpiYtdRevenue').innerText = '$22,290,097';
-            document.getElementById('kpiYtdRevenuePct').innerHTML = '↑ +35.34%';
-            document.getElementById('kpiYtdRevenueChange').innerText = '累计同比 +$5.82M';
-            document.getElementById('kpiOnlinePct').innerText = '22.41%';
-            document.getElementById('kpiOnlineWow').innerHTML = '↓ 环比 -1.19pp';
-            document.getElementById('kpiOnlineSales').innerHTML = '本周线上销量1,811条';
-            document.getElementById('kpiPop').innerText = '8.97';
-            document.getElementById('kpiPopWow').innerHTML = '↓ 环比 -0.05';
-            document.getElementById('summarySales').innerText = totalSales[10];
-            document.getElementById('summaryRevenue').innerText = (totalRevenue[10]/1e6).toFixed(2);
-            document.getElementById('summaryWow').innerText = '1.1';
-            document.getElementById('summaryYoy').innerText = '9.9';
-            document.getElementById('summaryBone').innerText = boneData[10];
-            document.getElementById('summaryBonePct').innerText = (boneData[10]/totalSales[10]*100).toFixed(1);
-            document.getElementById('summaryAir').innerText = airData[10];
-            document.getElementById('summaryAirPct').innerText = (airData[10]/totalSales[10]*100).toFixed(1);
-            document.getElementById('boneCardSales').innerText = boneData[10].toLocaleString();
-            document.getElementById('boneCardPct').innerText = '50.12%';
-            document.getElementById('boneCardYoY').innerHTML = '↑ +2.97%';
-            document.getElementById('boneCardWoW').innerHTML = '↓ -0.95%';
-            document.getElementById('boneCardYtd').innerText = '58,729';
-            document.getElementById('boneCardYtdYoY').innerHTML = '↑ +1.50%';
-            document.getElementById('boneCardRevenue').innerText = '$854,270';
-            document.getElementById('boneCardRevPct').innerText = '45.63%';
-            document.getElementById('boneCardRevYoY').innerHTML = '↑ +8.53%';
-            document.getElementById('boneCardRevWoW').innerHTML = '↓ -0.65%';
-            document.getElementById('boneCardRevYtd').innerText = '$9,907,244';
-            document.getElementById('boneCardRevYtdYoY').innerHTML = '↑ +5.79%';
-            document.getElementById('airCardSales').innerText = airData[10].toLocaleString();
-            document.getElementById('airCardPct').innerText = '46.79%';
-            document.getElementById('airCardYoY').innerHTML = '↑ +15.90%';
-            document.getElementById('airCardWoW').innerHTML = '↑ +0.37%';
-            document.getElementById('airCardYtd').innerText = '60,019';
-            document.getElementById('airCardYtdYoY').innerHTML = '↑ +36.33%';
-            document.getElementById('airCardRevenue').innerText = '$965,139';
-            document.getElementById('airCardRevPct').innerText = '51.56%';
-            document.getElementById('airCardRevYoY').innerHTML = '↑ +57.23%';
-            document.getElementById('airCardRevWoW').innerHTML = '↑ +1.60%';
-            document.getElementById('airCardRevYtd').innerText = '$11,801,864';
-            document.getElementById('airCardRevYtdYoY').innerHTML = '↑ +79.03%';
-            document.getElementById('marketYoY').innerHTML = '↑ +9.86%';
-            document.getElementById('airYoY').innerHTML = '↑ +15.90%';
+            // 更新动态文本（Week 12 最新数据）
+            document.getElementById('totalSalesSpan').innerText = totalSales[11].toLocaleString();
+            document.getElementById('wowSpan').innerText = '↑ +28.30%';
+            document.getElementById('yoySpan').innerText = '↑ +31.66%';
+            document.getElementById('boneSalesSpan').innerText = boneData[11].toLocaleString();
+            document.getElementById('bonePctSpan').innerText = (boneData[11]/totalSales[11]*100).toFixed(2);
+            document.getElementById('airSalesSpan').innerText = airData[11].toLocaleString();
+            document.getElementById('airPctSpan').innerText = (airData[11]/totalSales[11]*100).toFixed(2);
+            document.getElementById('kpiTotalSales').innerText = totalSales[11].toLocaleString();
+            document.getElementById('kpiWow').innerHTML = '↑ WoW +28.30%';
+            document.getElementById('kpiYoy').innerHTML = '↑ YoY +31.66%';
+            document.getElementById('kpiYtdSales').innerText = '134,962';
+            document.getElementById('kpiYtdPct').innerHTML = '↑ +18.03%';
+            document.getElementById('kpiYtdChange').innerText = '累计同比 +20,621';
+            document.getElementById('kpiTotalRevenue').innerText = '$2,341,755';
+            document.getElementById('kpiRevenueWow').innerHTML = '↑ WoW +25.10%';
+            document.getElementById('kpiRevenueYoy').innerHTML = '↑ YoY +54.69%';
+            document.getElementById('kpiYtdRevenue').innerText = '$24,631,852';
+            document.getElementById('kpiYtdRevenuePct').innerHTML = '↑ +36.97%';
+            document.getElementById('kpiYtdRevenueChange').innerText = '累计同比 +$6.65M';
+            document.getElementById('kpiOnlinePct').innerText = '33.13%';
+            document.getElementById('kpiOnlineWow').innerHTML = '↑ 环比显著回升';
+            document.getElementById('kpiOnlineSales').innerHTML = '本周线上销量 3,409 条';
+            document.getElementById('kpiPop').innerText = '10.13';
+            document.getElementById('kpiPopWow').innerHTML = '↑ 环比 +1.16';
+            document.getElementById('summarySales').innerText = totalSales[11].toLocaleString();
+            document.getElementById('summaryRevenue').innerText = (totalRevenue[11]/1e6).toFixed(2);
+            document.getElementById('summaryWow').innerText = '28.30';
+            document.getElementById('summaryYoy').innerText = '31.66';
+            document.getElementById('summaryBone').innerText = boneData[11].toLocaleString();
+            document.getElementById('summaryBonePct').innerText = (boneData[11]/totalSales[11]*100).toFixed(1);
+            document.getElementById('summaryAir').innerText = airData[11].toLocaleString();
+            document.getElementById('summaryAirPct').innerText = (airData[11]/totalSales[11]*100).toFixed(1);
+            document.getElementById('boneCardSales').innerText = boneData[11].toLocaleString();
+            document.getElementById('boneCardPct').innerText = '53.18%';
+            document.getElementById('boneCardYoY').innerHTML = '↑ +40.67%';
+            document.getElementById('boneCardWoW').innerHTML = '↑ +36.14%';
+            document.getElementById('boneCardYtd').innerText = '65,532';
+            document.getElementById('boneCardYtdYoY').innerHTML = '↑ +4.52%';
+            document.getElementById('boneCardRevenue').innerText = '$1,178,230';
+            document.getElementById('boneCardRevPct').innerText = '50.31%';
+            document.getElementById('boneCardRevYoY').innerHTML = '↑ +49.93%';
+            document.getElementById('boneCardRevWoW').innerHTML = '↑ +37.92%';
+            document.getElementById('boneCardRevYtd').innerText = '$11,085,473';
+            document.getElementById('boneCardRevYtdYoY').innerHTML = '↑ +9.20%';
+            document.getElementById('airCardSales').innerText = airData[11].toLocaleString();
+            document.getElementById('airCardPct').innerText = '44.27%';
+            document.getElementById('airCardYoY').innerHTML = '↑ +22.63%';
+            document.getElementById('airCardWoW').innerHTML = '↑ +21.39%';
+            document.getElementById('airCardYtd').innerText = '65,682';
+            document.getElementById('airCardYtdYoY').innerHTML = '↑ +35.03%';
+            document.getElementById('airCardRevenue').innerText = '$1,108,222';
+            document.getElementById('airCardRevPct').innerText = '47.32%';
+            document.getElementById('airCardRevYoY').innerHTML = '↑ +63.47%';
+            document.getElementById('airCardRevWoW').innerHTML = '↑ +14.83%';
+            document.getElementById('airCardRevYtd').innerText = '$12,910,086';
+            document.getElementById('airCardRevYtdYoY').innerHTML = '↑ +77.58%';
+            document.getElementById('marketYoY').innerHTML = '↑ +31.66%';
+            document.getElementById('airYoY').innerHTML = '↑ +22.63%';
         }
 
         // ==================== 10. 页面加载完成后执行 ====================

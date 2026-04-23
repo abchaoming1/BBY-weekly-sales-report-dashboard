@@ -1564,10 +1564,10 @@
                 let changeText = '0%';
                 let changeClass = '';
                 if (changePercent > 0) {
-                    changeText = '↑ ' + changePercent.toFixed(2) + '%';
+                    changeText = '↑ ' + Math.round(changePercent) + '%';
                     changeClass = 'positive-change';
                 } else if (changePercent < 0) {
-                    changeText = '↓ ' + Math.abs(changePercent).toFixed(2) + '%';
+                    changeText = '↓ ' + Math.round(Math.abs(changePercent)) + '%';
                     changeClass = 'negative-change';
                 }
 

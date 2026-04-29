@@ -120,7 +120,18 @@
         .promo-card .promo-detail { display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0; color: #ccc; }
         .promo-card .promo-detail span.label { color: #aaa; }
         .promo-card .promo-detail span.value { font-weight: bold; color: var(--warning-color); }
-    </style>
+    /* STORE_WEEKLY_STYLE_START */
+        .store-summary-note { font-size: 14px; color: #ccc; line-height: 1.7; }
+        .store-channel-tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+        .store-channel-tag.online { background: rgba(243,156,18,0.18); color: #f7c66c; border: 1px solid rgba(243,156,18,0.4); }
+        .store-channel-tag.in-store { background: rgba(52,152,219,0.18); color: #7fc8ff; border: 1px solid rgba(52,152,219,0.4); }
+        .store-chart-note { margin-top: 12px; font-size: 13px; color: #aaa; text-align: center; }
+        .store-num { text-align: right; white-space: nowrap; }
+        .store-weekly-table th, .store-weekly-table td { font-size: 13px; }
+        
+/* STORE_WEEKLY_STYLE_END */
+
+</style>
 </head>
 <body>
     <div class="container">
@@ -274,6 +285,70 @@
             <div class="chart-title">T010上市周趋势 (W5-W17)</div>
             <div id="newProductTrendChart" class="chart" style="height:300px;"></div>
         </div>
+
+<!-- STORE_WEEKLY_MODULE_START -->
+        <h2 class="section-title">🏪 单店单周销量表现 (Week 17)</h2>
+        <div class="summary-card">
+            <div class="store-summary-note">
+                本模块按《BBY-2026周报数据》中的“销量-原数据”，基于 <strong>2026/4/19</strong> 的 <strong>Store</strong> 口径重新聚合单店周销量。
+                本周共有 <strong>877</strong> 个有销量店铺，前100店合计贡献 <strong>43.65%</strong> 销量。
+                其中 <strong>Store 960</strong> 和 <strong>Store 973</strong> 为 Online 聚合店号，已在图表和表格中单独标注。
+            </div>
+        </div>
+
+        <div class="data-cards" style="margin-top:20px;">
+            <div class="data-card">
+                <div class="data-card-title">有销量店铺数</div>
+                <div class="data-item"><div class="data-label">本周有销量店铺</div><div class="data-value">877</div></div>
+                <div class="data-item"><div class="data-label">模块口径</div><div class="data-value">Start Date + Store</div></div>
+            </div>
+            <div class="data-card">
+                <div class="data-card-title">前100贡献</div>
+                <div class="data-item"><div class="data-label">Top 100销量贡献</div><div class="data-value">43.65%</div></div>
+                <div class="data-item"><div class="data-label">Top 100合计销量</div><div class="data-value">4,454</div></div>
+            </div>
+            <div class="data-card">
+                <div class="data-card-title">TOP1 总体店铺</div>
+                <div class="data-item"><div class="data-label">Store</div><div class="data-value">960</div></div>
+                <div class="data-item"><div class="data-label">Channel</div><div class="data-value">Online</div></div>
+                <div class="data-item"><div class="data-label">销量 / 销售额</div><div class="data-value">2,480 / $452,050</div></div>
+            </div>
+            <div class="data-card">
+                <div class="data-card-title">TOP1 实体店</div>
+                <div class="data-item"><div class="data-label">Store</div><div class="data-value">1118</div></div>
+                <div class="data-item"><div class="data-label">State / POP</div><div class="data-value">Puerto Rico / 1</div></div>
+                <div class="data-item"><div class="data-label">销量 / 销售额</div><div class="data-value">41 / $7,238</div></div>
+            </div>
+        </div>
+
+        <div class="chart-card" style="margin-bottom:30px; width:100%; height:460px;">
+            <div class="chart-title">Top 20 实体店单周销量排名 (Week 17)</div>
+            <div id="storeWeeklyTopChart" class="chart" style="height:380px;"></div>
+            <div class="store-chart-note">说明：图表聚焦实体店，表格保留全部前100店铺并区分 Online / In-store。</div>
+        </div>
+
+        <div class="table-container">
+            <div class="section-header" style="margin-top:0;">
+                <h3 class="section-title" style="font-size:18px;">前100店铺销量清单 (含Online)</h3>
+            </div>
+            <table class="store-weekly-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Store</th>
+                        <th>ID Number</th>
+                        <th>State</th>
+                        <th>Channel</th>
+                        <th>POP</th>
+                        <th>Weekly Sales</th>
+                        <th>Weekly Revenue</th>
+                        <th>Sales Share</th>
+                    </tr>
+                </thead>
+                <tbody id="storeWeeklyTop100Body"></tbody>
+            </table>
+        </div>
+<!-- STORE_WEEKLY_MODULE_END -->
 
         <div class="integrated-chart-container">
             <div class="chart-global-controls">
@@ -1534,6 +1609,11 @@
         };
 
         // ==================== 7. 动态生成表格行 ====================
+// STORE_WEEKLY_DATA_START
+        const storeWeeklyMeta = {"date": "2026/4/19", "activeStoreCount": 877, "top100Sales": 4454, "top100Share": 43.65};
+        const storeWeeklyData = [{"rank": 1, "store": "960", "idNumber": "-", "state": "Online", "channelKey": "online", "channelLabel": "Online", "pop": 0.0, "popText": "0", "sales": 2480, "salesText": "2,480", "revenue": 452049.8, "revenueText": "$452,050", "share": 24.3, "shareText": "24.30%"}, {"rank": 2, "store": "973", "idNumber": "-", "state": "Online", "channelKey": "online", "channelLabel": "Online", "pop": 0.0, "popText": "0", "sales": 130, "salesText": "130", "revenue": 20273.74, "revenueText": "$20,274", "share": 1.27, "shareText": "1.27%"}, {"rank": 3, "store": "1118", "idNumber": "ID001", "state": "Puerto Rico", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 41, "salesText": "41", "revenue": 7237.99, "revenueText": "$7,238", "share": 0.4, "shareText": "0.40%"}, {"rank": 4, "store": "235", "idNumber": "ID005", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 29, "salesText": "29", "revenue": 5198.63, "revenueText": "$5,199", "share": 0.28, "shareText": "0.28%"}, {"rank": 5, "store": "188", "idNumber": "ID107", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 5398.76, "revenueText": "$5,399", "share": 0.27, "shareText": "0.27%"}, {"rank": 6, "store": "1090", "idNumber": "ID076", "state": "-", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 4838.65, "revenueText": "$4,839", "share": 0.26, "shareText": "0.26%"}, {"rank": 7, "store": "353", "idNumber": "ID036", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 26, "salesText": "26", "revenue": 5159.02, "revenueText": "$5,159", "share": 0.25, "shareText": "0.25%"}, {"rank": 8, "store": "1411", "idNumber": "ID003", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 26, "salesText": "26", "revenue": 4808.74, "revenueText": "$4,809", "share": 0.25, "shareText": "0.25%"}, {"rank": 9, "store": "1028", "idNumber": "ID019", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "pop": 0.0, "popText": "0", "sales": 25, "salesText": "25", "revenue": 4758.91, "revenueText": "$4,759", "share": 0.24, "shareText": "0.24%"}, {"rank": 10, "store": "236", "idNumber": "ID009", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 25, "salesText": "25", "revenue": 4578.91, "revenueText": "$4,579", "share": 0.24, "shareText": "0.24%"}, {"rank": 11, "store": "255", "idNumber": "ID359", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4559.0, "revenueText": "$4,559", "share": 0.24, "shareText": "0.24%"}, {"rank": 12, "store": "508", "idNumber": "ID092", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4498.92, "revenueText": "$4,499", "share": 0.24, "shareText": "0.24%"}, {"rank": 13, "store": "1146", "idNumber": "ID257", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4599.09, "revenueText": "$4,599", "share": 0.23, "shareText": "0.23%"}, {"rank": 14, "store": "514", "idNumber": "ID022", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4069.02, "revenueText": "$4,069", "share": 0.22, "shareText": "0.22%"}, {"rank": 15, "store": "559", "idNumber": "ID044", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 2.0, "popText": "2", "sales": 22, "salesText": "22", "revenue": 4048.94, "revenueText": "$4,049", "share": 0.22, "shareText": "0.22%"}, {"rank": 16, "store": "1545", "idNumber": "ID390", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3999.02, "revenueText": "$3,999", "share": 0.22, "shareText": "0.22%"}, {"rank": 17, "store": "507", "idNumber": "ID038", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3919.02, "revenueText": "$3,919", "share": 0.22, "shareText": "0.22%"}, {"rank": 18, "store": "1526", "idNumber": "ID041", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 4209.19, "revenueText": "$4,209", "share": 0.21, "shareText": "0.21%"}, {"rank": 19, "store": "526", "idNumber": "ID006", "state": "Idaho", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 4099.19, "revenueText": "$4,099", "share": 0.21, "shareText": "0.21%"}, {"rank": 20, "store": "558", "idNumber": "ID002", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 4099.15, "revenueText": "$4,099", "share": 0.21, "shareText": "0.21%"}, {"rank": 21, "store": "13", "idNumber": "ID067", "state": "North Dakota", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3979.03, "revenueText": "$3,979", "share": 0.21, "shareText": "0.21%"}, {"rank": 22, "store": "241", "idNumber": "ID017", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3849.03, "revenueText": "$3,849", "share": 0.21, "shareText": "0.21%"}, {"rank": 23, "store": "1531", "idNumber": "ID025", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3838.99, "revenueText": "$3,839", "share": 0.21, "shareText": "0.21%"}, {"rank": 24, "store": "431", "idNumber": "ID102", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 2.0, "popText": "2", "sales": 21, "salesText": "21", "revenue": 3758.99, "revenueText": "$3,759", "share": 0.21, "shareText": "0.21%"}, {"rank": 25, "store": "1498", "idNumber": "ID021", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3748.95, "revenueText": "$3,749", "share": 0.21, "shareText": "0.21%"}, {"rank": 26, "store": "1502", "idNumber": "ID053", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3568.95, "revenueText": "$3,569", "share": 0.21, "shareText": "0.21%"}, {"rank": 27, "store": "125", "idNumber": "ID176", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 4349.36, "revenueText": "$4,349", "share": 0.2, "shareText": "0.20%"}, {"rank": 28, "store": "1459", "idNumber": "ID081", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3839.2, "revenueText": "$3,839", "share": 0.2, "shareText": "0.20%"}, {"rank": 29, "store": "1130", "idNumber": "ID523", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3669.08, "revenueText": "$3,669", "share": 0.2, "shareText": "0.20%"}, {"rank": 30, "store": "237", "idNumber": "ID037", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3559.08, "revenueText": "$3,559", "share": 0.2, "shareText": "0.20%"}, {"rank": 31, "store": "174", "idNumber": "ID030", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3539.04, "revenueText": "$3,539", "share": 0.2, "shareText": "0.20%"}, {"rank": 32, "store": "552", "idNumber": "ID063", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3719.13, "revenueText": "$3,719", "share": 0.19, "shareText": "0.19%"}, {"rank": 33, "store": "141", "idNumber": "ID530", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 19, "salesText": "19", "revenue": 3709.17, "revenueText": "$3,709", "share": 0.19, "shareText": "0.19%"}, {"rank": 34, "store": "58", "idNumber": "ID130", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 19, "salesText": "19", "revenue": 3699.17, "revenueText": "$3,699", "share": 0.19, "shareText": "0.19%"}, {"rank": 35, "store": "226", "idNumber": "ID011", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3679.25, "revenueText": "$3,679", "share": 0.19, "shareText": "0.19%"}, {"rank": 36, "store": "1784", "idNumber": "ID027", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3649.17, "revenueText": "$3,649", "share": 0.19, "shareText": "0.19%"}, {"rank": 37, "store": "221", "idNumber": "ID045", "state": "Oklahoma", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3629.13, "revenueText": "$3,629", "share": 0.19, "shareText": "0.19%"}, {"rank": 38, "store": "51", "idNumber": "ID023", "state": "Kansas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3559.09, "revenueText": "$3,559", "share": 0.19, "shareText": "0.19%"}, {"rank": 39, "store": "395", "idNumber": "ID008", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3539.09, "revenueText": "$3,539", "share": 0.19, "shareText": "0.19%"}, {"rank": 40, "store": "1530", "idNumber": "ID007", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3499.13, "revenueText": "$3,499", "share": 0.19, "shareText": "0.19%"}, {"rank": 41, "store": "852", "idNumber": "ID155", "state": "Hawaii", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3469.17, "revenueText": "$3,469", "share": 0.19, "shareText": "0.19%"}, {"rank": 42, "store": "167", "idNumber": "ID083", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 19, "salesText": "19", "revenue": 3449.09, "revenueText": "$3,449", "share": 0.19, "shareText": "0.19%"}, {"rank": 43, "store": "289", "idNumber": "ID093", "state": "Nevada", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3419.13, "revenueText": "$3,419", "share": 0.19, "shareText": "0.19%"}, {"rank": 44, "store": "181", "idNumber": "ID057", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3659.34, "revenueText": "$3,659", "share": 0.18, "shareText": "0.18%"}, {"rank": 45, "store": "212", "idNumber": "ID060", "state": "Colorado", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3609.26, "revenueText": "$3,609", "share": 0.18, "shareText": "0.18%"}, {"rank": 46, "store": "147", "idNumber": "ID117", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3599.3, "revenueText": "$3,599", "share": 0.18, "shareText": "0.18%"}, {"rank": 47, "store": "176", "idNumber": "ID164", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3489.3, "revenueText": "$3,489", "share": 0.18, "shareText": "0.18%"}, {"rank": 48, "store": "839", "idNumber": "ID199", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3469.22, "revenueText": "$3,469", "share": 0.18, "shareText": "0.18%"}, {"rank": 49, "store": "50", "idNumber": "ID178", "state": "Nebraska", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3449.18, "revenueText": "$3,449", "share": 0.18, "shareText": "0.18%"}, {"rank": 50, "store": "1401", "idNumber": "ID225", "state": "Oklahoma", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3439.22, "revenueText": "$3,439", "share": 0.18, "shareText": "0.18%"}, {"rank": 51, "store": "498", "idNumber": "ID113", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3419.18, "revenueText": "$3,419", "share": 0.18, "shareText": "0.18%"}, {"rank": 52, "store": "488", "idNumber": "ID004", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3369.22, "revenueText": "$3,369", "share": 0.18, "shareText": "0.18%"}, {"rank": 53, "store": "829", "idNumber": "ID279", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3259.18, "revenueText": "$3,259", "share": 0.18, "shareText": "0.18%"}, {"rank": 54, "store": "165", "idNumber": "ID143", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3209.18, "revenueText": "$3,209", "share": 0.18, "shareText": "0.18%"}, {"rank": 55, "store": "17", "idNumber": "ID049", "state": "South Dakota", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3159.14, "revenueText": "$3,159", "share": 0.18, "shareText": "0.18%"}, {"rank": 56, "store": "1790", "idNumber": "ID321", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3629.47, "revenueText": "$3,629", "share": 0.17, "shareText": "0.17%"}, {"rank": 57, "store": "497", "idNumber": "ID098", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3389.27, "revenueText": "$3,389", "share": 0.17, "shareText": "0.17%"}, {"rank": 58, "store": "1537", "idNumber": "ID110", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3349.31, "revenueText": "$3,349", "share": 0.17, "shareText": "0.17%"}, {"rank": 59, "store": "1517", "idNumber": "ID336", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3349.27, "revenueText": "$3,349", "share": 0.17, "shareText": "0.17%"}, {"rank": 60, "store": "560", "idNumber": "ID123", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3309.27, "revenueText": "$3,309", "share": 0.17, "shareText": "0.17%"}, {"rank": 61, "store": "135", "idNumber": "ID467", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3259.31, "revenueText": "$3,259", "share": 0.17, "shareText": "0.17%"}, {"rank": 62, "store": "357", "idNumber": "ID140", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3219.23, "revenueText": "$3,219", "share": 0.17, "shareText": "0.17%"}, {"rank": 63, "store": "233", "idNumber": "ID340", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3179.27, "revenueText": "$3,179", "share": 0.17, "shareText": "0.17%"}, {"rank": 64, "store": "2517", "idNumber": "ID104", "state": "Oregon", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3159.23, "revenueText": "$3,159", "share": 0.17, "shareText": "0.17%"}, {"rank": 65, "store": "482", "idNumber": "ID197", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3159.15, "revenueText": "$3,159", "share": 0.17, "shareText": "0.17%"}, {"rank": 66, "store": "565", "idNumber": "ID156", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3139.23, "revenueText": "$3,139", "share": 0.17, "shareText": "0.17%"}, {"rank": 67, "store": "1064", "idNumber": "ID337", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3109.19, "revenueText": "$3,109", "share": 0.17, "shareText": "0.17%"}, {"rank": 68, "store": "862", "idNumber": "ID314", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3099.15, "revenueText": "$3,099", "share": 0.17, "shareText": "0.17%"}, {"rank": 69, "store": "543", "idNumber": "ID085", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3019.19, "revenueText": "$3,019", "share": 0.17, "shareText": "0.17%"}, {"rank": 70, "store": "663", "idNumber": "ID061", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 2989.19, "revenueText": "$2,989", "share": 0.17, "shareText": "0.17%"}, {"rank": 71, "store": "1473", "idNumber": "ID034", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 2989.15, "revenueText": "$2,989", "share": 0.17, "shareText": "0.17%"}, {"rank": 72, "store": "555", "idNumber": "ID032", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 2959.15, "revenueText": "$2,959", "share": 0.17, "shareText": "0.17%"}, {"rank": 73, "store": "340", "idNumber": "ID013", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 2939.19, "revenueText": "$2,939", "share": 0.17, "shareText": "0.17%"}, {"rank": 74, "store": "1413", "idNumber": "ID135", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3269.4, "revenueText": "$3,269", "share": 0.16, "shareText": "0.16%"}, {"rank": 75, "store": "451", "idNumber": "ID147", "state": "Oregon", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3259.36, "revenueText": "$3,259", "share": 0.16, "shareText": "0.16%"}, {"rank": 76, "store": "1124", "idNumber": "ID012", "state": "Colorado", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3099.36, "revenueText": "$3,099", "share": 0.16, "shareText": "0.16%"}, {"rank": 77, "store": "561", "idNumber": "ID079", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 16, "salesText": "16", "revenue": 3029.32, "revenueText": "$3,029", "share": 0.16, "shareText": "0.16%"}, {"rank": 78, "store": "477", "idNumber": "ID191", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3019.36, "revenueText": "$3,019", "share": 0.16, "shareText": "0.16%"}, {"rank": 79, "store": "509", "idNumber": "ID456", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3009.24, "revenueText": "$3,009", "share": 0.16, "shareText": "0.16%"}, {"rank": 80, "store": "1491", "idNumber": "ID073", "state": "Oregon", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2999.24, "revenueText": "$2,999", "share": 0.16, "shareText": "0.16%"}, {"rank": 81, "store": "1527", "idNumber": "ID120", "state": "Wyoming", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2979.28, "revenueText": "$2,979", "share": 0.16, "shareText": "0.16%"}, {"rank": 82, "store": "438", "idNumber": "ID058", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 16, "salesText": "16", "revenue": 2949.28, "revenueText": "$2,949", "share": 0.16, "shareText": "0.16%"}, {"rank": 83, "store": "527", "idNumber": "ID051", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2949.28, "revenueText": "$2,949", "share": 0.16, "shareText": "0.16%"}, {"rank": 84, "store": "948", "idNumber": "ID169", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2899.28, "revenueText": "$2,899", "share": 0.16, "shareText": "0.16%"}, {"rank": 85, "store": "557", "idNumber": "ID344", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 16, "salesText": "16", "revenue": 2869.24, "revenueText": "$2,869", "share": 0.16, "shareText": "0.16%"}, {"rank": 86, "store": "187", "idNumber": "ID149", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 2.0, "popText": "2", "sales": 16, "salesText": "16", "revenue": 2859.24, "revenueText": "$2,859", "share": 0.16, "shareText": "0.16%"}, {"rank": 87, "store": "793", "idNumber": "ID087", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2789.2, "revenueText": "$2,789", "share": 0.16, "shareText": "0.16%"}, {"rank": 88, "store": "685", "idNumber": "ID205", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 3149.49, "revenueText": "$3,149", "share": 0.15, "shareText": "0.15%"}, {"rank": 89, "store": "821", "idNumber": "ID322", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 3019.41, "revenueText": "$3,019", "share": 0.15, "shareText": "0.15%"}, {"rank": 90, "store": "776", "idNumber": "ID454", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2969.49, "revenueText": "$2,969", "share": 0.15, "shareText": "0.15%"}, {"rank": 91, "store": "445", "idNumber": "ID148", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2919.37, "revenueText": "$2,919", "share": 0.15, "shareText": "0.15%"}, {"rank": 92, "store": "1428", "idNumber": "ID167", "state": "South Carolina", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2849.33, "revenueText": "$2,849", "share": 0.15, "shareText": "0.15%"}, {"rank": 93, "store": "378", "idNumber": "ID015", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2839.37, "revenueText": "$2,839", "share": 0.15, "shareText": "0.15%"}, {"rank": 94, "store": "169", "idNumber": "ID033", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 15, "salesText": "15", "revenue": 2829.33, "revenueText": "$2,829", "share": 0.15, "shareText": "0.15%"}, {"rank": 95, "store": "496", "idNumber": "ID020", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2829.29, "revenueText": "$2,829", "share": 0.15, "shareText": "0.15%"}, {"rank": 96, "store": "216", "idNumber": "ID174", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "pop": 3.0, "popText": "3", "sales": 15, "salesText": "15", "revenue": 2819.37, "revenueText": "$2,819", "share": 0.15, "shareText": "0.15%"}, {"rank": 97, "store": "495", "idNumber": "ID042", "state": "Louisiana", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2819.37, "revenueText": "$2,819", "share": 0.15, "shareText": "0.15%"}, {"rank": 98, "store": "104", "idNumber": "ID379", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2809.37, "revenueText": "$2,809", "share": 0.15, "shareText": "0.15%"}, {"rank": 99, "store": "1475", "idNumber": "ID476", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "pop": 2.0, "popText": "2", "sales": 15, "salesText": "15", "revenue": 2799.33, "revenueText": "$2,799", "share": 0.15, "shareText": "0.15%"}, {"rank": 100, "store": "249", "idNumber": "ID491", "state": "Arizona", "channelKey": "in-store", "channelLabel": "In-store", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2789.29, "revenueText": "$2,789", "share": 0.15, "shareText": "0.15%"}];
+// STORE_WEEKLY_DATA_END
+
         function generateSummaryTableRows() {
             const tbody = document.getElementById('skuTableBody');
             if (!tbody) return;
@@ -2238,6 +2318,78 @@
         }
 
         // ==================== 10. 页面加载完成后执行 ====================
+// STORE_WEEKLY_RENDER_START
+        function renderStoreWeeklyModule() {
+            const chartDom = document.getElementById('storeWeeklyTopChart');
+            const tableBody = document.getElementById('storeWeeklyTop100Body');
+            if (!chartDom || !tableBody || !Array.isArray(storeWeeklyData)) return;
+
+            const inStoreTop20 = storeWeeklyData.filter(row => row.channelKey === 'in-store').slice(0, 20);
+            const chart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
+            chart.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: (params) => {
+                        const row = inStoreTop20[params[0].dataIndex];
+                        if (!row) return '';
+                        return [
+                            `<strong>Store ${row.store}</strong>`,
+                            `${row.state} | ${row.channelLabel}`,
+                            `ID Number: ${row.idNumber}`,
+                            `销量: ${row.salesText}`,
+                            `销售额: ${row.revenueText}`,
+                            `销量占比: ${row.shareText}`,
+                            `POP: ${row.popText}`
+                        ].join('<br/>');
+                    }
+                },
+                grid: { left: '8%', right: '8%', top: '8%', bottom: '8%', containLabel: true },
+                xAxis: {
+                    type: 'value',
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    splitLine: { lineStyle: { color: '#2c3e50' } },
+                    axisLabel: { color: '#ecf0f1' }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: inStoreTop20.map(row => `#${row.rank} ${row.store}`),
+                    axisLine: { lineStyle: { color: '#ecf0f1' } },
+                    axisLabel: { color: '#ecf0f1', fontSize: 11 }
+                },
+                series: [{
+                    type: 'bar',
+                    data: inStoreTop20.map(row => ({
+                        value: row.sales,
+                        itemStyle: { color: '#3498db' }
+                    })),
+                    label: {
+                        show: true,
+                        position: 'right',
+                        color: '#ecf0f1',
+                        fontWeight: 'bold',
+                        formatter: (params) => inStoreTop20[params.dataIndex]?.salesText || params.value
+                    }
+                }]
+            });
+
+            tableBody.innerHTML = storeWeeklyData.map(row => `
+                <tr>
+                    <td class="store-num">${row.rank}</td>
+                    <td><strong>${row.store}</strong></td>
+                    <td>${row.idNumber}</td>
+                    <td>${row.state}</td>
+                    <td><span class="store-channel-tag ${row.channelKey}">${row.channelLabel}</span></td>
+                    <td class="store-num">${row.popText}</td>
+                    <td class="store-num">${row.salesText}</td>
+                    <td class="store-num">${row.revenueText}</td>
+                    <td class="store-num">${row.shareText}</td>
+                </tr>
+            `).join('');
+        }
+        
+// STORE_WEEKLY_RENDER_END
+
         window.onload = function() {
             generateSummaryTableRows();
             initMacroCharts();
@@ -2247,8 +2399,8 @@
             renderChart();
             updatePromoCards();
             bindEvents();
-
-            document.querySelectorAll('.table-filter-item').forEach(item => {
+            renderStoreWeeklyModule();
+document.querySelectorAll('.table-filter-item').forEach(item => {
                 item.addEventListener('click', function() {
                     const filter = this.getAttribute('data-filter');
                     document.querySelectorAll('.table-filter-item').forEach(i => i.classList.remove('active'));

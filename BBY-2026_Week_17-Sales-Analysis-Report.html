@@ -1538,7 +1538,17 @@
             { date: '2026/4/5', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
             { date: '2026/4/5', sku: 'T921-ST-BK-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
             { date: '2026/4/5', sku: 'T921-ST-GY-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'T921-ST-SB-US-326', promoPrice: 159.99, days: 3, rate: 20, savings: 40 }
+            { date: '2026/4/5', sku: 'T921-ST-SB-US-326', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/19', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 169.99, days: 1, rate: 20, savings: 30 },
+            { date: '2026/4/19', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 3, rate: 22, savings: 35 },
+            { date: '2026/4/19', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 3, rate: 22, savings: 35 },
+            { date: '2026/4/19', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 3, rate: 22, savings: 35 },
+            { date: '2026/4/19', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 3, rate: 22, savings: 35 },
+            { date: '2026/4/19', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 109.99, days: 1, rate: 31, savings: 50 },
+            { date: '2026/4/19', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 2, rate: 22, savings: 35 },
+            { date: '2026/4/19', sku: 'S820-ST-BY-US-326', promoPrice: 149.99, days: 1, rate: 22, savings: 30 },
+            { date: '2026/4/19', sku: 'T511-ST-SB-US-326', promoPrice: 89.99, days: 1, rate: 25, savings: 30 },
+            { date: '2026/4/19', sku: 'T921-ST-SB-US-326', promoPrice: 159.99, days: 1, rate: 20, savings: 40 }
         ];
 
         promoList.forEach(p => {
@@ -1589,12 +1599,12 @@
         // ==================== 6. 大类汇总数据（Week17） ====================
         const summaryData = {
             'T910': { sales: 19, changePercent: -61.22, changeRaw: -30, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T511': { sales: 480, changePercent: -51.00, changeRaw: -496, priceTier: '低端', msrp: 119.95, finalPrice: 119.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T511-SB': { sales: 179, changePercent: -42.00, changeRaw: -129, priceTier: '低端', msrp: 119.95, finalPrice: 119.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S820-SB': { sales: 803, changePercent: -45.00, changeRaw: -661, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S820': { sales: 3950, changePercent: -3.00, changeRaw: -134, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S810-SB': { sales: 118, changePercent: -53.00, changeRaw: -134, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S810': { sales: 145, changePercent: -51.00, changeRaw: -151, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'T511': { sales: 480, changePercent: -51.00, changeRaw: -496, priceTier: '低端', msrp: 119.95, finalPrice: 89.99, days: 1, discountRate: 25.00, savings: 30.00 },
+            'T511-SB': { sales: 179, changePercent: -42.00, changeRaw: -129, priceTier: '低端', msrp: 119.95, finalPrice: 89.99, days: 1, discountRate: 25.00, savings: 30.00 },
+            'S820-SB': { sales: 803, changePercent: -45.00, changeRaw: -661, priceTier: '高端', msrp: 179.95, finalPrice: 149.99, days: 1, discountRate: 22.00, savings: 30.00 },
+            'S820': { sales: 3950, changePercent: -3.00, changeRaw: -134, priceTier: '高端', msrp: 179.95, finalPrice: 149.99, days: 1, discountRate: 22.00, savings: 30.00 },
+            'S810-SB': { sales: 118, changePercent: -53.00, changeRaw: -134, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 2, discountRate: 22.00, savings: 35.00 },
+            'S810': { sales: 145, changePercent: -51.00, changeRaw: -151, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 3, discountRate: 22.00, savings: 35.00 },
             'S803': { sales: 834, changePercent: 27.00, changeRaw: 178, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'S661': { sales: 0, changePercent: 0.00, changeRaw: 0, priceTier: '低端', msrp: 79.95, finalPrice: 79.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'C120-AN': { sales: 266, changePercent: -19.00, changeRaw: -63, priceTier: '高端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
@@ -1602,9 +1612,9 @@
             'S700': { sales: 0, changePercent: 0.00, changeRaw: 0, priceTier: '', msrp: 149.95, finalPrice: 149.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'S710': { sales: 436, changePercent: -12.00, changeRaw: -57, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'T920': { sales: 157, changePercent: -22.00, changeRaw: -44, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'E310': { sales: 1127, changePercent: -13.00, changeRaw: 59, priceTier: '高端', msrp: 199.99, finalPrice: 199.99, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T921': { sales: 1114, changePercent: -22.00, changeRaw: -323, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T921-SB': { sales: 479, changePercent: -45.00, changeRaw: -385, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'E310': { sales: 1127, changePercent: -13.00, changeRaw: 59, priceTier: '高端', msrp: 199.99, finalPrice: 169.99, days: 1, discountRate: 20.00, savings: 30.00 },
+            'T921': { sales: 1114, changePercent: -22.00, changeRaw: -323, priceTier: '高端', msrp: 199.95, finalPrice: 159.99, days: 1, discountRate: 20.00, savings: 40.00 },
+            'T921-SB': { sales: 479, changePercent: -45.00, changeRaw: -385, priceTier: '高端', msrp: 199.95, finalPrice: 159.99, days: 1, discountRate: 20.00, savings: 40.00 },
             'T010': { sales: 1470, changePercent: 13.00, changeRaw: 165, priceTier: '高端', msrp: 249.99, finalPrice: 249.99, days: 0, discountRate: 0.00, savings: 0.00 }
         };
 

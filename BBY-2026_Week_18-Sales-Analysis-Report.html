@@ -126,6 +126,11 @@
         .store-channel-tag.online { background: rgba(243,156,18,0.18); color: #f7c66c; border: 1px solid rgba(243,156,18,0.4); }
         .store-channel-tag.in-store { background: rgba(52,152,219,0.18); color: #7fc8ff; border: 1px solid rgba(52,152,219,0.4); }
         .store-chart-note { margin-top: 12px; font-size: 13px; color: #aaa; text-align: center; }
+        .store-filter-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+        .store-filter-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .store-filter-label { color: #aaa; font-size: 13px; }
+        .store-filter-select { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 6px 12px; font-size: 13px; min-width: 180px; }
+        .store-filter-summary { color: #aaa; font-size: 13px; }
         .store-num { text-align: right; white-space: nowrap; }
         .store-weekly-table th, .store-weekly-table td { font-size: 13px; }
         
@@ -370,6 +375,8 @@
                     </tbody>
             </table>
         </div>
+
+
 <!-- STORE_WEEKLY_MODULE_START -->
         <h2 class="section-title">🏪 单店单周销量表现 (Week 18)</h2>
         <div class="summary-card">
@@ -415,6 +422,15 @@
         <div class="table-container">
             <div class="section-header" style="margin-top:0;">
                 <h3 class="section-title" style="font-size:18px;">前100店铺销量清单 (含Online)</h3>
+            </div>
+            <div class="store-filter-bar">
+                <div class="store-filter-group">
+                    <span class="store-filter-label">Store Type 筛选</span>
+                    <select id="storeTypeFilter" class="store-filter-select">
+                        <option value="all">全部 Store Type</option>
+                    </select>
+                </div>
+                <div id="storeTypeFilterSummary" class="store-filter-summary">当前显示全部前100店铺</div>
             </div>
             <table class="store-weekly-table">
                 <thead>
@@ -2345,7 +2361,9 @@
         function renderStoreWeeklyModule() {
             const chartDom = document.getElementById('storeWeeklyTopChart');
             const tableBody = document.getElementById('storeWeeklyTop100Body');
-            if (!chartDom || !tableBody || !Array.isArray(storeWeeklyData)) return;
+            const typeFilter = document.getElementById('storeTypeFilter');
+            const filterSummary = document.getElementById('storeTypeFilterSummary');
+            if (!chartDom || !tableBody || !typeFilter || !Array.isArray(storeWeeklyData)) return;
 
             const inStoreTop20 = storeWeeklyData.filter(row => row.channelKey === 'in-store').slice(0, 20);
             const chart = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
@@ -2364,9 +2382,9 @@
                             `${row.state} | ${row.channelLabel}`,
                             `ID Number: ${row.idNumber}`,
                             `Store Type: ${typeLine}`,
-                            `销量: ${row.salesText}`,
-                            `销售额: ${row.revenueText}`,
-                            `销量占比: ${row.shareText}`,
+                            `Weekly Sales: ${row.salesText}`,
+                            `Weekly Revenue: ${row.revenueText}`,
+                            `Sales Share: ${row.shareText}`,
                             `POP: ${row.popText}`
                         ].join('<br/>');
                     }
@@ -2400,20 +2418,47 @@
                 }]
             });
 
-            tableBody.innerHTML = storeWeeklyData.map(row => `
-                <tr>
-                    <td class="store-num">${row.rank}</td>
-                    <td><strong>${row.store}</strong></td>
-                    <td>${row.idNumber}</td>
-                    <td>${row.state}</td>
-                    <td><span class="store-channel-tag ${row.channelKey}">${row.channelLabel}</span></td>
-                    <td>${row.storeTypeLabel}${row.storeTypeDesc && row.storeTypeDesc !== '-' && row.channelKey !== 'online' ? `<br/><span style="color:#aaa;font-size:12px;">${row.storeTypeDesc}</span>` : ''}</td>
-                    <td class="store-num">${row.popText}</td>
-                    <td class="store-num">${row.salesText}</td>
-                    <td class="store-num">${row.revenueText}</td>
-                    <td class="store-num">${row.shareText}</td>
-                </tr>
-            `).join('');
+            const preferredStoreTypes = ['Online Aggregate', 'SideStock', '14in BD', '35K 2ft EC', 'No POP'];
+            const seenTypes = new Set(storeWeeklyData.map(row => row.storeTypeLabel).filter(Boolean));
+            const orderedStoreTypes = preferredStoreTypes.filter(type => seenTypes.has(type));
+            const extraTypes = Array.from(seenTypes).filter(type => !preferredStoreTypes.includes(type)).sort();
+            const typeOptions = ['all'].concat(orderedStoreTypes, extraTypes);
+
+            typeFilter.innerHTML = typeOptions.map(type => {
+                const label = type === 'all' ? '全部 Store Type' : type;
+                return `<option value="${type}">${label}</option>`;
+            }).join('');
+
+            const renderStoreTable = () => {
+                const selectedType = typeFilter.value || 'all';
+                const filteredRows = selectedType === 'all'
+                    ? storeWeeklyData
+                    : storeWeeklyData.filter(row => row.storeTypeLabel === selectedType);
+                const filteredSales = filteredRows.reduce((sum, row) => sum + (row.sales || 0), 0);
+                if (filterSummary) {
+                    filterSummary.innerText = selectedType === 'all'
+                        ? `当前显示全部前100店铺，共 ${filteredRows.length} 家，销量 ${filteredSales.toLocaleString()}`
+                        : `当前显示 ${selectedType}，共 ${filteredRows.length} 家，销量 ${filteredSales.toLocaleString()}`;
+                }
+
+                tableBody.innerHTML = filteredRows.map(row => `
+                    <tr>
+                        <td class="store-num">${row.rank}</td>
+                        <td><strong>${row.store}</strong></td>
+                        <td>${row.idNumber}</td>
+                        <td>${row.state}</td>
+                        <td><span class="store-channel-tag ${row.channelKey}">${row.channelLabel}</span></td>
+                        <td>${row.storeTypeLabel}${row.storeTypeDesc && row.storeTypeDesc !== '-' && row.channelKey !== 'online' ? `<br/><span style="color:#aaa;font-size:12px;">${row.storeTypeDesc}</span>` : ''}</td>
+                        <td class="store-num">${row.popText}</td>
+                        <td class="store-num">${row.salesText}</td>
+                        <td class="store-num">${row.revenueText}</td>
+                        <td class="store-num">${row.shareText}</td>
+                    </tr>
+                `).join('');
+            };
+
+            typeFilter.onchange = renderStoreTable;
+            renderStoreTable();
         }
         
 // STORE_WEEKLY_RENDER_END

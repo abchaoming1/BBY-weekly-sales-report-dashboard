@@ -357,6 +357,7 @@
             <div class="table-filter-item active" data-filter="all">全部产品线</div>
             <div class="table-filter-item" data-filter="bone">骨导线</div>
             <div class="table-filter-item" data-filter="air">气导线</div>
+            <div class="table-filter-item" data-filter="promo">本周促销</div>
         </div>
         <div class="table-container">
             <table id="skuTable">
@@ -1678,7 +1679,7 @@
                 else keyMsg = '无销量';
                 if (days > 0) keyMsg += ' / 大促';
 
-                html += `<tr class="product-line-all product-line-${lineDisplay}" data-line="${lineDisplay}">`;
+                html += `<tr class="product-line-all product-line-${lineDisplay} ${days > 0 ? 'product-line-promo' : ''}" data-line="${lineDisplay}" data-promo="${days > 0 ? '1' : '0'}">`;
                 html += `<td>${sku}</td>`;
                 html += `<td>${sales}</td>`;
                 html += `<td class="${changeClass}">${changeText}</td>`;
@@ -1693,7 +1694,7 @@
                 html += `</tr>`;
 
                 // 原因分析行
-                html += `<tr class="sku-reason-row sku-reason-all sku-reason-${lineDisplay}">`;
+                html += `<tr class="sku-reason-row sku-reason-all sku-reason-${lineDisplay} ${days > 0 ? 'sku-reason-promo' : ''}" data-line="${lineDisplay}" data-promo="${days > 0 ? '1' : '0'}">`;
                 html += `<td colspan="11" class="sku-reason-cell"><div class="sku-reason-title">${sku} 分析</div>`;
                 html += `本周销量 ${sales} 条，环比 ${changeText}，条数变化 ${changeRaw}。`;
                 if (days > 0) {
@@ -2437,6 +2438,7 @@
                         if (filter === 'all') row.style.display = (row.classList.contains('product-line-all')||row.classList.contains('sku-reason-all')) ? 'table-row' : 'none';
                         else if (filter === 'bone') row.style.display = (row.classList.contains('product-line-bone')||row.classList.contains('sku-reason-bone')) ? 'table-row' : 'none';
                         else if (filter === 'air') row.style.display = (row.classList.contains('product-line-air')||row.classList.contains('sku-reason-air')) ? 'table-row' : 'none';
+                        else if (filter === 'promo') row.style.display = (row.classList.contains('product-line-promo')||row.classList.contains('sku-reason-promo')) ? 'table-row' : 'none';
                     });
                 });
             });

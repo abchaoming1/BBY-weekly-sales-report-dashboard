@@ -136,6 +136,29 @@
         
 /* STORE_WEEKLY_STYLE_END */
 
+/* PROMO_TREND_STYLE_START */
+        .kpi-charts-container { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+        .promo-trend-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(87, 199, 255, 0.18);
+            background: linear-gradient(180deg, rgba(87, 199, 255, 0.10) 0%, rgba(22, 33, 62, 0.98) 28%, rgba(22, 33, 62, 1) 100%);
+        }
+        .promo-trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #57c7ff 0%, #7b8cff 52%, #ffb347 100%);
+            opacity: 0.95;
+        }
+        .promo-trend-card .kpi-chart-title {
+            letter-spacing: 0.02em;
+        }
+/* PROMO_TREND_STYLE_END */
+
 </style>
 </head>
 <body>
@@ -200,6 +223,12 @@
             <div class="kpi-chart-card"><div class="kpi-chart-title">本周总销售额 - 十三周趋势</div><div id="totalRevenueChart" class="kpi-chart"></div></div>
             <div class="kpi-chart-card"><div class="kpi-chart-title">线上销售占比 - 十三周趋势</div><div id="onlineSalesChart" class="kpi-chart"></div></div>
             <div class="kpi-chart-card"><div class="kpi-chart-title">POP单店单周 - 十三周趋势</div><div id="popSalesChart" class="kpi-chart"></div></div>
+<!-- PROMO_TREND_CARD_START -->
+            <div class="kpi-chart-card promo-trend-card">
+                <div class="kpi-chart-title">本周促销强度 - 十三周趋势</div>
+                <div id="promoTrendChart" class="kpi-chart"></div>
+            </div>
+<!-- PROMO_TREND_CARD_END -->
         </div>
         
         <div class="summary-card">
@@ -2271,6 +2300,134 @@
                     label: { show: true, position: 'top', color: '#ecf0f1', fontWeight: 'bold', fontSize: 11, formatter: (params) => params.value.toFixed(2) }
                 }]
             });
+
+// PROMO_TREND_CHART_START
+            const promoTrendChartDom = document.getElementById('promoTrendChart');
+            if (promoTrendChartDom) {
+                const promoTrendWeekly = weekDates.map((weekDate, index) => {
+                    const rows = promoList.filter(item => item.date === weekDate);
+                    const promoSkuCount = new Set(rows.map(item => item.sku)).size;
+                    const avgDiscountRate = rows.length
+                        ? rows.reduce((sum, item) => sum + (Number(item.rate) || 0), 0) / rows.length
+                        : 0;
+                    const avgPromoDays = rows.length
+                        ? rows.reduce((sum, item) => sum + (Number(item.days) || 0), 0) / rows.length
+                        : 0;
+                    const totalPromoDays = rows.reduce((sum, item) => sum + (Number(item.days) || 0), 0);
+                    return {
+                        week: weeks[index],
+                        date: weekDate,
+                        promoSkuCount,
+                        avgDiscountRate: Number(avgDiscountRate.toFixed(1)),
+                        avgPromoDays: Number(avgPromoDays.toFixed(1)),
+                        totalPromoDays
+                    };
+                });
+
+                const maxDiscountRate = Math.max(...promoTrendWeekly.map(item => item.avgDiscountRate), 0);
+                const promoTrendChart = echarts.getInstanceByDom(promoTrendChartDom) || echarts.init(promoTrendChartDom);
+                promoTrendChart.setOption({
+                    tooltip: {
+                        trigger: 'axis',
+                        backgroundColor: 'rgba(10, 16, 30, 0.94)',
+                        borderColor: 'rgba(87, 199, 255, 0.28)',
+                        textStyle: { color: '#ecf0f1' },
+                        formatter: (params) => {
+                            const point = promoTrendWeekly[params[0]?.dataIndex ?? 0];
+                            if (!point) return '';
+                            return [
+                                `<strong>${point.week}</strong>`,
+                                `日期: ${point.date}`,
+                                `促销SKU数: ${point.promoSkuCount}`,
+                                `平均折扣率: ${point.avgDiscountRate.toFixed(1)}%`,
+                                `平均促销天数: ${point.avgPromoDays.toFixed(1)}天`,
+                                `总促销天数: ${point.totalPromoDays}`
+                            ].join('<br/>');
+                        }
+                    },
+                    legend: {
+                        data: ['促销SKU数', '平均折扣率'],
+                        top: 0,
+                        textStyle: { color: '#ecf0f1' }
+                    },
+                    grid: { left: '8%', right: '8%', top: '18%', bottom: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: weeks,
+                        axisLine: { lineStyle: { color: '#ecf0f1' } },
+                        axisLabel: { color: '#ecf0f1' }
+                    },
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: 'SKU数',
+                            minInterval: 1,
+                            axisLine: { lineStyle: { color: '#ecf0f1' } },
+                            axisLabel: { color: '#ecf0f1' },
+                            splitLine: { lineStyle: { color: '#2c3e50' } }
+                        },
+                        {
+                            type: 'value',
+                            name: '折扣%',
+                            min: 0,
+                            max: Math.max(35, Math.ceil(maxDiscountRate / 5) * 5),
+                            axisLine: { lineStyle: { color: '#ecf0f1' } },
+                            axisLabel: { color: '#ecf0f1', formatter: value => `${value}%` },
+                            splitLine: { show: false }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '促销SKU数',
+                            type: 'line',
+                            smooth: true,
+                            data: promoTrendWeekly.map(item => item.promoSkuCount),
+                            lineStyle: { color: '#57c7ff', width: 3 },
+                            itemStyle: { color: '#57c7ff' },
+                            areaStyle: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                    { offset: 0, color: 'rgba(87, 199, 255, 0.32)' },
+                                    { offset: 1, color: 'rgba(87, 199, 255, 0.04)' }
+                                ])
+                            },
+                            symbol: 'circle',
+                            symbolSize: 7,
+                            label: {
+                                show: true,
+                                position: 'top',
+                                color: '#dff6ff',
+                                fontWeight: 'bold',
+                                fontSize: 11,
+                                formatter: params => params.value ? params.value : ''
+                            },
+                            labelLayout: { hideOverlap: true },
+                            emphasis: { focus: 'series' }
+                        },
+                        {
+                            name: '平均折扣率',
+                            type: 'line',
+                            smooth: true,
+                            yAxisIndex: 1,
+                            data: promoTrendWeekly.map(item => item.avgDiscountRate),
+                            lineStyle: { color: '#ffb347', width: 3, type: 'dashed' },
+                            itemStyle: { color: '#ffb347' },
+                            symbol: 'diamond',
+                            symbolSize: 7,
+                            label: {
+                                show: true,
+                                position: 'bottom',
+                                color: '#ffcf7a',
+                                fontWeight: 'bold',
+                                fontSize: 11,
+                                formatter: params => params.value ? `${Math.round(params.value)}%` : ''
+                            },
+                            labelLayout: { hideOverlap: true },
+                            emphasis: { focus: 'series' }
+                        }
+                    ]
+                });
+            }
+// PROMO_TREND_CHART_END
 
             echarts.init(document.getElementById('newProductTrendChart')).setOption({
                 tooltip: { trigger: 'axis' },

@@ -137,25 +137,156 @@
 /* STORE_WEEKLY_STYLE_END */
 
 /* PROMO_TREND_STYLE_START */
-        .kpi-charts-container { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-        .promo-trend-card {
+        .promo-trend-strip {
             position: relative;
             overflow: hidden;
+            margin-bottom: 28px;
+            padding: 22px 24px 20px;
+            border-radius: 14px;
             border: 1px solid rgba(87, 199, 255, 0.18);
-            background: linear-gradient(180deg, rgba(87, 199, 255, 0.10) 0%, rgba(22, 33, 62, 0.98) 28%, rgba(22, 33, 62, 1) 100%);
+            background:
+                radial-gradient(circle at top right, rgba(123, 140, 255, 0.16), transparent 28%),
+                linear-gradient(180deg, rgba(87, 199, 255, 0.08) 0%, rgba(22, 33, 62, 0.98) 24%, rgba(22, 33, 62, 1) 100%);
+            box-shadow: 0 18px 40px rgba(5, 10, 25, 0.28);
         }
-        .promo-trend-card::before {
+        .promo-trend-strip::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, #57c7ff 0%, #7b8cff 52%, #ffb347 100%);
-            opacity: 0.95;
+            background: linear-gradient(90deg, #57c7ff 0%, #7b8cff 50%, #ffb347 100%);
         }
-        .promo-trend-card .kpi-chart-title {
+        .promo-trend-strip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .promo-trend-copy {
+            min-width: 280px;
+        }
+        .promo-trend-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #57c7ff;
             letter-spacing: 0.02em;
+            margin-bottom: 6px;
+        }
+        .promo-trend-subtitle {
+            font-size: 13px;
+            color: rgba(236, 240, 241, 0.76);
+            line-height: 1.5;
+        }
+        .promo-trend-metrics {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .promo-trend-metric {
+            min-width: 112px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .promo-trend-metric-value {
+            display: block;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ecf0f1;
+            line-height: 1.2;
+        }
+        .promo-trend-metric-label {
+            display: block;
+            margin-top: 4px;
+            font-size: 12px;
+            color: rgba(236, 240, 241, 0.68);
+        }
+        .promo-trend-chart {
+            width: 100%;
+            height: 255px;
+            margin-bottom: 18px;
+        }
+        .promo-sku-strip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .promo-sku-strip-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ecf0f1;
+        }
+        .promo-sku-strip-note {
+            font-size: 12px;
+            color: rgba(236, 240, 241, 0.68);
+        }
+        .promo-sku-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+        }
+        .promo-sku-chip,
+        .promo-sku-empty {
+            border-radius: 12px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .promo-sku-chip-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        .promo-sku-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ecf0f1;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+        .promo-sku-rate {
+            flex-shrink: 0;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(255, 179, 71, 0.14);
+            color: #ffcf7a;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .promo-sku-chip-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .promo-sku-meta {
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(87, 199, 255, 0.08);
+            color: rgba(236, 240, 241, 0.82);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .promo-sku-empty {
+            color: rgba(236, 240, 241, 0.72);
+            text-align: center;
+        }
+        @media (max-width: 900px) {
+            .promo-trend-strip {
+                padding: 20px 18px 18px;
+            }
+            .promo-trend-chart {
+                height: 235px;
+            }
         }
 /* PROMO_TREND_STYLE_END */
 
@@ -223,14 +354,39 @@
             <div class="kpi-chart-card"><div class="kpi-chart-title">本周总销售额 - 十三周趋势</div><div id="totalRevenueChart" class="kpi-chart"></div></div>
             <div class="kpi-chart-card"><div class="kpi-chart-title">线上销售占比 - 十三周趋势</div><div id="onlineSalesChart" class="kpi-chart"></div></div>
             <div class="kpi-chart-card"><div class="kpi-chart-title">POP单店单周 - 十三周趋势</div><div id="popSalesChart" class="kpi-chart"></div></div>
-<!-- PROMO_TREND_CARD_START -->
-            <div class="kpi-chart-card promo-trend-card">
-                <div class="kpi-chart-title">本周促销强度 - 十三周趋势</div>
-                <div id="promoTrendChart" class="kpi-chart"></div>
-            </div>
-<!-- PROMO_TREND_CARD_END -->
         </div>
         
+<!-- PROMO_TREND_CARD_START -->
+        <div class="promo-trend-strip">
+            <div class="promo-trend-strip-header">
+                <div class="promo-trend-copy">
+                    <div class="promo-trend-title">本周促销脉冲 - 十三周趋势</div>
+                    <div class="promo-trend-subtitle">上半部分看过去十三周促销节奏，下半部分直接列出本周全部打折 SKU，方便一眼定位促销面。</div>
+                </div>
+                <div class="promo-trend-metrics">
+                    <div class="promo-trend-metric">
+                        <span class="promo-trend-metric-value" id="promoCurrentSkuCount">0</span>
+                        <span class="promo-trend-metric-label">本周促销SKU</span>
+                    </div>
+                    <div class="promo-trend-metric">
+                        <span class="promo-trend-metric-value" id="promoCurrentAvgRate">0%</span>
+                        <span class="promo-trend-metric-label">平均折扣率</span>
+                    </div>
+                    <div class="promo-trend-metric">
+                        <span class="promo-trend-metric-value" id="promoCurrentAvgDays">0天</span>
+                        <span class="promo-trend-metric-label">平均促销天数</span>
+                    </div>
+                </div>
+            </div>
+            <div id="promoTrendChart" class="promo-trend-chart"></div>
+            <div class="promo-sku-strip-header">
+                <div class="promo-sku-strip-title">本周打折 SKU 清单</div>
+                <div class="promo-sku-strip-note" id="promoSkuStripNote">按 SKU 列出促销天数、折扣率、促销价和省下金额</div>
+            </div>
+            <div id="promoSkuList" class="promo-sku-list"></div>
+        </div>
+<!-- PROMO_TREND_CARD_END -->
+
         <div class="summary-card">
             <div class="summary-text">
                 📊 <strong>Week-20关键表现：</strong>本周销量<span id="summarySales"></span>条，销售额$<span id="summaryRevenue"></span>M，环比上升<span id="summaryWow"></span>%，同比上升<span id="summaryYoy"></span>%。骨导线<span id="summaryBone"></span>条(<span id="summaryBonePct"></span>%)，气导线<span id="summaryAir"></span>条(<span id="summaryAirPct"></span>%)。T010销量1,409条，份额13.69%。S820系列达3,875条(占比37.64%)，继续占主导地位。本周整体销量与销售额同步回升，气导线YoY继续保持高增长。
@@ -2303,6 +2459,11 @@
 
 // PROMO_TREND_CHART_START
             const promoTrendChartDom = document.getElementById('promoTrendChart');
+            const promoSkuListDom = document.getElementById('promoSkuList');
+            const promoSkuStripNoteDom = document.getElementById('promoSkuStripNote');
+            const promoCurrentSkuCountDom = document.getElementById('promoCurrentSkuCount');
+            const promoCurrentAvgRateDom = document.getElementById('promoCurrentAvgRate');
+            const promoCurrentAvgDaysDom = document.getElementById('promoCurrentAvgDays');
             if (promoTrendChartDom) {
                 const promoTrendWeekly = weekDates.map((weekDate, index) => {
                     const rows = promoList.filter(item => item.date === weekDate);
@@ -2324,11 +2485,56 @@
                     };
                 });
 
+                const latestPromoDate = weekDates[weekDates.length - 1];
+                const latestPromoPoint = promoTrendWeekly[promoTrendWeekly.length - 1] || {
+                    promoSkuCount: 0,
+                    avgDiscountRate: 0,
+                    avgPromoDays: 0
+                };
+                const currentPromoRows = promoList
+                    .filter(item => item.date === latestPromoDate)
+                    .sort((a, b) =>
+                        (Number(b.rate) || 0) - (Number(a.rate) || 0)
+                        || (Number(b.days) || 0) - (Number(a.days) || 0)
+                        || String(a.sku).localeCompare(String(b.sku))
+                    );
+
+                if (promoCurrentSkuCountDom) {
+                    promoCurrentSkuCountDom.innerText = latestPromoPoint.promoSkuCount.toLocaleString();
+                }
+                if (promoCurrentAvgRateDom) {
+                    promoCurrentAvgRateDom.innerText = `${Math.round(latestPromoPoint.avgDiscountRate)}%`;
+                }
+                if (promoCurrentAvgDaysDom) {
+                    promoCurrentAvgDaysDom.innerText = `${latestPromoPoint.avgPromoDays.toFixed(1)}天`;
+                }
+                if (promoSkuStripNoteDom) {
+                    promoSkuStripNoteDom.innerText = `${latestPromoDate} 共 ${currentPromoRows.length} 个打折 SKU，已按折扣率从高到低展开。`;
+                }
+                if (promoSkuListDom) {
+                    promoSkuListDom.innerHTML = currentPromoRows.length
+                        ? currentPromoRows.map(item => `
+                            <div class="promo-sku-chip">
+                                <div class="promo-sku-chip-top">
+                                    <span class="promo-sku-name">${item.sku}</span>
+                                    <span class="promo-sku-rate">${Math.round(Number(item.rate) || 0)}%</span>
+                                </div>
+                                <div class="promo-sku-chip-bottom">
+                                    <span class="promo-sku-meta">${Number(item.days) || 0}天促销</span>
+                                    <span class="promo-sku-meta">$${Number(item.promoPrice || 0).toFixed(2)}</span>
+                                    <span class="promo-sku-meta">省 $${Number(item.savings || 0).toFixed(2)}</span>
+                                </div>
+                            </div>
+                        `).join('')
+                        : '<div class="promo-sku-empty">本周没有促销 SKU。</div>';
+                }
+
                 const maxDiscountRate = Math.max(...promoTrendWeekly.map(item => item.avgDiscountRate), 0);
                 const promoTrendChart = echarts.getInstanceByDom(promoTrendChartDom) || echarts.init(promoTrendChartDom);
                 promoTrendChart.setOption({
                     tooltip: {
                         trigger: 'axis',
+                        axisPointer: { type: 'line' },
                         backgroundColor: 'rgba(10, 16, 30, 0.94)',
                         borderColor: 'rgba(87, 199, 255, 0.28)',
                         textStyle: { color: '#ecf0f1' },
@@ -2348,12 +2554,14 @@
                     legend: {
                         data: ['促销SKU数', '平均折扣率'],
                         top: 0,
+                        right: 0,
                         textStyle: { color: '#ecf0f1' }
                     },
-                    grid: { left: '8%', right: '8%', top: '18%', bottom: '10%', containLabel: true },
+                    grid: { left: '5%', right: '5%', top: '18%', bottom: '14%', containLabel: true },
                     xAxis: {
                         type: 'category',
                         data: weeks,
+                        boundaryGap: false,
                         axisLine: { lineStyle: { color: '#ecf0f1' } },
                         axisLabel: { color: '#ecf0f1' }
                     },
@@ -2361,6 +2569,7 @@
                         {
                             type: 'value',
                             name: 'SKU数',
+                            min: 0,
                             minInterval: 1,
                             axisLine: { lineStyle: { color: '#ecf0f1' } },
                             axisLabel: { color: '#ecf0f1' },
@@ -2386,8 +2595,8 @@
                             itemStyle: { color: '#57c7ff' },
                             areaStyle: {
                                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                    { offset: 0, color: 'rgba(87, 199, 255, 0.32)' },
-                                    { offset: 1, color: 'rgba(87, 199, 255, 0.04)' }
+                                    { offset: 0, color: 'rgba(87, 199, 255, 0.28)' },
+                                    { offset: 1, color: 'rgba(87, 199, 255, 0.02)' }
                                 ])
                             },
                             symbol: 'circle',

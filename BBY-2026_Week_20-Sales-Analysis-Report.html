@@ -2554,10 +2554,27 @@
             const promoTrendSubtitleDom = document.getElementById('promoTrendSubtitle') || document.querySelector('.promo-trend-subtitle');
             const promoFamilyListDom = document.getElementById('promoFamilyList');
             const promoSkuStripNoteDom = document.getElementById('promoSkuStripNote');
+            const promoTrendMetricsDom = document.querySelector('.promo-trend-metrics');
             const promoCurrentSkuCountDom = document.getElementById('promoCurrentSkuCount');
+            let promoAverageSkuCountDom = document.getElementById('promoAverageSkuCount');
             const promoCurrentAvgRateDom = document.getElementById('promoCurrentAvgRate');
             const promoCurrentAvgDaysDom = document.getElementById('promoCurrentAvgDays');
             if (promoTrendChartDom) {
+                if (!promoAverageSkuCountDom && promoTrendMetricsDom) {
+                    const averageMetricDom = document.createElement('div');
+                    averageMetricDom.className = 'promo-trend-metric';
+                    averageMetricDom.innerHTML = `
+                        <span class="promo-trend-metric-value" id="promoAverageSkuCount">0.0</span>
+                        <span class="promo-trend-metric-label">13周平均SKU</span>
+                    `;
+                    const skuMetricDom = promoCurrentSkuCountDom?.closest('.promo-trend-metric');
+                    if (skuMetricDom?.nextSibling) {
+                        promoTrendMetricsDom.insertBefore(averageMetricDom, skuMetricDom.nextSibling);
+                    } else {
+                        promoTrendMetricsDom.appendChild(averageMetricDom);
+                    }
+                    promoAverageSkuCountDom = averageMetricDom.querySelector('#promoAverageSkuCount');
+                }
                 const getPromoFamilyKey = (sku) => {
                     const value = String(sku || '').trim();
                     if (!value) return 'Other';
@@ -2672,6 +2689,9 @@
                 const syncPromoMetrics = (point) => {
                     if (promoCurrentSkuCountDom) {
                         promoCurrentSkuCountDom.innerText = point.promoSkuCount.toLocaleString();
+                    }
+                    if (promoAverageSkuCountDom) {
+                        promoAverageSkuCountDom.innerText = '0.0';
                     }
                     if (promoCurrentAvgRateDom) {
                         promoCurrentAvgRateDom.innerText = `${Math.round(point.avgDiscountRate)}%`;
@@ -2834,7 +2854,13 @@
                     activeFamily = family && promoFamilySeriesMap.has(family) ? family : null;
                     const seriesData = activeFamily ? promoFamilySeriesMap.get(activeFamily) : promoTrendWeekly;
                     const latestPoint = seriesData[seriesData.length - 1] || summarizePromoRows([], weekDates.length - 1);
+                    const averageSkuCount = seriesData.length
+                        ? seriesData.reduce((sum, item) => sum + (Number(item.promoSkuCount) || 0), 0) / seriesData.length
+                        : 0;
                     syncPromoMetrics(latestPoint);
+                    if (promoAverageSkuCountDom) {
+                        promoAverageSkuCountDom.innerText = averageSkuCount.toFixed(1);
+                    }
                     syncPromoCopy(activeFamily, latestPoint);
                     syncPromoFamilySelection(activeFamily);
                     promoTrendChart.setOption(buildChartOption(seriesData, activeFamily), true);

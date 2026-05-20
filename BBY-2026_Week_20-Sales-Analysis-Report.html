@@ -2561,6 +2561,7 @@
                 const getPromoFamilyKey = (sku) => {
                     const value = String(sku || '').trim();
                     if (!value) return 'Other';
+                    if (value.startsWith('S805') || value.startsWith('S806')) return 'S803';
                     if (value.startsWith('C120-AN')) return 'C120-AN';
                     if (value.startsWith('C120-UC')) return 'C120-UC';
                     return value.split('-')[0] || value;

@@ -238,6 +238,12 @@
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+        }
+        .promo-family-group.selected {
+            border-color: rgba(87, 199, 255, 0.42);
+            background: linear-gradient(180deg, rgba(87, 199, 255, 0.10), rgba(255, 255, 255, 0.04));
+            box-shadow: inset 3px 0 0 rgba(87, 199, 255, 0.92);
         }
         .promo-family-toggle {
             width: 100%;
@@ -251,6 +257,10 @@
             color: inherit;
             cursor: pointer;
             text-align: left;
+            transition: background 0.22s ease;
+        }
+        .promo-family-group.selected .promo-family-toggle {
+            background: rgba(87, 199, 255, 0.04);
         }
         .promo-family-main {
             display: flex;
@@ -2540,32 +2550,14 @@
 
 // PROMO_TREND_CHART_START
             const promoTrendChartDom = document.getElementById('promoTrendChart');
+            const promoTrendTitleDom = document.getElementById('promoTrendTitle') || document.querySelector('.promo-trend-title');
+            const promoTrendSubtitleDom = document.getElementById('promoTrendSubtitle') || document.querySelector('.promo-trend-subtitle');
             const promoFamilyListDom = document.getElementById('promoFamilyList');
             const promoSkuStripNoteDom = document.getElementById('promoSkuStripNote');
             const promoCurrentSkuCountDom = document.getElementById('promoCurrentSkuCount');
             const promoCurrentAvgRateDom = document.getElementById('promoCurrentAvgRate');
             const promoCurrentAvgDaysDom = document.getElementById('promoCurrentAvgDays');
             if (promoTrendChartDom) {
-                const promoTrendWeekly = weekDates.map((weekDate, index) => {
-                    const rows = promoList.filter(item => item.date === weekDate);
-                    const promoSkuCount = new Set(rows.map(item => item.sku)).size;
-                    const avgDiscountRate = rows.length
-                        ? rows.reduce((sum, item) => sum + (Number(item.rate) || 0), 0) / rows.length
-                        : 0;
-                    const avgPromoDays = rows.length
-                        ? rows.reduce((sum, item) => sum + (Number(item.days) || 0), 0) / rows.length
-                        : 0;
-                    const totalPromoDays = rows.reduce((sum, item) => sum + (Number(item.days) || 0), 0);
-                    return {
-                        week: weeks[index],
-                        date: weekDate,
-                        promoSkuCount,
-                        avgDiscountRate: Number(avgDiscountRate.toFixed(1)),
-                        avgPromoDays: Number(avgPromoDays.toFixed(1)),
-                        totalPromoDays
-                    };
-                });
-
                 const getPromoFamilyKey = (sku) => {
                     const value = String(sku || '').trim();
                     if (!value) return 'Other';
@@ -2573,20 +2565,57 @@
                     if (value.startsWith('C120-UC')) return 'C120-UC';
                     return value.split('-')[0] || value;
                 };
-
-                const latestPromoDate = weekDates[weekDates.length - 1];
-                const latestPromoPoint = promoTrendWeekly[promoTrendWeekly.length - 1] || {
-                    promoSkuCount: 0,
-                    avgDiscountRate: 0,
-                    avgPromoDays: 0
+                const formatCurrency = (value) => `$${Number(value || 0).toFixed(2)}`;
+                const summarizePromoRows = (rows, index) => {
+                    const safeRows = Array.isArray(rows) ? rows : [];
+                    const uniqueSkus = Array.from(
+                        new Set(
+                            safeRows
+                                .map(item => String(item.sku || '').trim())
+                                .filter(Boolean)
+                        )
+                    ).sort((a, b) => a.localeCompare(b));
+                    const avgDiscountRate = safeRows.length
+                        ? safeRows.reduce((sum, item) => sum + (Number(item.rate) || 0), 0) / safeRows.length
+                        : 0;
+                    const avgPromoDays = safeRows.length
+                        ? safeRows.reduce((sum, item) => sum + (Number(item.days) || 0), 0) / safeRows.length
+                        : 0;
+                    return {
+                        week: weeks[index],
+                        date: weekDates[index],
+                        promoSkuCount: uniqueSkus.length,
+                        avgDiscountRate: Number(avgDiscountRate.toFixed(1)),
+                        avgPromoDays: Number(avgPromoDays.toFixed(1)),
+                        totalPromoDays: safeRows.reduce((sum, item) => sum + (Number(item.days) || 0), 0),
+                        skus: uniqueSkus
+                    };
                 };
-                const currentPromoRows = promoList
-                    .filter(item => item.date === latestPromoDate)
-                    .sort((a, b) =>
-                        (Number(b.rate) || 0) - (Number(a.rate) || 0)
-                        || (Number(b.days) || 0) - (Number(a.days) || 0)
-                        || String(a.sku).localeCompare(String(b.sku))
-                    );
+
+                const promoRowsByWeek = new Map();
+                const promoRowsByWeekAndFamily = new Map();
+                promoList.forEach(item => {
+                    const date = String(item.date || '');
+                    const family = getPromoFamilyKey(item.sku);
+                    if (!promoRowsByWeek.has(date)) {
+                        promoRowsByWeek.set(date, []);
+                    }
+                    promoRowsByWeek.get(date).push(item);
+
+                    const familyKey = `${date}__${family}`;
+                    if (!promoRowsByWeekAndFamily.has(familyKey)) {
+                        promoRowsByWeekAndFamily.set(familyKey, []);
+                    }
+                    promoRowsByWeekAndFamily.get(familyKey).push(item);
+                });
+
+                const promoTrendWeekly = weekDates.map((weekDate, index) => summarizePromoRows(promoRowsByWeek.get(weekDate) || [], index));
+                const latestPromoDate = weekDates[weekDates.length - 1];
+                const currentPromoRows = (promoRowsByWeek.get(latestPromoDate) || []).slice().sort((a, b) =>
+                    (Number(b.rate) || 0) - (Number(a.rate) || 0)
+                    || (Number(b.days) || 0) - (Number(a.days) || 0)
+                    || String(a.sku).localeCompare(String(b.sku))
+                );
                 const promoFamilies = Array.from(
                     currentPromoRows.reduce((map, item) => {
                         const family = getPromoFamilyKey(item.sku);
@@ -2608,29 +2637,212 @@
                         group.savings = Number(item.savings) || group.savings;
                         return map;
                     }, new Map()).values()
-                ).sort((a, b) =>
-                    b.maxRate - a.maxRate
-                    || b.items.length - a.items.length
-                    || a.family.localeCompare(b.family)
+                )
+                    .map(group => ({
+                        ...group,
+                        items: group.items.slice().sort((a, b) =>
+                            (Number(b.rate) || 0) - (Number(a.rate) || 0)
+                            || (Number(b.days) || 0) - (Number(a.days) || 0)
+                            || String(a.sku).localeCompare(String(b.sku))
+                        )
+                    }))
+                    .sort((a, b) =>
+                        b.maxRate - a.maxRate
+                        || b.items.length - a.items.length
+                        || a.family.localeCompare(b.family)
+                    );
+
+                const promoFamilySeriesMap = new Map(
+                    promoFamilies.map(group => [
+                        group.family,
+                        weekDates.map((weekDate, index) =>
+                            summarizePromoRows(
+                                promoRowsByWeekAndFamily.get(`${weekDate}__${group.family}`) || [],
+                                index
+                            )
+                        )
+                    ])
                 );
 
-                if (promoCurrentSkuCountDom) {
-                    promoCurrentSkuCountDom.innerText = latestPromoPoint.promoSkuCount.toLocaleString();
-                }
-                if (promoCurrentAvgRateDom) {
-                    promoCurrentAvgRateDom.innerText = `${Math.round(latestPromoPoint.avgDiscountRate)}%`;
-                }
-                if (promoCurrentAvgDaysDom) {
-                    promoCurrentAvgDaysDom.innerText = `${latestPromoPoint.avgPromoDays.toFixed(1)}天`;
-                }
-                if (promoSkuStripNoteDom) {
-                    promoSkuStripNoteDom.innerText = `${latestPromoDate} 共 ${promoFamilies.length} 个大类 SKU，${currentPromoRows.length} 个小类 SKU，点击可查看每个大类下具体哪些小类 SKU 在打折。`;
-                }
+                const promoTrendChart = echarts.getInstanceByDom(promoTrendChartDom) || echarts.init(promoTrendChartDom);
+                let activeFamily = null;
+
+                const syncPromoMetrics = (point) => {
+                    if (promoCurrentSkuCountDom) {
+                        promoCurrentSkuCountDom.innerText = point.promoSkuCount.toLocaleString();
+                    }
+                    if (promoCurrentAvgRateDom) {
+                        promoCurrentAvgRateDom.innerText = `${Math.round(point.avgDiscountRate)}%`;
+                    }
+                    if (promoCurrentAvgDaysDom) {
+                        promoCurrentAvgDaysDom.innerText = `${point.avgPromoDays.toFixed(1)}天`;
+                    }
+                };
+
+                const syncPromoCopy = (family, point) => {
+                    if (promoTrendTitleDom) {
+                        promoTrendTitleDom.innerText = family
+                            ? `${family} 促销历史 - 十三周趋势`
+                            : '本周促销脉冲 - 十三周趋势';
+                    }
+                    if (promoTrendSubtitleDom) {
+                        promoTrendSubtitleDom.innerText = family
+                            ? `上半部分展示 ${family} 过去十三周的促销节奏，下半部分展开本周 ${family} 对应的打折小类 SKU。`
+                            : '上半部分展示过去十三周的促销节奏，下半部分按大类 SKU 展开本周打折小类 SKU。';
+                    }
+                    if (promoSkuStripNoteDom) {
+                        if (!currentPromoRows.length) {
+                            promoSkuStripNoteDom.innerText = '本周没有促销 SKU。';
+                        } else if (family) {
+                            promoSkuStripNoteDom.innerText = `${latestPromoDate} ${family} 本周共有 ${point.promoSkuCount} 个打折小类 SKU，平均折扣 ${Math.round(point.avgDiscountRate)}%，平均促销 ${point.avgPromoDays.toFixed(1)} 天；图表展示该大类过去十三周的打折历史。`;
+                        } else {
+                            promoSkuStripNoteDom.innerText = `${latestPromoDate} 共 ${promoFamilies.length} 个大类 SKU、${currentPromoRows.length} 个小类 SKU 在促销；点击某个大类即可查看该大类过去十三周的打折历史。`;
+                        }
+                    }
+                };
+
+                const syncPromoFamilySelection = (family) => {
+                    if (!promoFamilyListDom) {
+                        return;
+                    }
+                    Array.from(promoFamilyListDom.querySelectorAll('.promo-family-group')).forEach((node, index) => {
+                        const isSelected = Boolean(family) && node.dataset.family === family;
+                        node.classList.toggle('selected', isSelected);
+                        node.classList.toggle('open', family ? isSelected : index === 0);
+                        const toggle = node.querySelector('.promo-family-toggle');
+                        if (toggle) {
+                            toggle.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+                        }
+                    });
+                };
+
+                const buildChartOption = (seriesData, family) => {
+                    const maxDiscountRate = Math.max(...seriesData.map(item => item.avgDiscountRate), 0);
+                    return {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: { type: 'line' },
+                            backgroundColor: 'rgba(10, 16, 30, 0.94)',
+                            borderColor: 'rgba(87, 199, 255, 0.28)',
+                            textStyle: { color: '#ecf0f1' },
+                            formatter: (params) => {
+                                const point = seriesData[params[0]?.dataIndex ?? 0];
+                                if (!point) return '';
+                                const lines = [
+                                    `<strong>${point.week}</strong>`,
+                                    `日期: ${point.date}`,
+                                    `促销SKU数: ${point.promoSkuCount}`,
+                                    `平均折扣率: ${point.avgDiscountRate.toFixed(1)}%`,
+                                    `平均促销天数: ${point.avgPromoDays.toFixed(1)}天`,
+                                    `总促销天数: ${point.totalPromoDays}`
+                                ];
+                                if (family) {
+                                    lines.push(`当周打折SKU: ${point.skus.length ? point.skus.join(', ') : '无'}`);
+                                }
+                                return lines.join('<br/>');
+                            }
+                        },
+                        legend: {
+                            data: ['促销SKU数', '平均折扣率'],
+                            top: 0,
+                            right: 0,
+                            textStyle: { color: '#ecf0f1' }
+                        },
+                        grid: { left: '5%', right: '5%', top: '18%', bottom: '14%', containLabel: true },
+                        xAxis: {
+                            type: 'category',
+                            data: weeks,
+                            boundaryGap: false,
+                            axisLine: { lineStyle: { color: '#ecf0f1' } },
+                            axisLabel: { color: '#ecf0f1' }
+                        },
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: 'SKU数',
+                                min: 0,
+                                minInterval: 1,
+                                axisLine: { lineStyle: { color: '#ecf0f1' } },
+                                axisLabel: { color: '#ecf0f1' },
+                                splitLine: { lineStyle: { color: '#2c3e50' } }
+                            },
+                            {
+                                type: 'value',
+                                name: '折扣%',
+                                min: 0,
+                                max: Math.max(35, Math.ceil(maxDiscountRate / 5) * 5),
+                                axisLine: { lineStyle: { color: '#ecf0f1' } },
+                                axisLabel: { color: '#ecf0f1', formatter: value => `${value}%` },
+                                splitLine: { show: false }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '促销SKU数',
+                                type: 'line',
+                                smooth: true,
+                                data: seriesData.map(item => item.promoSkuCount),
+                                lineStyle: { color: '#57c7ff', width: 3 },
+                                itemStyle: { color: '#57c7ff' },
+                                areaStyle: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                        { offset: 0, color: 'rgba(87, 199, 255, 0.28)' },
+                                        { offset: 1, color: 'rgba(87, 199, 255, 0.02)' }
+                                    ])
+                                },
+                                symbol: 'circle',
+                                symbolSize: 7,
+                                label: {
+                                    show: true,
+                                    position: 'top',
+                                    color: '#dff6ff',
+                                    fontWeight: 'bold',
+                                    fontSize: 11,
+                                    formatter: params => params.value ? params.value : ''
+                                },
+                                labelLayout: { hideOverlap: true },
+                                emphasis: { focus: 'series' }
+                            },
+                            {
+                                name: '平均折扣率',
+                                type: 'line',
+                                smooth: true,
+                                yAxisIndex: 1,
+                                data: seriesData.map(item => item.avgDiscountRate),
+                                lineStyle: { color: '#ffb347', width: 3, type: 'dashed' },
+                                itemStyle: { color: '#ffb347' },
+                                symbol: 'diamond',
+                                symbolSize: 7,
+                                label: {
+                                    show: true,
+                                    position: 'bottom',
+                                    color: '#ffcf7a',
+                                    fontWeight: 'bold',
+                                    fontSize: 11,
+                                    formatter: params => params.value ? `${Math.round(params.value)}%` : ''
+                                },
+                                labelLayout: { hideOverlap: true },
+                                emphasis: { focus: 'series' }
+                            }
+                        ]
+                    };
+                };
+
+                const renderPromoHistory = (family = null) => {
+                    activeFamily = family && promoFamilySeriesMap.has(family) ? family : null;
+                    const seriesData = activeFamily ? promoFamilySeriesMap.get(activeFamily) : promoTrendWeekly;
+                    const latestPoint = seriesData[seriesData.length - 1] || summarizePromoRows([], weekDates.length - 1);
+                    syncPromoMetrics(latestPoint);
+                    syncPromoCopy(activeFamily, latestPoint);
+                    syncPromoFamilySelection(activeFamily);
+                    promoTrendChart.setOption(buildChartOption(seriesData, activeFamily), true);
+                };
+
                 if (promoFamilyListDom) {
                     promoFamilyListDom.innerHTML = promoFamilies.length
                         ? promoFamilies.map((group, index) => `
-                            <div class="promo-family-group ${index === 0 ? 'open' : ''}">
-                                <button type="button" class="promo-family-toggle">
+                            <div class="promo-family-group ${index === 0 ? 'open' : ''}" data-family="${group.family}">
+                                <button type="button" class="promo-family-toggle" aria-pressed="false">
                                     <div class="promo-family-main">
                                         <span class="promo-family-name">${group.family}</span>
                                         <span class="promo-family-count">${group.items.length} 个小类 SKU</span>
@@ -2638,10 +2850,10 @@
                                     <div class="promo-family-badges">
                                         <span class="promo-family-badge rate">${Math.round(group.maxRate)}%</span>
                                         <span class="promo-family-badge">${group.maxDays}天促销</span>
-                                        <span class="promo-family-badge">$${group.promoPrice.toFixed(2)}</span>
-                                        <span class="promo-family-badge">省 $${group.savings.toFixed(2)}</span>
+                                        <span class="promo-family-badge">${formatCurrency(group.promoPrice)}</span>
+                                        <span class="promo-family-badge">省 ${formatCurrency(group.savings)}</span>
                                     </div>
-                                    <span class="promo-family-chevron">▾</span>
+                                    <span class="promo-family-chevron">▼</span>
                                 </button>
                                 <div class="promo-family-children">
                                     <div class="promo-child-grid">
@@ -2653,8 +2865,8 @@
                                                 </div>
                                                 <div class="promo-child-bottom">
                                                     <span class="promo-child-meta">${Number(item.days) || 0}天促销</span>
-                                                    <span class="promo-child-meta">$${Number(item.promoPrice || 0).toFixed(2)}</span>
-                                                    <span class="promo-child-meta">省 $${Number(item.savings || 0).toFixed(2)}</span>
+                                                    <span class="promo-child-meta">${formatCurrency(item.promoPrice)}</span>
+                                                    <span class="promo-child-meta">省 ${formatCurrency(item.savings)}</span>
                                                 </div>
                                             </div>
                                         `).join('')}
@@ -2665,117 +2877,17 @@
                         : '<div class="promo-family-empty">本周没有促销 SKU。</div>';
                     promoFamilyListDom.querySelectorAll('.promo-family-toggle').forEach(btn => {
                         btn.addEventListener('click', () => {
-                            btn.closest('.promo-family-group')?.classList.toggle('open');
+                            const groupDom = btn.closest('.promo-family-group');
+                            const family = groupDom?.dataset.family || '';
+                            if (!family) {
+                                return;
+                            }
+                            renderPromoHistory(activeFamily === family ? null : family);
                         });
                     });
                 }
 
-                const maxDiscountRate = Math.max(...promoTrendWeekly.map(item => item.avgDiscountRate), 0);
-                const promoTrendChart = echarts.getInstanceByDom(promoTrendChartDom) || echarts.init(promoTrendChartDom);
-                promoTrendChart.setOption({
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: { type: 'line' },
-                        backgroundColor: 'rgba(10, 16, 30, 0.94)',
-                        borderColor: 'rgba(87, 199, 255, 0.28)',
-                        textStyle: { color: '#ecf0f1' },
-                        formatter: (params) => {
-                            const point = promoTrendWeekly[params[0]?.dataIndex ?? 0];
-                            if (!point) return '';
-                            return [
-                                `<strong>${point.week}</strong>`,
-                                `日期: ${point.date}`,
-                                `促销SKU数: ${point.promoSkuCount}`,
-                                `平均折扣率: ${point.avgDiscountRate.toFixed(1)}%`,
-                                `平均促销天数: ${point.avgPromoDays.toFixed(1)}天`,
-                                `总促销天数: ${point.totalPromoDays}`
-                            ].join('<br/>');
-                        }
-                    },
-                    legend: {
-                        data: ['促销SKU数', '平均折扣率'],
-                        top: 0,
-                        right: 0,
-                        textStyle: { color: '#ecf0f1' }
-                    },
-                    grid: { left: '5%', right: '5%', top: '18%', bottom: '14%', containLabel: true },
-                    xAxis: {
-                        type: 'category',
-                        data: weeks,
-                        boundaryGap: false,
-                        axisLine: { lineStyle: { color: '#ecf0f1' } },
-                        axisLabel: { color: '#ecf0f1' }
-                    },
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: 'SKU数',
-                            min: 0,
-                            minInterval: 1,
-                            axisLine: { lineStyle: { color: '#ecf0f1' } },
-                            axisLabel: { color: '#ecf0f1' },
-                            splitLine: { lineStyle: { color: '#2c3e50' } }
-                        },
-                        {
-                            type: 'value',
-                            name: '折扣%',
-                            min: 0,
-                            max: Math.max(35, Math.ceil(maxDiscountRate / 5) * 5),
-                            axisLine: { lineStyle: { color: '#ecf0f1' } },
-                            axisLabel: { color: '#ecf0f1', formatter: value => `${value}%` },
-                            splitLine: { show: false }
-                        }
-                    ],
-                    series: [
-                        {
-                            name: '促销SKU数',
-                            type: 'line',
-                            smooth: true,
-                            data: promoTrendWeekly.map(item => item.promoSkuCount),
-                            lineStyle: { color: '#57c7ff', width: 3 },
-                            itemStyle: { color: '#57c7ff' },
-                            areaStyle: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                    { offset: 0, color: 'rgba(87, 199, 255, 0.28)' },
-                                    { offset: 1, color: 'rgba(87, 199, 255, 0.02)' }
-                                ])
-                            },
-                            symbol: 'circle',
-                            symbolSize: 7,
-                            label: {
-                                show: true,
-                                position: 'top',
-                                color: '#dff6ff',
-                                fontWeight: 'bold',
-                                fontSize: 11,
-                                formatter: params => params.value ? params.value : ''
-                            },
-                            labelLayout: { hideOverlap: true },
-                            emphasis: { focus: 'series' }
-                        },
-                        {
-                            name: '平均折扣率',
-                            type: 'line',
-                            smooth: true,
-                            yAxisIndex: 1,
-                            data: promoTrendWeekly.map(item => item.avgDiscountRate),
-                            lineStyle: { color: '#ffb347', width: 3, type: 'dashed' },
-                            itemStyle: { color: '#ffb347' },
-                            symbol: 'diamond',
-                            symbolSize: 7,
-                            label: {
-                                show: true,
-                                position: 'bottom',
-                                color: '#ffcf7a',
-                                fontWeight: 'bold',
-                                fontSize: 11,
-                                formatter: params => params.value ? `${Math.round(params.value)}%` : ''
-                            },
-                            labelLayout: { hideOverlap: true },
-                            emphasis: { focus: 'series' }
-                        }
-                    ]
-                });
+                renderPromoHistory(null);
             }
 // PROMO_TREND_CHART_END
 

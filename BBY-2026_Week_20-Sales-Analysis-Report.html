@@ -228,33 +228,106 @@
             font-size: 12px;
             color: rgba(236, 240, 241, 0.68);
         }
-        .promo-sku-list {
+        .promo-family-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: 1fr;
             gap: 10px;
         }
-        .promo-sku-chip,
-        .promo-sku-empty {
+        .promo-family-group,
+        .promo-family-empty {
             border-radius: 12px;
-            padding: 12px 14px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.07);
         }
-        .promo-sku-chip-top {
+        .promo-family-toggle {
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(180px, 1.2fr) minmax(260px, 1fr) 24px;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 16px;
+            background: transparent;
+            border: 0;
+            color: inherit;
+            cursor: pointer;
+            text-align: left;
+        }
+        .promo-family-main {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .promo-family-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ecf0f1;
+            line-height: 1.3;
+        }
+        .promo-family-count {
+            font-size: 12px;
+            color: rgba(236, 240, 241, 0.68);
+        }
+        .promo-family-badges {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .promo-family-badge {
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(87, 199, 255, 0.10);
+            color: rgba(236, 240, 241, 0.88);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .promo-family-badge.rate {
+            background: rgba(255, 179, 71, 0.14);
+            color: #ffcf7a;
+        }
+        .promo-family-chevron {
+            color: #57c7ff;
+            font-size: 14px;
+            transition: transform 0.25s ease;
+        }
+        .promo-family-group.open .promo-family-chevron {
+            transform: rotate(180deg);
+        }
+        .promo-family-children {
+            display: none;
+            padding: 0 16px 16px;
+        }
+        .promo-family-group.open .promo-family-children {
+            display: block;
+        }
+        .promo-child-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             gap: 10px;
+        }
+        .promo-child-chip {
+            border-radius: 12px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .promo-child-top {
+            display: flex;
+            justify-content: space-between;
             align-items: flex-start;
+            gap: 10px;
             margin-bottom: 8px;
         }
-        .promo-sku-name {
+        .promo-child-name {
             font-size: 13px;
             font-weight: 700;
             color: #ecf0f1;
             line-height: 1.4;
             word-break: break-word;
         }
-        .promo-sku-rate {
+        .promo-child-rate {
             flex-shrink: 0;
             padding: 2px 8px;
             border-radius: 999px;
@@ -263,12 +336,12 @@
             font-size: 12px;
             font-weight: 700;
         }
-        .promo-sku-chip-bottom {
+        .promo-child-bottom {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
-        .promo-sku-meta {
+        .promo-child-meta {
             padding: 3px 8px;
             border-radius: 999px;
             background: rgba(87, 199, 255, 0.08);
@@ -276,7 +349,8 @@
             font-size: 12px;
             line-height: 1.4;
         }
-        .promo-sku-empty {
+        .promo-family-empty {
+            padding: 14px 16px;
             color: rgba(236, 240, 241, 0.72);
             text-align: center;
         }
@@ -286,6 +360,13 @@
             }
             .promo-trend-chart {
                 height: 235px;
+            }
+            .promo-family-toggle {
+                grid-template-columns: 1fr;
+                align-items: flex-start;
+            }
+            .promo-family-badges {
+                justify-content: flex-start;
             }
         }
 /* PROMO_TREND_STYLE_END */
@@ -383,7 +464,7 @@
                 <div class="promo-sku-strip-title">本周打折 SKU 清单</div>
                 <div class="promo-sku-strip-note" id="promoSkuStripNote">按 SKU 列出促销天数、折扣率、促销价和省下金额</div>
             </div>
-            <div id="promoSkuList" class="promo-sku-list"></div>
+            <div id="promoFamilyList" class="promo-family-list"></div>
         </div>
 <!-- PROMO_TREND_CARD_END -->
 
@@ -2459,7 +2540,7 @@
 
 // PROMO_TREND_CHART_START
             const promoTrendChartDom = document.getElementById('promoTrendChart');
-            const promoSkuListDom = document.getElementById('promoSkuList');
+            const promoFamilyListDom = document.getElementById('promoFamilyList');
             const promoSkuStripNoteDom = document.getElementById('promoSkuStripNote');
             const promoCurrentSkuCountDom = document.getElementById('promoCurrentSkuCount');
             const promoCurrentAvgRateDom = document.getElementById('promoCurrentAvgRate');
@@ -2485,6 +2566,14 @@
                     };
                 });
 
+                const getPromoFamilyKey = (sku) => {
+                    const value = String(sku || '').trim();
+                    if (!value) return 'Other';
+                    if (value.startsWith('C120-AN')) return 'C120-AN';
+                    if (value.startsWith('C120-UC')) return 'C120-UC';
+                    return value.split('-')[0] || value;
+                };
+
                 const latestPromoDate = weekDates[weekDates.length - 1];
                 const latestPromoPoint = promoTrendWeekly[promoTrendWeekly.length - 1] || {
                     promoSkuCount: 0,
@@ -2498,6 +2587,32 @@
                         || (Number(b.days) || 0) - (Number(a.days) || 0)
                         || String(a.sku).localeCompare(String(b.sku))
                     );
+                const promoFamilies = Array.from(
+                    currentPromoRows.reduce((map, item) => {
+                        const family = getPromoFamilyKey(item.sku);
+                        if (!map.has(family)) {
+                            map.set(family, {
+                                family,
+                                items: [],
+                                maxRate: Number(item.rate) || 0,
+                                maxDays: Number(item.days) || 0,
+                                promoPrice: Number(item.promoPrice) || 0,
+                                savings: Number(item.savings) || 0
+                            });
+                        }
+                        const group = map.get(family);
+                        group.items.push(item);
+                        group.maxRate = Math.max(group.maxRate, Number(item.rate) || 0);
+                        group.maxDays = Math.max(group.maxDays, Number(item.days) || 0);
+                        group.promoPrice = Number(item.promoPrice) || group.promoPrice;
+                        group.savings = Number(item.savings) || group.savings;
+                        return map;
+                    }, new Map()).values()
+                ).sort((a, b) =>
+                    b.maxRate - a.maxRate
+                    || b.items.length - a.items.length
+                    || a.family.localeCompare(b.family)
+                );
 
                 if (promoCurrentSkuCountDom) {
                     promoCurrentSkuCountDom.innerText = latestPromoPoint.promoSkuCount.toLocaleString();
@@ -2509,24 +2624,50 @@
                     promoCurrentAvgDaysDom.innerText = `${latestPromoPoint.avgPromoDays.toFixed(1)}天`;
                 }
                 if (promoSkuStripNoteDom) {
-                    promoSkuStripNoteDom.innerText = `${latestPromoDate} 共 ${currentPromoRows.length} 个打折 SKU，已按折扣率从高到低展开。`;
+                    promoSkuStripNoteDom.innerText = `${latestPromoDate} 共 ${promoFamilies.length} 个大类 SKU，${currentPromoRows.length} 个小类 SKU，点击可查看每个大类下具体哪些小类 SKU 在打折。`;
                 }
-                if (promoSkuListDom) {
-                    promoSkuListDom.innerHTML = currentPromoRows.length
-                        ? currentPromoRows.map(item => `
-                            <div class="promo-sku-chip">
-                                <div class="promo-sku-chip-top">
-                                    <span class="promo-sku-name">${item.sku}</span>
-                                    <span class="promo-sku-rate">${Math.round(Number(item.rate) || 0)}%</span>
-                                </div>
-                                <div class="promo-sku-chip-bottom">
-                                    <span class="promo-sku-meta">${Number(item.days) || 0}天促销</span>
-                                    <span class="promo-sku-meta">$${Number(item.promoPrice || 0).toFixed(2)}</span>
-                                    <span class="promo-sku-meta">省 $${Number(item.savings || 0).toFixed(2)}</span>
+                if (promoFamilyListDom) {
+                    promoFamilyListDom.innerHTML = promoFamilies.length
+                        ? promoFamilies.map((group, index) => `
+                            <div class="promo-family-group ${index === 0 ? 'open' : ''}">
+                                <button type="button" class="promo-family-toggle">
+                                    <div class="promo-family-main">
+                                        <span class="promo-family-name">${group.family}</span>
+                                        <span class="promo-family-count">${group.items.length} 个小类 SKU</span>
+                                    </div>
+                                    <div class="promo-family-badges">
+                                        <span class="promo-family-badge rate">${Math.round(group.maxRate)}%</span>
+                                        <span class="promo-family-badge">${group.maxDays}天促销</span>
+                                        <span class="promo-family-badge">$${group.promoPrice.toFixed(2)}</span>
+                                        <span class="promo-family-badge">省 $${group.savings.toFixed(2)}</span>
+                                    </div>
+                                    <span class="promo-family-chevron">▾</span>
+                                </button>
+                                <div class="promo-family-children">
+                                    <div class="promo-child-grid">
+                                        ${group.items.map(item => `
+                                            <div class="promo-child-chip">
+                                                <div class="promo-child-top">
+                                                    <span class="promo-child-name">${item.sku}</span>
+                                                    <span class="promo-child-rate">${Math.round(Number(item.rate) || 0)}%</span>
+                                                </div>
+                                                <div class="promo-child-bottom">
+                                                    <span class="promo-child-meta">${Number(item.days) || 0}天促销</span>
+                                                    <span class="promo-child-meta">$${Number(item.promoPrice || 0).toFixed(2)}</span>
+                                                    <span class="promo-child-meta">省 $${Number(item.savings || 0).toFixed(2)}</span>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
                                 </div>
                             </div>
                         `).join('')
-                        : '<div class="promo-sku-empty">本周没有促销 SKU。</div>';
+                        : '<div class="promo-family-empty">本周没有促销 SKU。</div>';
+                    promoFamilyListDom.querySelectorAll('.promo-family-toggle').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            btn.closest('.promo-family-group')?.classList.toggle('open');
+                        });
+                    });
                 }
 
                 const maxDiscountRate = Math.max(...promoTrendWeekly.map(item => item.avgDiscountRate), 0);

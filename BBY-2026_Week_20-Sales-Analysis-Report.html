@@ -484,21 +484,22 @@
             </div>
         </div>
         
-        <h2 class="section-title">业务线表现对比 (Week 20)</h2>
+                <h2 class="section-title">业务线表现对比 (Week 20)</h2>
         <div class="charts-container">
             <div class="chart-card"><div class="chart-title">销量占比分布 (Week 20)</div><div id="salesVolumeChart" class="chart"></div></div>
             <div class="chart-card"><div class="chart-title">销售额占比分布 (Week 20)</div><div id="salesAmountChart" class="chart"></div></div>
         </div>
-        
+
         <div class="chart-card" style="margin-top:20px; width:100%; height:450px;">
-            <div class="chart-title">骨导线 vs 气导线 十三周销量趋势</div>
+            <div class="chart-title">骨导 / 耳夹 / 耳挂 十三周销量趋势</div>
             <div class="checkbox-group" id="lineCheckboxGroup">
                 <label><input type="checkbox" id="showBone" checked> 骨导线</label>
-                <label><input type="checkbox" id="showAir" checked> 气导线</label>
+                <label><input type="checkbox" id="showEarClip" checked> 耳夹</label>
+                <label><input type="checkbox" id="showEarHook" checked> 耳挂</label>
             </div>
             <div id="compareLineChart" class="chart" style="height:350px;"></div>
         </div>
-        
+
         <div class="data-cards">
             <div class="data-card">
                 <div class="data-card-title">骨导线表现 (Week 20)</div>
@@ -516,7 +517,7 @@
                 <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change" id="boneCardRevYtdYoY"></div></div>
             </div>
             <div class="data-card">
-                <div class="data-card-title">气导线表现 (Week 20)</div>
+                <div class="data-card-title">气导线总计 (Week 20)</div>
                 <div class="data-item"><div class="data-label">本周销量</div><div class="data-value" id="airCardSales"></div></div>
                 <div class="data-item"><div class="data-label">销量占比</div><div class="data-value" id="airCardPct"></div></div>
                 <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change" id="airCardYoY"></div></div>
@@ -530,8 +531,38 @@
                 <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value" id="airCardRevYtd"></div></div>
                 <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change" id="airCardRevYtdYoY"></div></div>
             </div>
+            <div class="data-card">
+                <div class="data-card-title">耳夹业务线表现 (Week 20)</div>
+                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value" id="clipCardSales"></div></div>
+                <div class="data-item"><div class="data-label">销量占比</div><div class="data-value" id="clipCardPct"></div></div>
+                <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change" id="clipCardYoY"></div></div>
+                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value negative-change" id="clipCardWoW"></div></div>
+                <div class="data-item"><div class="data-label">本年累计销量</div><div class="data-value" id="clipCardYtd"></div></div>
+                <div class="data-item"><div class="data-label">累计销量同比</div><div class="data-value positive-change" id="clipCardYtdYoY"></div></div>
+                <div class="data-item"><div class="data-label">本周销售额</div><div class="data-value" id="clipCardRevenue"></div></div>
+                <div class="data-item"><div class="data-label">销售额占比</div><div class="data-value" id="clipCardRevPct"></div></div>
+                <div class="data-item"><div class="data-label">销售额同比</div><div class="data-value positive-change" id="clipCardRevYoY"></div></div>
+                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value negative-change" id="clipCardRevWoW"></div></div>
+                <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value" id="clipCardRevYtd"></div></div>
+                <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change" id="clipCardRevYtdYoY"></div></div>
+            </div>
+            <div class="data-card">
+                <div class="data-card-title">耳挂业务线表现 (Week 20)</div>
+                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value" id="hookCardSales"></div></div>
+                <div class="data-item"><div class="data-label">销量占比</div><div class="data-value" id="hookCardPct"></div></div>
+                <div class="data-item"><div class="data-label">销量同比</div><div class="data-value positive-change" id="hookCardYoY"></div></div>
+                <div class="data-item"><div class="data-label">销量环比</div><div class="data-value negative-change" id="hookCardWoW"></div></div>
+                <div class="data-item"><div class="data-label">本年累计销量</div><div class="data-value" id="hookCardYtd"></div></div>
+                <div class="data-item"><div class="data-label">累计销量同比</div><div class="data-value positive-change" id="hookCardYtdYoY"></div></div>
+                <div class="data-item"><div class="data-label">本周销售额</div><div class="data-value" id="hookCardRevenue"></div></div>
+                <div class="data-item"><div class="data-label">销售额占比</div><div class="data-value" id="hookCardRevPct"></div></div>
+                <div class="data-item"><div class="data-label">销售额同比</div><div class="data-value positive-change" id="hookCardRevYoY"></div></div>
+                <div class="data-item"><div class="data-label">销售额环比</div><div class="data-value negative-change" id="hookCardRevWoW"></div></div>
+                <div class="data-item"><div class="data-label">本年累计销售额</div><div class="data-value" id="hookCardRevYtd"></div></div>
+                <div class="data-item"><div class="data-label">累计销售额同比</div><div class="data-value positive-change" id="hookCardRevYtdYoY"></div></div>
+            </div>
         </div>
-        
+
         <div class="business-analysis">
             <div class="analysis-section">
                 <div class="analysis-title">📊 业务线表现深度分析 (Week 20)</div>
@@ -543,7 +574,6 @@
                 </div>
             </div>
         </div>
-        
         <h2 class="section-title">🎯 新品上市表现追踪 (T010)</h2>
         <div class="data-cards" style="margin-top:20px;">
             <div class="data-card">
@@ -2473,10 +2503,11 @@
                     type: 'pie', radius: ['40%','70%'],
                     data: [
                         { value: 55.54, name: '骨导销量 55.54%' },
-                        { value: 44.46, name: '气导销量 44.46%' },
-                        { value: 0.00, name: '其他 0.00%' }
+                        { value: 10.68, name: '耳夹销量 10.68%' },
+                        { value: 33.77, name: '耳挂销量 33.77%' },
+                        { value: 0.01, name: '其他 0.01%' }
                     ],
-                    color: ['#3498db','#2ecc71','#f39c12'],
+                    color: ['#3498db','#1abc9c','#f39c12','#95a5a6'],
                     label: { color: '#ecf0f1', formatter: '{b}' }
                 }]
             });
@@ -2487,10 +2518,11 @@
                     type: 'pie', radius: ['40%','70%'],
                     data: [
                         { value: 51.37, name: '骨导销售额 51.37%' },
-                        { value: 48.63, name: '气导销售额 48.63%' },
+                        { value: 11.61, name: '耳夹销售额 11.61%' },
+                        { value: 37.02, name: '耳挂销售额 37.02%' },
                         { value: 0.00, name: '其他 0.00%' }
                     ],
-                    color: ['#3498db','#2ecc71','#f39c12'],
+                    color: ['#3498db','#1abc9c','#f39c12','#95a5a6'],
                     label: { color: '#ecf0f1', formatter: '{b}' }
                 }]
             });
@@ -2972,22 +3004,54 @@
             });
 
             const lineChart = echarts.init(document.getElementById('compareLineChart'));
-            lineChart.setOption({
-                tooltip: { trigger: 'axis' },
-                legend: { data: ['骨导线','气导线'], textStyle: { color: '#ecf0f1' } },
-                grid: { left: '5%', right: '5%', bottom: '10%', top: '15%', containLabel: true },
-                xAxis: { type: 'category', data: weekDates.map(d => d.slice(5)), axisLine: { lineStyle: { color: '#ecf0f1' } }, axisLabel: { color: '#ecf0f1' } },
-                yAxis: { type: 'value', axisLine: { lineStyle: { color: '#ecf0f1' } }, splitLine: { lineStyle: { color: '#2c3e50' } } },
-                series: [
-                    { name: '骨导线', type: 'line', data: boneData, lineStyle: { color: '#3498db', width: 3 }, symbol: 'circle', symbolSize: 8, label: { show: true, position: 'top', color: '#ecf0f1', fontWeight: 'bold', fontSize: 11 } },
-                    { name: '气导线', type: 'line', data: airData, lineStyle: { color: '#f39c12', width: 3 }, symbol: 'circle', symbolSize: 8, label: { show: true, position: 'top', color: '#ecf0f1', fontWeight: 'bold', fontSize: 11 } }
-                ]
-            });
-            document.getElementById('showBone').addEventListener('change', function(e) {
-                lineChart.setOption({ series: [{ name: '骨导线', show: e.target.checked }] });
-            });
-            document.getElementById('showAir').addEventListener('change', function(e) {
-                lineChart.setOption({ series: [{ name: '气导线', show: e.target.checked }] });
+            const businessLineSeries = [
+                { key: 'showBone', name: '骨导线', data: boneData, color: '#3498db' },
+                { key: 'showEarClip', name: '耳夹', data: [1913,1936,1227,1327,1623,1551,1773,1166,1301,1135,1531,2026,1100], color: '#1abc9c' },
+                { key: 'showEarHook', name: '耳挂', data: [4364,3642,3421,3338,4040,3863,4016,3228,3964,3266,3424,4278,3477], color: '#f39c12' }
+            ];
+            const renderBusinessLineChart = () => {
+                const activeSeries = businessLineSeries
+                    .filter((item) => {
+                        const checkbox = document.getElementById(item.key);
+                        return !checkbox || checkbox.checked;
+                    })
+                    .map((item) => ({
+                        name: item.name,
+                        type: 'line',
+                        data: item.data,
+                        smooth: true,
+                        lineStyle: { color: item.color, width: 3 },
+                        itemStyle: { color: item.color },
+                        symbol: 'circle',
+                        symbolSize: 8,
+                        label: { show: true, position: 'top', color: '#ecf0f1', fontWeight: 'bold', fontSize: 11 },
+                        emphasis: { focus: 'series' }
+                    }));
+
+                lineChart.setOption({
+                    tooltip: { trigger: 'axis' },
+                    legend: { data: activeSeries.map((item) => item.name), textStyle: { color: '#ecf0f1' } },
+                    grid: { left: '5%', right: '5%', bottom: '10%', top: '15%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: weekDates.map((d) => d.slice(5)),
+                        axisLine: { lineStyle: { color: '#ecf0f1' } },
+                        axisLabel: { color: '#ecf0f1' }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLine: { lineStyle: { color: '#ecf0f1' } },
+                        splitLine: { lineStyle: { color: '#2c3e50' } }
+                    },
+                    series: activeSeries
+                });
+            };
+            renderBusinessLineChart();
+            ['showBone', 'showEarClip', 'showEarHook'].forEach((id) => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('change', renderBusinessLineChart);
+                }
             });
 
             // 更新动态文本（Week 20 最新数据）
@@ -3056,6 +3120,32 @@
             document.getElementById('airCardRevWoW').innerHTML = '↓ -27.65%';
             document.getElementById('airCardRevYtd').innerText = '$21,138,509';
             document.getElementById('airCardRevYtdYoY').innerHTML = '↑ +70.07%';
+
+            document.getElementById('clipCardSales').innerText = '1,100';
+            document.getElementById('clipCardPct').innerText = '10.68%';
+            document.getElementById('clipCardYoY').innerHTML = '↓ -33.13%';
+            document.getElementById('clipCardWoW').innerHTML = '↓ -45.71%';
+            document.getElementById('clipCardYtd').innerText = '31,211';
+            document.getElementById('clipCardYtdYoY').innerHTML = '↑ +844.36%';
+            document.getElementById('clipCardRevenue').innerText = '$219,945';
+            document.getElementById('clipCardRevPct').innerText = '11.61%';
+            document.getElementById('clipCardRevYoY').innerHTML = '↓ -33.13%';
+            document.getElementById('clipCardRevWoW').innerHTML = '↓ -45.71%';
+            document.getElementById('clipCardRevYtd').innerText = '$6,240,639';
+            document.getElementById('clipCardRevYtdYoY').innerHTML = '↑ +844.36%';
+
+            document.getElementById('hookCardSales').innerText = '3,477';
+            document.getElementById('hookCardPct').innerText = '33.77%';
+            document.getElementById('hookCardYoY').innerHTML = '↑ +19.77%';
+            document.getElementById('hookCardWoW').innerHTML = '↓ -18.72%';
+            document.getElementById('hookCardYtd').innerText = '75,570';
+            document.getElementById('hookCardYtdYoY').innerHTML = '↓ -3.00%';
+            document.getElementById('hookCardRevenue').innerText = '$701,093';
+            document.getElementById('hookCardRevPct').innerText = '37.02%';
+            document.getElementById('hookCardRevYoY').innerHTML = '↑ +56.32%';
+            document.getElementById('hookCardRevWoW').innerHTML = '↓ -19.23%';
+            document.getElementById('hookCardRevYtd').innerText = '$14,897,870';
+            document.getElementById('hookCardRevYtdYoY').innerHTML = '↑ +26.59%';
 
             document.getElementById('marketYoY').innerHTML = '↑ +0.59%';
             document.getElementById('airYoY').innerHTML = '↑ +0.64%';

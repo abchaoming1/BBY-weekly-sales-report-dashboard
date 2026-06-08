@@ -3191,8 +3191,10 @@
             document.getElementById('hookCardRevYtd').innerText = '$16,775,544';
             document.getElementById('hookCardRevYtdYoY').innerHTML = '↑ +26.12%';
 
-            document.getElementById('marketYoY').innerHTML = '↓ -0.19%';
-            document.getElementById('airYoY').innerHTML = '↓ -7.52%';
+            const marketYoYEl = document.getElementById('marketYoY');
+            if (marketYoYEl) marketYoYEl.innerHTML = '↓ -0.19%';
+            const airYoYEl = document.getElementById('airYoY');
+            if (airYoYEl) airYoYEl.innerHTML = '↓ -7.52%';
         }
 
         // ==================== 10. 页面加载完成后执行 ====================

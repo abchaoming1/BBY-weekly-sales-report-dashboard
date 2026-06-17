@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week-24 BBY 销售数据周报分析（2026.6.7 全数据完整版）</title>
+    <title>Week-24 BBY 销售数据周报分析（2026.6.9-6.15 全数据完整版）</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
         /* ==================== 原报告完整样式 ==================== */
@@ -387,8 +387,8 @@
     <div class="container">
         <div class="top-banner">
             <div class="activity-banner">
-                <div class="activity-title">📊 Week-24 销售数据 (截至2026.6.7)</div>
-                <div class="activity-date">日期：2026.6.7 | 整体销量<span id="totalSalesSpan"></span>条，环比<span id="wowSpan"></span>，同比<span id="yoySpan"></span> | 骨导线<span id="boneSalesSpan"></span>条(<span id="bonePctSpan"></span>%)，气导线<span id="airSalesSpan"></span>条(<span id="airPctSpan"></span>%)</div>
+                <div class="activity-title">📊 Week-24 销售数据 (2026.6.9-6.15)</div>
+                <div class="activity-date">日期：2026.6.9-6.15 | 整体销量<span id="totalSalesSpan"></span>条，环比<span id="wowSpan"></span>，同比<span id="yoySpan"></span> | 骨导线<span id="boneSalesSpan"></span>条(<span id="bonePctSpan"></span>%)，气导线<span id="airSalesSpan"></span>条(<span id="airPctSpan"></span>%)</div>
             </div>
             <div class="new-product-banner">
                 <div class="new-product-title">🚀 新品表现：T010 / E320 / E210</div>
@@ -398,12 +398,12 @@
         </div>
         
         <header>
-            <div class="logo">BBY销售数据智能平台 (Week-24 · 2026.6.7 全数据完整版)</div>
+            <div class="logo">BBY销售数据智能平台 (Week-24 · 2026.6.9-6.15 全数据完整版)</div>
         </header>
         
         <div class="kpi-cards">
             <div class="kpi-card">
-                <div class="kpi-title">本周总销量 (W24 6.7)</div>
+                <div class="kpi-title">本周总销量 (W24 6.9-6.15)</div>
                 <div class="kpi-value" id="kpiTotalSales"></div>
                 <div class="kpi-change negative" id="kpiWow"></div>
                 <div class="kpi-change positive" id="kpiYoy"></div>
@@ -415,7 +415,7 @@
                 </div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">本周总销售额 (W24 6.7)</div>
+                <div class="kpi-title">本周总销售额 (W24 6.9-6.15)</div>
                 <div class="kpi-value" id="kpiTotalRevenue"></div>
                 <div class="kpi-change negative" id="kpiRevenueWow"></div>
                 <div class="kpi-change positive" id="kpiRevenueYoy"></div>
@@ -427,7 +427,7 @@
                 </div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">线上销售占比 (W24 6.7)</div>
+                <div class="kpi-title">线上销售占比 (W24 6.9-6.15)</div>
                 <div class="kpi-value" id="kpiOnlinePct"></div>
                 <div class="kpi-change negative" id="kpiOnlineWow"></div>
                 <div class="kpi-change" id="kpiOnlineSales"></div>
@@ -656,13 +656,13 @@
                 <div id="mainChart"></div>
             </div>
             <div style="font-size:14px; color:#aaa; margin-top:15px; text-align:center;">
-                时间轴：2026/3/15 - 2026/6/7 (每周日)，促销标记覆盖完整周区间。
+                时间轴：2026/3/15 - 2026/6/15 (每周日)，促销标记覆盖完整周区间。
             </div>
         </div>
 
         <div class="sku-share-chart-container">
             <div class="section-header" style="border-bottom:none; margin:0 0 20px 0;">
-                <h2 class="sku-share-chart-title">📈 十三周各SKU趋势 (W12-W24, 至6.7) - 堆叠柱状图</h2>
+                <h2 class="sku-share-chart-title">📈 十三周各SKU趋势 (W12-W24, 至6.9-6.15) - 堆叠柱状图</h2>
                 <div style="display:flex; gap:10px; align-items:center;">
                     <div class="chart-toggle">
                         <button id="showPercentage" class="toggle-btn active">显示占比</button>
@@ -691,6 +691,8 @@
                     </tbody>
             </table>
         </div>
+
+
 
 
 
@@ -1757,215 +1759,217 @@
         // ==================== 3. 构建促销活动映射 ====================
         const promotionByDetailSku = {};
         const promoList = [
-            { date: '2026/3/15', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 6, rate: 25, savings: 50 },
-            { date: '2026/3/15', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/15', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/15', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
-            { date: '2026/3/15', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
-            { date: '2026/3/15', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
-            { date: '2026/3/15', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
-            { date: '2026/3/15', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 1, rate: 21.90, savings: 35 },
-            { date: '2026/3/15', sku: 'S811-MN-BG-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
-            { date: '2026/3/15', sku: 'S811-MN-BK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
-            { date: '2026/3/15', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 6, rate: 27.80, savings: 50 },
-            { date: '2026/3/15', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 6, rate: 33.30, savings: 40 },
-            { date: '2026/3/15', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 6, rate: 25, savings: 50 },
-            { date: '2026/3/22', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/3/22', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/3/22', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 1, rate: 25, savings: 50 },
-            { date: '2026/3/22', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/3/22', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 4, rate: 31.30, savings: 25 },
-            { date: '2026/3/22', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 4, rate: 31.30, savings: 25 },
-            { date: '2026/3/22', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 7, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 7, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
-            { date: '2026/3/22', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
-            { date: '2026/3/22', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
-            { date: '2026/3/22', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
-            { date: '2026/3/22', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
-            { date: '2026/3/22', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
-            { date: '2026/3/22', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 109.99, days: 1, rate: 31.23, savings: 49.96 },
-            { date: '2026/3/22', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 1, rate: 27.76, savings: 49.96 },
-            { date: '2026/3/22', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
-            { date: '2026/3/22', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 4, rate: 33.31, savings: 39.96 },
-            { date: '2026/3/22', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 4, rate: 33.31, savings: 39.96 },
-            { date: '2026/3/22', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 1, rate: 33.31, savings: 39.96 },
-            { date: '2026/3/22', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 4, rate: 33.31, savings: 39.96 },
-            { date: '2026/3/22', sku: 'T921-ST-BK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 39.96 },
-            { date: '2026/3/22', sku: 'T921-ST-GY-US', promoPrice: 159.99, days: 4, rate: 20, savings: 39.96 },
-            { date: '2026/3/22', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 1, rate: 24.99, savings: 49.96 },
-            { date: '2026/3/29', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/3/29', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/3/29', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/3/29', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/3/29', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
-            { date: '2026/3/29', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
-            { date: '2026/3/29', sku: 'S661-ST-PK-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
-            { date: '2026/3/29', sku: 'S661-ST-WT-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
-            { date: '2026/3/29', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
-            { date: '2026/3/29', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
-            { date: '2026/3/29', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
-            { date: '2026/3/29', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
-            { date: '2026/3/29', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
-            { date: '2026/3/29', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
-            { date: '2026/3/29', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
-            { date: '2026/3/29', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
-            { date: '2026/3/29', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
-            { date: '2026/3/29', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
-            { date: '2026/3/29', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
-            { date: '2026/3/29', sku: 'T921-ST-BK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/3/29', sku: 'T921-ST-GY-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/3/29', sku: 'T921-ST-SB-US-326', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
-            { date: '2026/4/5', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
-            { date: '2026/4/5', sku: 'S661-ST-PK-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
-            { date: '2026/4/5', sku: 'S661-ST-WT-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
-            { date: '2026/4/5', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
-            { date: '2026/4/5', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
-            { date: '2026/4/5', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
-            { date: '2026/4/5', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
-            { date: '2026/4/5', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
-            { date: '2026/4/5', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
-            { date: '2026/4/5', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
-            { date: '2026/4/5', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
-            { date: '2026/4/5', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
-            { date: '2026/4/5', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
-            { date: '2026/4/5', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
-            { date: '2026/4/5', sku: 'T921-ST-BK-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'T921-ST-GY-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/5', sku: 'T921-ST-SB-US-326', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
-            { date: '2026/4/26', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/4/26', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/4/26', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/4/26', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/4/26', sku: 'E310-ST-RD-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
-            { date: '2026/4/26', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
-            { date: '2026/4/26', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
-            { date: '2026/4/26', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
-            { date: '2026/4/26', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
-            { date: '2026/4/26', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
-            { date: '2026/4/26', sku: 'S805-ST-BL-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
-            { date: '2026/4/26', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
-            { date: '2026/4/26', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
-            { date: '2026/4/26', sku: 'T921-ST-BK-US', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
-            { date: '2026/4/26', sku: 'T921-ST-GY-US', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
-            { date: '2026/4/26', sku: 'T921-ST-PR-US', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
-            { date: '2026/4/26', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
-            { date: '2026/5/3', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/5/3', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/5/3', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/5/3', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/5/3', sku: 'E310-ST-RD-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
-            { date: '2026/5/3', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
-            { date: '2026/5/3', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
-            { date: '2026/5/3', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
-            { date: '2026/5/3', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
-            { date: '2026/5/3', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
-            { date: '2026/5/3', sku: 'S805-ST-BL-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
-            { date: '2026/5/3', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
-            { date: '2026/5/3', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
-            { date: '2026/5/3', sku: 'T921-ST-BK-US', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
-            { date: '2026/5/3', sku: 'T921-ST-GY-US', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
-            { date: '2026/5/3', sku: 'T921-ST-PR-US', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
-            { date: '2026/5/3', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
-            { date: '2026/5/10', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
-            { date: '2026/5/10', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
-            { date: '2026/5/10', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
-            { date: '2026/5/10', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
-            { date: '2026/5/10', sku: 'E310-ST-RD-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
-            { date: '2026/5/10', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
-            { date: '2026/5/10', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
-            { date: '2026/5/10', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
-            { date: '2026/5/10', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
-            { date: '2026/5/10', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
-            { date: '2026/5/10', sku: 'S805-ST-BL-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
-            { date: '2026/5/10', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
-            { date: '2026/5/10', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
-            { date: '2026/5/10', sku: 'T921-ST-BK-US', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
-            { date: '2026/5/10', sku: 'T921-ST-GY-US', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
-            { date: '2026/5/10', sku: 'T921-ST-PR-US', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
-            { date: '2026/5/10', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
-            { date: '2026/5/17', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 6, rate: 31, savings: 25 },
-            { date: '2026/5/17', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 6, rate: 31, savings: 25 },
-            { date: '2026/5/17', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 99.99, days: 6, rate: 38, savings: 60 },
-            { date: '2026/5/17', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 6, rate: 22, savings: 50 },
-            { date: '2026/5/17', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
-            { date: '2026/5/17', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
-            { date: '2026/5/17', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
-            { date: '2026/5/17', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
-            { date: '2026/5/24', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 2, rate: 31, savings: 25 },
-            { date: '2026/5/24', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 2, rate: 31, savings: 25 },
-            { date: '2026/5/24', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 99.99, days: 2, rate: 38, savings: 60 },
-            { date: '2026/5/24', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 2, rate: 22, savings: 50 },
-            { date: '2026/5/24', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
-            { date: '2026/5/24', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
-            { date: '2026/5/24', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
-            { date: '2026/5/24', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
-            { date: '2026/6/7', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 6, rate: 25, savings: 50 },
-            { date: '2026/6/7', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 6, rate: 22, savings: 35 },
-            { date: '2026/6/7', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 6, rate: 22, savings: 35 },
-            { date: '2026/6/7', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 6, rate: 22, savings: 35 },
-            { date: '2026/6/7', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 6, rate: 22, savings: 35 },
-            { date: '2026/6/7', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 6, rate: 22, savings: 35 }
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/20', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 6, rate: 25, savings: 50 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/21', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/21', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/17', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/17', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/17', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/17', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/15', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 1, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/17', sku: 'S811-MN-BG-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/17', sku: 'S811-MN-BK-US', promoPrice: 124.99, days: 3, rate: 21.90, savings: 35 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/20', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 6, rate: 27.80, savings: 50 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/20', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 6, rate: 33.30, savings: 40 },
+            { date: '2026/3/15', startDate: '2026/3/15', endDate: '2026/3/20', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 6, rate: 25, savings: 50 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/22', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 1, rate: 25, savings: 50 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 4, rate: 31.30, savings: 25 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 4, rate: 31.30, savings: 25 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/28', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 7, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/28', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 7, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 4, rate: 30.80, savings: 40 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/22', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 109.99, days: 1, rate: 31.23, savings: 49.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/22', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 1, rate: 27.76, savings: 49.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 4, rate: 22.21, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 4, rate: 33.31, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 4, rate: 33.31, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/22', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 1, rate: 33.31, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 4, rate: 33.31, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'T921-ST-BK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/25', sku: 'T921-ST-GY-US', promoPrice: 159.99, days: 4, rate: 20, savings: 39.96 },
+            { date: '2026/3/22', startDate: '2026/3/22', endDate: '2026/3/22', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 1, rate: 24.99, savings: 49.96 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S661-ST-PK-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S661-ST-WT-US', promoPrice: 54.99, days: 7, rate: 31.30, savings: 25 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/3/31', sku: 'S710-ST-GY-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/3/31', sku: 'S710-ST-RD-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 7, rate: 30.80, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 7, rate: 22.20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 7, rate: 33.30, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'T921-ST-BK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'T921-ST-GY-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/3/29', startDate: '2026/3/29', endDate: '2026/4/4', sku: 'T921-ST-SB-US-326', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S661-ST-PK-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S661-ST-WT-US', promoPrice: 54.99, days: 3, rate: 31.30, savings: 25 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 3, rate: 30.80, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 3, rate: 22.20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 3, rate: 33.30, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'T921-ST-BK-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'T921-ST-GY-US', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/5', startDate: '2026/4/5', endDate: '2026/4/7', sku: 'T921-ST-SB-US-326', promoPrice: 159.99, days: 3, rate: 20, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'E310-ST-RD-US', promoPrice: 159.99, days: 4, rate: 20, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S805-ST-BL-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 4, rate: 31, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 4, rate: 22, savings: 40 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'T921-ST-BK-US', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'T921-ST-GY-US', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'T921-ST-PR-US', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
+            { date: '2026/4/26', startDate: '2026/4/26', endDate: '2026/4/29', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 4, rate: 20, savings: 50 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'E310-ST-RD-US', promoPrice: 159.99, days: 7, rate: 20, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S805-ST-BL-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 7, rate: 31, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 7, rate: 22, savings: 40 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'T921-ST-BK-US', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'T921-ST-GY-US', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'T921-ST-PR-US', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
+            { date: '2026/5/3', startDate: '2026/5/3', endDate: '2026/5/9', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 7, rate: 20, savings: 50 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'E310-ST-BK-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'E310-ST-GY-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'E310-ST-PK-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'E310-ST-RD-US', promoPrice: 159.99, days: 1, rate: 20, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S803-MN-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S803-MN-BL-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S803-ST-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S803-ST-BL-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S805-ST-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S805-ST-BL-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S806-MN-BK-US', promoPrice: 89.99, days: 1, rate: 31, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S820-ST-BK-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S820-ST-BL-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S820-ST-BY-US-326', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S820-ST-OR-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S820-ST-SR-US-326', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S821-MN-BK-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S821-MN-BL-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S821-MN-OR-US', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'S821-MN-SR-US-326', promoPrice: 139.99, days: 1, rate: 22, savings: 40 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'T921-ST-BK-US', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'T921-ST-GY-US', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'T921-ST-PR-US', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
+            { date: '2026/5/10', startDate: '2026/5/10', endDate: '2026/5/10', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 1, rate: 20, savings: 50 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 6, rate: 31, savings: 25 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 6, rate: 31, savings: 25 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 99.99, days: 6, rate: 38, savings: 60 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 6, rate: 22, savings: 50 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
+            { date: '2026/5/17', startDate: '2026/5/17', endDate: '2026/5/22', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'S661-ST-BL-US', promoPrice: 54.99, days: 2, rate: 31, savings: 25 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'S661-ST-GY-US', promoPrice: 54.99, days: 2, rate: 31, savings: 25 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 99.99, days: 2, rate: 38, savings: 60 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'S820-ST-BY-US-326', promoPrice: 129.99, days: 2, rate: 22, savings: 50 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'T511-ST-BK-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
+            { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
+            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/14', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 6, rate: 25, savings: 50 },
+            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/7', startDate: '2026/6/15', endDate: '2026/6/15', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 1, rate: 33, savings: 40 },
+            { date: '2026/6/7', startDate: '2026/6/15', endDate: '2026/6/15', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 1, rate: 20, savings: 50 }
         ];
 
         promoList.forEach(p => {
             if (!promotionByDetailSku[p.sku]) promotionByDetailSku[p.sku] = [];
-            const startDate = p.date;
-            const endDate = new Date(new Date(p.date).getTime() + (p.days-1)*24*3600*1000).toLocaleDateString('en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g,'/');
+            const startDate = p.startDate || p.date;
+            const endDate = p.endDate || new Date(new Date(startDate).getTime() + (p.days-1)*24*3600*1000).toLocaleDateString('en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g,'/');
             promotionByDetailSku[p.sku].push({
                 startDate: startDate,
                 endDate: endDate,
@@ -2012,12 +2016,12 @@
         // ==================== 6. 大类汇总数据（Week24） ====================
         const summaryData = {
             'T910': { sales: 7, changePercent: -30.00, changeRaw: -3, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T511': { sales: 405, changePercent: -11.57, changeRaw: -53, priceTier: '中端', msrp: 119.95, finalPrice: 119.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T511-SB': { sales: 143, changePercent: -15.88, changeRaw: -27, priceTier: '中端', msrp: 119.95, finalPrice: 119.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'T511': { sales: 405, changePercent: -11.57, changeRaw: -53, priceTier: '中端', msrp: 119.95, finalPrice: 79.99, days: 1, discountRate: 33.00, savings: 40.00 },
+            'T511-SB': { sales: 143, changePercent: -15.88, changeRaw: -27, priceTier: '中端', msrp: 119.95, finalPrice: 79.99, days: 1, discountRate: 33.00, savings: 40.00 },
             'S820-SB': { sales: 720, changePercent: 7.14, changeRaw: 48, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'S820': { sales: 3476, changePercent: 1.94, changeRaw: 66, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S810-SB': { sales: 117, changePercent: 244.12, changeRaw: 83, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 6, discountRate: 22.00, savings: 35.00 },
-            'S810': { sales: 141, changePercent: 220.45, changeRaw: 97, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 6, discountRate: 22.00, savings: 35.00 },
+            'S810-SB': { sales: 117, changePercent: 244.12, changeRaw: 83, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 22.00, savings: 35.00 },
+            'S810': { sales: 141, changePercent: 220.45, changeRaw: 97, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 22.00, savings: 35.00 },
             'S803': { sales: 913, changePercent: 4.58, changeRaw: 40, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'S661': { sales: 49, changePercent: -44.94, changeRaw: -40, priceTier: '低端', msrp: 79.95, finalPrice: 79.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'C120-AN': { sales: 284, changePercent: 13.60, changeRaw: 34, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
@@ -2026,8 +2030,8 @@
             'S710': { sales: 595, changePercent: 0.00, changeRaw: 0, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'T920': { sales: 358, changePercent: 91.44, changeRaw: 171, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'E310': { sales: 768, changePercent: 0.26, changeRaw: 2, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 6, discountRate: 25.00, savings: 50.00 },
-            'T921': { sales: 814, changePercent: -8.02, changeRaw: -71, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T921-SB': { sales: 312, changePercent: -14.99, changeRaw: -55, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'T921': { sales: 814, changePercent: -8.02, changeRaw: -71, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 1, discountRate: 20.00, savings: 50.00 },
+            'T921-SB': { sales: 312, changePercent: -14.99, changeRaw: -55, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 1, discountRate: 20.00, savings: 50.00 },
             'T010': { sales: 1250, changePercent: 4.25, changeRaw: 51, priceTier: '高端', msrp: 249.99, finalPrice: 249.99, days: 0, discountRate: 0.00, savings: 0.00 },
             'E320': { sales: 1054, changePercent: 69.18, changeRaw: 431, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'E210': { sales: 158, changePercent: 51.92, changeRaw: 54, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0.00, savings: 0.00 }
@@ -2773,9 +2777,9 @@
                         if (!currentPromoRows.length) {
                             promoSkuStripNoteDom.innerText = '本周没有促销 SKU。';
                         } else if (family) {
-                            promoSkuStripNoteDom.innerText = `${latestPromoDate} ${family} 本周共有 ${point.promoSkuCount} 个打折小类 SKU，平均折扣 ${Math.round(point.avgDiscountRate)}%，平均促销 ${point.avgPromoDays.toFixed(1)} 天；图表展示该大类过去十三周的打折历史。`;
+                            promoSkuStripNoteDom.innerText = `2026.6.9-6.15 ${family} 本周共有 ${point.promoSkuCount} 个打折小类 SKU，平均折扣 ${Math.round(point.avgDiscountRate)}%，平均促销 ${point.avgPromoDays.toFixed(1)} 天；图表展示该大类过去十三周的打折历史。`;
                         } else {
-                            promoSkuStripNoteDom.innerText = `${latestPromoDate} 共 ${promoFamilies.length} 个大类 SKU、${currentPromoRows.length} 个小类 SKU 在促销；点击某个大类即可查看该大类过去十三周的打折历史。`;
+                            promoSkuStripNoteDom.innerText = `2026.6.9-6.15 共 ${promoFamilies.length} 个大类 SKU、${currentPromoRows.length} 个小类 SKU 在促销；点击某个大类即可查看该大类过去十三周的打折历史。`;
                         }
                     }
                 };

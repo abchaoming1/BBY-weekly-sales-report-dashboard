@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week-24 BBY 销售数据周报分析（2026.6.9-6.15 全数据完整版）</title>
+    <title>Week-24 BBY 销售数据周报分析（2026.6.14-6.20 全数据完整版）</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
         /* ==================== 原报告完整样式 ==================== */
@@ -387,23 +387,23 @@
     <div class="container">
         <div class="top-banner">
             <div class="activity-banner">
-                <div class="activity-title">📊 Week-24 销售数据 (2026.6.9-6.15)</div>
-                <div class="activity-date">日期：2026.6.9-6.15 | 整体销量<span id="totalSalesSpan"></span>条，环比<span id="wowSpan"></span>，同比<span id="yoySpan"></span> | 骨导线<span id="boneSalesSpan"></span>条(<span id="bonePctSpan"></span>%)，气导线<span id="airSalesSpan"></span>条(<span id="airPctSpan"></span>%)</div>
+                <div class="activity-title">📊 Week-24 销售数据 (2026.6.14-6.20)</div>
+                <div class="activity-date">日期：2026.6.14-6.20 | 整体销量<span id="totalSalesSpan"></span>条，环比<span id="wowSpan"></span>，同比<span id="yoySpan"></span> | 骨导线<span id="boneSalesSpan"></span>条(<span id="bonePctSpan"></span>%)，气导线<span id="airSalesSpan"></span>条(<span id="airPctSpan"></span>%)</div>
             </div>
             <div class="new-product-banner">
                 <div class="new-product-title">🚀 新品表现：T010 / E320 / E210</div>
-                <div class="new-product-info">T010 1,250条；E320 1,054条；E210 158条</div>
-                <div class="new-product-info">E320 / E210 已纳入新品追踪、SKU汇总与趋势图；全品类线上占比24.49%</div>
+                <div class="new-product-info">T010 1,309条；E320 1,525条；E210 239条</div>
+                <div class="new-product-info">E320 / E210 已纳入新品追踪、SKU汇总与趋势图；全品类线上占比25.54%</div>
             </div>
         </div>
         
         <header>
-            <div class="logo">BBY销售数据智能平台 (Week-24 · 2026.6.9-6.15 全数据完整版)</div>
+            <div class="logo">BBY销售数据智能平台 (Week-24 · 2026.6.14-6.20 全数据完整版)</div>
         </header>
         
         <div class="kpi-cards">
             <div class="kpi-card">
-                <div class="kpi-title">本周总销量 (W24 6.9-6.15)</div>
+                <div class="kpi-title">本周总销量 (W24 6.14-6.20)</div>
                 <div class="kpi-value" id="kpiTotalSales"></div>
                 <div class="kpi-change negative" id="kpiWow"></div>
                 <div class="kpi-change positive" id="kpiYoy"></div>
@@ -415,7 +415,7 @@
                 </div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">本周总销售额 (W24 6.9-6.15)</div>
+                <div class="kpi-title">本周总销售额 (W24 6.14-6.20)</div>
                 <div class="kpi-value" id="kpiTotalRevenue"></div>
                 <div class="kpi-change negative" id="kpiRevenueWow"></div>
                 <div class="kpi-change positive" id="kpiRevenueYoy"></div>
@@ -427,7 +427,7 @@
                 </div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">线上销售占比 (W24 6.9-6.15)</div>
+                <div class="kpi-title">线上销售占比 (W24 6.14-6.20)</div>
                 <div class="kpi-value" id="kpiOnlinePct"></div>
                 <div class="kpi-change negative" id="kpiOnlineWow"></div>
                 <div class="kpi-change" id="kpiOnlineSales"></div>
@@ -480,7 +480,7 @@
 
         <div class="summary-card">
             <div class="summary-text">
-                📊 <strong>Week-24关键表现：</strong>本周销量<span id="summarySales"></span>条，销售额$<span id="summaryRevenue"></span>M，环比上升<span id="summaryWow"></span>%，同比上升<span id="summaryYoy"></span>%。骨导线<span id="summaryBone"></span>条(<span id="summaryBonePct"></span>%)，气导线<span id="summaryAir"></span>条(<span id="summaryAirPct"></span>%)。T010销量1,250条，份额12.09%。S820系列达3,476条(占比33.63%)，继续占主导地位。本周整体销量与销售额同步回升，气导线YoY继续保持高增长。
+                📊 <strong>Week-24关键表现：</strong>本周销量<span id="summarySales"></span>条，销售额$<span id="summaryRevenue"></span>M，环比上升<span id="summaryWow"></span>%，同比上升<span id="summaryYoy"></span>%。骨导线<span id="summaryBone"></span>条(<span id="summaryBonePct"></span>%)，气导线<span id="summaryAir"></span>条(<span id="summaryAirPct"></span>%)。T010销量1,309条，份额10.16%。S820系列达4,339条(占比33.67%)，继续占主导地位。本周整体销量与销售额同步回升，气导线YoY继续保持高增长。
             </div>
         </div>
         
@@ -568,10 +568,10 @@
             <div class="analysis-section">
                 <div class="analysis-title">📊 业务线表现深度分析 (Week 24)</div>
                 <div class="analysis-content">
-                    <p><strong>大盘概览：</strong>本周总销量为10,337条，环比上升7.98%，同比增长-11.92%，整体继续保持在1.2万条以上高位运行。</p>
-                    <p><strong>骨导线分析：</strong>销量5,523条，占比53.43%，环比+3.41%。S820系列达3,476条，继续占主导地位；S803回升至913条（+5%）。</p>
-                    <p><strong>气导线分析：</strong>销量4,814条，占比46.57%，环比+13.75%，同比增幅达+-1.84%。E310为768条，T921为814条，T010为1,250条。</p>
-                    <p><strong>T010高端新品：</strong>本周无折扣情况下销量1,250条，环比4%，市场份额调整为12.09%，整体表现仍保持稳定。</p>
+                    <p><strong>大盘概览：</strong>本周总销量为12,885条，环比上升34.60%，同比增长23.08%，整体继续保持在1.2万条以上高位运行。</p>
+                    <p><strong>骨导线分析：</strong>销量6,720条，占比52.15%，环比+25.82%。S820系列达4,339条，继续占主导地位；S803回升至1,108条（+27%）。</p>
+                    <p><strong>气导线分析：</strong>销量6,165条，占比47.85%，环比+45.68%，同比增幅达+47.28%。E310为534条，T921为1,483条，T010为1,309条。</p>
+                    <p><strong>T010高端新品：</strong>本周无折扣情况下销量1,309条，环比9%，市场份额调整为10.16%，整体表现仍保持稳定。</p>
                 </div>
             </div>
         </div>
@@ -579,26 +579,26 @@
         <div class="data-cards" style="margin-top:20px;">
             <div class="data-card">
                 <div class="data-card-title">T010 新品表现 (Week 24)</div>
-                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">1,250</div></div>
+                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">1,309</div></div>
                 <div class="data-item"><div class="data-label">上周销量</div><div class="data-value">1,199</div></div>
-                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +4.25%</div></div>
-                <div class="data-item"><div class="data-label">线上占比</div><div class="data-value">18.80%</div></div>
+                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +9.17%</div></div>
+                <div class="data-item"><div class="data-label">线上占比</div><div class="data-value">18.18%</div></div>
                 <div class="data-item"><div class="data-label">价格段位</div><div class="data-value">高端 / $249.99</div></div>
             </div>
             <div class="data-card">
                 <div class="data-card-title">E320 新品表现 (Week 24)</div>
-                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">1,054</div></div>
+                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">1,525</div></div>
                 <div class="data-item"><div class="data-label">上周销量</div><div class="data-value">623</div></div>
-                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +69.18%</div></div>
-                <div class="data-item"><div class="data-label">线上占比</div><div class="data-value">22.77%</div></div>
+                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +144.78%</div></div>
+                <div class="data-item"><div class="data-label">线上占比</div><div class="data-value">36.92%</div></div>
                 <div class="data-item"><div class="data-label">价格段位</div><div class="data-value">高端 / $199.95</div></div>
             </div>
             <div class="data-card">
                 <div class="data-card-title">E210 新品表现 (Week 24)</div>
-                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">158</div></div>
+                <div class="data-item"><div class="data-label">本周销量</div><div class="data-value">239</div></div>
                 <div class="data-item"><div class="data-label">上周销量</div><div class="data-value">104</div></div>
-                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +51.92%</div></div>
-                <div class="data-item"><div class="data-label">线上占比</div><div class="data-value">27.22%</div></div>
+                <div class="data-item"><div class="data-label">环比</div><div class="data-value positive-change">↑ +129.81%</div></div>
+                <div class="data-item"><div class="data-label">线上占比</div><div class="data-value">22.18%</div></div>
                 <div class="data-item"><div class="data-label">价格段位</div><div class="data-value">中端 / $129.95</div></div>
             </div>
         </div>
@@ -656,13 +656,13 @@
                 <div id="mainChart"></div>
             </div>
             <div style="font-size:14px; color:#aaa; margin-top:15px; text-align:center;">
-                时间轴：2026/3/15 - 2026/6/15 (每周日)，促销标记覆盖完整周区间。
+                时间轴：2026/3/15 - 2026/6/20 (每周日)，促销标记覆盖完整周区间。
             </div>
         </div>
 
         <div class="sku-share-chart-container">
             <div class="section-header" style="border-bottom:none; margin:0 0 20px 0;">
-                <h2 class="sku-share-chart-title">📈 十三周各SKU趋势 (W12-W24, 至6.9-6.15) - 堆叠柱状图</h2>
+                <h2 class="sku-share-chart-title">📈 十三周各SKU趋势 (W12-W24, 至6.14-6.20) - 堆叠柱状图</h2>
                 <div style="display:flex; gap:10px; align-items:center;">
                     <div class="chart-toggle">
                         <button id="showPercentage" class="toggle-btn active">显示占比</button>
@@ -705,16 +705,12 @@
 
 
 
-
-
-
-
 <!-- STORE_WEEKLY_MODULE_START -->
         <h2 class="section-title">🏪 单店单周销量表现 (Week 24)</h2>
         <div class="summary-card">
             <div class="store-summary-note">
-                本模块按《BBY-2026周报数据》中的“销量-原数据”，基于 <strong>2026/6/7</strong> 的 <strong>Store</strong> 口径重新聚合单店周销量。
-                本周共有 <strong>876</strong> 个有销量店铺，前100店合计贡献 <strong>43.71%</strong> 销量。
+                本模块按《BBY-2026周报数据》中的“销量-原数据”，基于 <strong>2026/6/14</strong> 的 <strong>Store</strong> 口径重新聚合单店周销量。
+                本周共有 <strong>886</strong> 个有销量店铺，前100店合计贡献 <strong>45.25%</strong> 销量。
                 其中 <strong>Store 960</strong> 和 <strong>Store 973</strong> 为 Online 聚合店号，表格中同时区分了 <strong>Online / In-store</strong> 与 <strong>POP 类型</strong>。
             </div>
         </div>
@@ -722,26 +718,26 @@
         <div class="data-cards" style="margin-top:20px;">
             <div class="data-card">
                 <div class="data-card-title">有销量店铺数</div>
-                <div class="data-item"><div class="data-label">本周有销量店铺</div><div class="data-value">876</div></div>
+                <div class="data-item"><div class="data-label">本周有销量店铺</div><div class="data-value">886</div></div>
                 <div class="data-item"><div class="data-label">模块口径</div><div class="data-value">Start Date + Store</div></div>
             </div>
             <div class="data-card">
                 <div class="data-card-title">前100贡献</div>
-                <div class="data-item"><div class="data-label">Top 100销量贡献</div><div class="data-value">43.71%</div></div>
-                <div class="data-item"><div class="data-label">Top 100合计销量</div><div class="data-value">4,518</div></div>
+                <div class="data-item"><div class="data-label">Top 100销量贡献</div><div class="data-value">45.25%</div></div>
+                <div class="data-item"><div class="data-label">Top 100合计销量</div><div class="data-value">5,830</div></div>
             </div>
             <div class="data-card">
                 <div class="data-card-title">TOP1 总体店铺</div>
                 <div class="data-item"><div class="data-label">Store</div><div class="data-value">960</div></div>
                 <div class="data-item"><div class="data-label">Channel</div><div class="data-value">Online</div></div>
                 <div class="data-item"><div class="data-label">Store Type</div><div class="data-value">Online Aggregate</div></div>
-                <div class="data-item"><div class="data-label">销量 / 销售额</div><div class="data-value">2,178 / $393,460</div></div>
+                <div class="data-item"><div class="data-label">销量 / 销售额</div><div class="data-value">3,185 / $569,680</div></div>
             </div>
             <div class="data-card">
                 <div class="data-card-title">TOP1 实体店</div>
                 <div class="data-item"><div class="data-label">Store</div><div class="data-value">1118</div></div>
                 <div class="data-item"><div class="data-label">State / Type</div><div class="data-value">Puerto Rico / SideStock</div></div>
-                <div class="data-item"><div class="data-label">销量 / 销售额</div><div class="data-value">55 / $10,097</div></div>
+                <div class="data-item"><div class="data-label">销量 / 销售额</div><div class="data-value">77 / $13,586</div></div>
             </div>
         </div>
 
@@ -1686,66 +1682,67 @@
             {date:'2026/5/31', sku:'E320-ST-GY-US', online:9, offline:1},
             {date:'2026/5/31', sku:'E210-ST-PR-US', online:4, offline:1},
 
-            // 2026/6/7
-            {date:'2026/6/7', sku:'C120-AA-BK-US', online:1, offline:2},
-            {date:'2026/6/7', sku:'C120-AC-BK-US', online:24, offline:31},
-            {date:'2026/6/7', sku:'C120-AN-BK-US', online:55, offline:229},
-            {date:'2026/6/7', sku:'C610-AN-BK-US-326-TB1', online:6, offline:0},
-            {date:'2026/6/7', sku:'E210-ST-BK-US', online:31, offline:114},
-            {date:'2026/6/7', sku:'E210-ST-PR-US', online:12, offline:1},
-            {date:'2026/6/7', sku:'E310-ST-BK-US', online:28, offline:100},
-            {date:'2026/6/7', sku:'E310-ST-GY-US', online:17, offline:59},
-            {date:'2026/6/7', sku:'E310-ST-NB-US-326-BBY', online:192, offline:317},
-            {date:'2026/6/7', sku:'E310-ST-PK-US', online:26, offline:23},
-            {date:'2026/6/7', sku:'E310-ST-RD-US', online:3, offline:3},
-            {date:'2026/6/7', sku:'E320-ST-BK-US', online:131, offline:677},
-            {date:'2026/6/7', sku:'E320-ST-GY-US', online:23, offline:8},
-            {date:'2026/6/7', sku:'E320-ST-WT-US', online:86, offline:129},
-            {date:'2026/6/7', sku:'S661-ST-BL-US', online:7, offline:1},
-            {date:'2026/6/7', sku:'S661-ST-GY-US', online:37, offline:4},
-            {date:'2026/6/7', sku:'S710-ST-GY-US', online:77, offline:482},
-            {date:'2026/6/7', sku:'S710-ST-RD-US', online:15, offline:4},
-            {date:'2026/6/7', sku:'S710-ST-WT-US', online:13, offline:4},
-            {date:'2026/6/7', sku:'S803-MN-BK-US', online:128, offline:356},
-            {date:'2026/6/7', sku:'S803-MN-BL-US', online:20, offline:5},
-            {date:'2026/6/7', sku:'S803-ST-BK-US', online:106, offline:267},
-            {date:'2026/6/7', sku:'S803-ST-BL-US', online:14, offline:1},
-            {date:'2026/6/7', sku:'S803-ST-GY-US', online:1, offline:0},
-            {date:'2026/6/7', sku:'S805-ST-BK-US', online:6, offline:0},
-            {date:'2026/6/7', sku:'S805-ST-BL-US', online:1, offline:1},
-            {date:'2026/6/7', sku:'S806-MN-BK-US', online:7, offline:0},
-            {date:'2026/6/7', sku:'S810-ST-BK-US', online:2, offline:1},
-            {date:'2026/6/7', sku:'S810-ST-BL-US', online:19, offline:1},
-            {date:'2026/6/7', sku:'S810-ST-PK-US', online:1, offline:0},
-            {date:'2026/6/7', sku:'S810-ST-SB-US-153-BBY', online:103, offline:14},
-            {date:'2026/6/7', sku:'S811-MN-BK-US', online:1, offline:0},
-            {date:'2026/6/7', sku:'S820-ST-BK-US', online:209, offline:990},
-            {date:'2026/6/7', sku:'S820-ST-BL-US', online:23, offline:6},
-            {date:'2026/6/7', sku:'S820-ST-BY-US-326', online:118, offline:602},
-            {date:'2026/6/7', sku:'S820-ST-OR-US', online:30, offline:16},
-            {date:'2026/6/7', sku:'S820-ST-SR-US-326', online:11, offline:6},
-            {date:'2026/6/7', sku:'S821-MN-BK-US', online:116, offline:1267},
-            {date:'2026/6/7', sku:'S821-MN-BL-US', online:21, offline:19},
-            {date:'2026/6/7', sku:'S821-MN-OR-US', online:12, offline:12},
-            {date:'2026/6/7', sku:'S821-MN-SR-US-326', online:13, offline:5},
-            {date:'2026/6/7', sku:'T010-ST-BK-US', online:194, offline:772},
-            {date:'2026/6/7', sku:'T010-ST-WT-US', online:41, offline:243},
-            {date:'2026/6/7', sku:'T511-ST-BK-US', online:56, offline:154},
-            {date:'2026/6/7', sku:'T511-ST-PK-US', online:12, offline:2},
-            {date:'2026/6/7', sku:'T511-ST-SB-US-326', online:26, offline:117},
-            {date:'2026/6/7', sku:'T511-ST-WT-US', online:15, offline:23},
-            {date:'2026/6/7', sku:'T910-ST-BG-US', online:4, offline:0},
-            {date:'2026/6/7', sku:'T910-ST-BK-US', online:0, offline:3},
-            {date:'2026/6/7', sku:'T920-ST-BG-US', online:25, offline:20},
-            {date:'2026/6/7', sku:'T920-ST-BK-US', online:266, offline:47},
-            {date:'2026/6/7', sku:'T921-ST-BK-US', online:57, offline:419},
-            {date:'2026/6/7', sku:'T921-ST-GY-US', online:9, offline:1},
-            {date:'2026/6/7', sku:'T921-ST-PR-US', online:12, offline:4},
-            {date:'2026/6/7', sku:'T921-ST-SB-US-326', online:69, offline:243}
+            // 2026/6/14
+            {date:'2026/6/14', sku:'C120-AA-BK-US', online:4, offline:1},
+            {date:'2026/6/14', sku:'C120-AC-BK-US', online:27, offline:38},
+            {date:'2026/6/14', sku:'C120-AN-BK-US', online:65, offline:277},
+            {date:'2026/6/14', sku:'C610-AN-BK-US-326-TB1', online:3, offline:1},
+            {date:'2026/6/14', sku:'E210-ST-BK-US', online:40, offline:181},
+            {date:'2026/6/14', sku:'E210-ST-PR-US', online:13, offline:5},
+            {date:'2026/6/14', sku:'E310-ST-BK-US', online:28, offline:116},
+            {date:'2026/6/14', sku:'E310-ST-GY-US', online:10, offline:49},
+            {date:'2026/6/14', sku:'E310-ST-NB-US-326-BBY', online:93, offline:177},
+            {date:'2026/6/14', sku:'E310-ST-PK-US', online:25, offline:30},
+            {date:'2026/6/14', sku:'E310-ST-RD-US', online:6, offline:0},
+            {date:'2026/6/14', sku:'E320-ST-BK-US', online:402, offline:772},
+            {date:'2026/6/14', sku:'E320-ST-GY-US', online:46, offline:9},
+            {date:'2026/6/14', sku:'E320-ST-WT-US', online:115, offline:181},
+            {date:'2026/6/14', sku:'S661-ST-BL-US', online:8, offline:1},
+            {date:'2026/6/14', sku:'S661-ST-GY-US', online:36, offline:6},
+            {date:'2026/6/14', sku:'S710-ST-GY-US', online:81, offline:544},
+            {date:'2026/6/14', sku:'S710-ST-RD-US', online:10, offline:8},
+            {date:'2026/6/14', sku:'S710-ST-WT-US', online:4, offline:0},
+            {date:'2026/6/14', sku:'S803-MN-BK-US', online:146, offline:435},
+            {date:'2026/6/14', sku:'S803-MN-BL-US', online:16, offline:2},
+            {date:'2026/6/14', sku:'S803-ST-BK-US', online:109, offline:377},
+            {date:'2026/6/14', sku:'S803-ST-BL-US', online:12, offline:1},
+            {date:'2026/6/14', sku:'S803-ST-GY-US', online:1, offline:0},
+            {date:'2026/6/14', sku:'S805-ST-BK-US', online:3, offline:1},
+            {date:'2026/6/14', sku:'S805-ST-BL-US', online:2, offline:1},
+            {date:'2026/6/14', sku:'S806-MN-BK-US', online:0, offline:2},
+            {date:'2026/6/14', sku:'S810-ST-BK-US', online:5, offline:2},
+            {date:'2026/6/14', sku:'S810-ST-BL-US', online:14, offline:2},
+            {date:'2026/6/14', sku:'S810-ST-PK-US', online:2, offline:0},
+            {date:'2026/6/14', sku:'S810-ST-SB-US-153-BBY', online:112, offline:20},
+            {date:'2026/6/14', sku:'S811-MN-BG-US', online:1, offline:0},
+            {date:'2026/6/14', sku:'S811-MN-BK-US', online:1, offline:0},
+            {date:'2026/6/14', sku:'S820-ST-BK-US', online:318, offline:1276},
+            {date:'2026/6/14', sku:'S820-ST-BL-US', online:24, offline:4},
+            {date:'2026/6/14', sku:'S820-ST-BY-US-326', online:160, offline:810},
+            {date:'2026/6/14', sku:'S820-ST-OR-US', online:31, offline:18},
+            {date:'2026/6/14', sku:'S820-ST-SR-US-326', online:19, offline:3},
+            {date:'2026/6/14', sku:'S821-MN-BK-US', online:155, offline:1428},
+            {date:'2026/6/14', sku:'S821-MN-BL-US', online:25, offline:13},
+            {date:'2026/6/14', sku:'S821-MN-OR-US', online:20, offline:18},
+            {date:'2026/6/14', sku:'S821-MN-SR-US-326', online:8, offline:9},
+            {date:'2026/6/14', sku:'T010-ST-BK-US', online:199, offline:812},
+            {date:'2026/6/14', sku:'T010-ST-WT-US', online:39, offline:259},
+            {date:'2026/6/14', sku:'T511-ST-BK-US', online:32, offline:148},
+            {date:'2026/6/14', sku:'T511-ST-PK-US', online:4, offline:2},
+            {date:'2026/6/14', sku:'T511-ST-SB-US-326', online:278, offline:437},
+            {date:'2026/6/14', sku:'T511-ST-WT-US', online:10, offline:17},
+            {date:'2026/6/14', sku:'T910-ST-BG-US', online:1, offline:1},
+            {date:'2026/6/14', sku:'T910-ST-BK-US', online:10, offline:2},
+            {date:'2026/6/14', sku:'T920-ST-BG-US', online:24, offline:14},
+            {date:'2026/6/14', sku:'T920-ST-BK-US', online:61, offline:34},
+            {date:'2026/6/14', sku:'T921-ST-BK-US', online:53, offline:415},
+            {date:'2026/6/14', sku:'T921-ST-GY-US', online:9, offline:3},
+            {date:'2026/6/14', sku:'T921-ST-PR-US', online:12, offline:3},
+            {date:'2026/6/14', sku:'T921-ST-SB-US-326', online:359, offline:629}
         ];
 
         // ==================== 2. 构建 channelData ====================
-        const weekDates = ['2026/3/15','2026/3/22','2026/3/29','2026/4/5','2026/4/12','2026/4/19','2026/4/26','2026/5/3','2026/5/10','2026/5/17','2026/5/24','2026/5/31','2026/6/7'];
+        const weekDates = ['2026/3/15','2026/3/22','2026/3/29','2026/4/5','2026/4/12','2026/4/19','2026/4/26','2026/5/3','2026/5/10','2026/5/17','2026/5/24','2026/5/31','2026/6/14'];
         const weeks = ['W12','W13','W14','W15','W16','W17','W18','W19','W20','W21','W22','W23','W24'];
 
         window.channelData = {};
@@ -1956,14 +1953,14 @@
             { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'T511-ST-PK-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
             { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
             { date: '2026/5/24', startDate: '2026/5/24', endDate: '2026/5/25', sku: 'T511-ST-WT-US', promoPrice: 79.99, days: 2, rate: 33, savings: 40 },
-            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/14', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 6, rate: 25, savings: 50 },
-            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
-            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
-            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
-            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
-            { date: '2026/6/7', startDate: '2026/6/9', endDate: '2026/6/15', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
-            { date: '2026/6/7', startDate: '2026/6/15', endDate: '2026/6/15', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 1, rate: 33, savings: 40 },
-            { date: '2026/6/7', startDate: '2026/6/15', endDate: '2026/6/15', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 1, rate: 20, savings: 50 }
+            { date: '2026/6/14', startDate: '2026/6/14', endDate: '2026/6/14', sku: 'E310-ST-NB-US-326-BBY', promoPrice: 149.99, days: 1, rate: 25, savings: 50 },
+            { date: '2026/6/14', startDate: '2026/6/14', endDate: '2026/6/20', sku: 'S810-ST-BG-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/14', startDate: '2026/6/14', endDate: '2026/6/20', sku: 'S810-ST-BK-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/14', startDate: '2026/6/14', endDate: '2026/6/20', sku: 'S810-ST-BL-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/14', startDate: '2026/6/14', endDate: '2026/6/20', sku: 'S810-ST-PK-US', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/14', startDate: '2026/6/14', endDate: '2026/6/20', sku: 'S810-ST-SB-US-153-BBY', promoPrice: 124.99, days: 7, rate: 22, savings: 35 },
+            { date: '2026/6/14', startDate: '2026/6/15', endDate: '2026/6/20', sku: 'T511-ST-SB-US-326', promoPrice: 79.99, days: 6, rate: 33, savings: 40 },
+            { date: '2026/6/14', startDate: '2026/6/15', endDate: '2026/6/20', sku: 'T921-ST-SB-US-326', promoPrice: 149.99, days: 6, rate: 20, savings: 50 }
         ];
 
         promoList.forEach(p => {
@@ -2005,42 +2002,42 @@
         const mainSkuList = ['S820','T010','E320','E210','E310','T921','S803','T511','S710','T920','C120','S661','S810','T910'];
 
         // ==================== 5. 宏观KPI数据 ====================
-        const totalSales = [12793,12086,12775,9529,11348,10205,11929,14457,10295,12249,10922,9573,10337];
-        const totalRevenue = [2341755.31,2211191.02,2316336.13,1732037.51,2081354.8,1900738.55,2212186.43,2657211.07,1893951.61,2207098.27,1982036.1,1761389.31,1910403.15];
-        const onlineSales = [4183,3564,3184,2649,3366,2612,3016,3813,2646,4204,3203,2189,2532];
-        const onlinePercentages = [32.7,29.49,24.92,27.8,29.66,25.6,25.28,26.37,25.7,34.32,29.33,22.87,24.49];
-        const popSales = [10.13,10.02,11.29,8.08,9.34,8.93,10.44,12.53,8.96,9.42,9.07,8.67,9.31];
-        const boneData = [7130,6672,6986,5135,6083,5804,6974,8153,5718,7609,6424,5341,5523];
-        const airData = [5663,5414,5789,4394,5265,4401,4955,6304,4577,4640,4498,4232,4814];
+        const totalSales = [12793,12086,12775,9529,11348,10205,11929,14457,10295,12249,10922,9573,12885];
+        const totalRevenue = [2341755.31,2211191.02,2316336.13,1732037.51,2081354.8,1900738.55,2212186.43,2657211.07,1893951.61,2207098.27,1982036.1,1761389.31,2344308.11];
+        const onlineSales = [4183,3564,3184,2649,3366,2612,3016,3813,2646,4204,3203,2189,3291];
+        const onlinePercentages = [32.7,29.49,24.92,27.8,29.66,25.6,25.28,26.37,25.7,34.32,29.33,22.87,25.54];
+        const popSales = [10.13,10.02,11.29,8.08,9.34,8.93,10.44,12.53,8.96,9.42,9.07,8.67,11.39];
+        const boneData = [7130,6672,6986,5135,6083,5804,6974,8153,5718,7609,6424,5341,6720];
+        const airData = [5663,5414,5789,4394,5265,4401,4955,6304,4577,4640,4498,4232,6165];
 
         // ==================== 6. 大类汇总数据（Week24） ====================
         const summaryData = {
-            'T910': { sales: 7, changePercent: -30.00, changeRaw: -3, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T511': { sales: 405, changePercent: -11.57, changeRaw: -53, priceTier: '中端', msrp: 119.95, finalPrice: 79.99, days: 1, discountRate: 33.00, savings: 40.00 },
-            'T511-SB': { sales: 143, changePercent: -15.88, changeRaw: -27, priceTier: '中端', msrp: 119.95, finalPrice: 79.99, days: 1, discountRate: 33.00, savings: 40.00 },
-            'S820-SB': { sales: 720, changePercent: 7.14, changeRaw: 48, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S820': { sales: 3476, changePercent: 1.94, changeRaw: 66, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S810-SB': { sales: 117, changePercent: 244.12, changeRaw: 83, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 22.00, savings: 35.00 },
-            'S810': { sales: 141, changePercent: 220.45, changeRaw: 97, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 22.00, savings: 35.00 },
-            'S803': { sales: 913, changePercent: 4.58, changeRaw: 40, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S661': { sales: 49, changePercent: -44.94, changeRaw: -40, priceTier: '低端', msrp: 79.95, finalPrice: 79.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'C120-AN': { sales: 284, changePercent: 13.60, changeRaw: 34, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'C120-UC': { sales: 58, changePercent: -1.69, changeRaw: -1, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'T910': { sales: 14, changePercent: 40.00, changeRaw: 4, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'T511': { sales: 928, changePercent: 102.62, changeRaw: 470, priceTier: '中端', msrp: 119.95, finalPrice: 79.99, days: 6, discountRate: 33.00, savings: 40.00 },
+            'T511-SB': { sales: 715, changePercent: 400.00, changeRaw: 572, priceTier: '中端', msrp: 119.95, finalPrice: 79.99, days: 6, discountRate: 33.00, savings: 40.00 },
+            'S820-SB': { sales: 970, changePercent: 34.72, changeRaw: 250, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'S820': { sales: 4339, changePercent: 27.24, changeRaw: 929, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'S810-SB': { sales: 132, changePercent: 12.82, changeRaw: 15, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 22.00, savings: 35.00 },
+            'S810': { sales: 157, changePercent: 256.82, changeRaw: 113, priceTier: '中端', msrp: 159.95, finalPrice: 124.99, days: 7, discountRate: 22.00, savings: 35.00 },
+            'S803': { sales: 1108, changePercent: 26.92, changeRaw: 235, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'S661': { sales: 51, changePercent: -42.70, changeRaw: -38, priceTier: '低端', msrp: 79.95, finalPrice: 79.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'C120-AN': { sales: 342, changePercent: 20.42, changeRaw: 58, priceTier: '中端', msrp: 159.95, finalPrice: 159.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'C120-UC': { sales: 70, changePercent: 20.69, changeRaw: 12, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
             'S700': { sales: 0, changePercent: 0.00, changeRaw: 0, priceTier: '低端', msrp: 0.00, finalPrice: 0.00, days: 0, discountRate: 0.00, savings: 0.00 },
-            'S710': { sales: 595, changePercent: 0.00, changeRaw: 0, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'T920': { sales: 358, changePercent: 91.44, changeRaw: 171, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'E310': { sales: 768, changePercent: 0.26, changeRaw: 2, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 6, discountRate: 25.00, savings: 50.00 },
-            'T921': { sales: 814, changePercent: -8.02, changeRaw: -71, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 1, discountRate: 20.00, savings: 50.00 },
-            'T921-SB': { sales: 312, changePercent: -14.99, changeRaw: -55, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 1, discountRate: 20.00, savings: 50.00 },
-            'T010': { sales: 1250, changePercent: 4.25, changeRaw: 51, priceTier: '高端', msrp: 249.99, finalPrice: 249.99, days: 0, discountRate: 0.00, savings: 0.00 },
-            'E320': { sales: 1054, changePercent: 69.18, changeRaw: 431, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
-            'E210': { sales: 158, changePercent: 51.92, changeRaw: 54, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0.00, savings: 0.00 }
+            'S710': { sales: 647, changePercent: 8.74, changeRaw: 52, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'T920': { sales: 133, changePercent: -28.88, changeRaw: -54, priceTier: '高端', msrp: 179.95, finalPrice: 179.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'E310': { sales: 534, changePercent: -30.29, changeRaw: -232, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 1, discountRate: 25.00, savings: 50.00 },
+            'T921': { sales: 1483, changePercent: 67.57, changeRaw: 598, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 6, discountRate: 20.00, savings: 50.00 },
+            'T921-SB': { sales: 988, changePercent: 216.67, changeRaw: 676, priceTier: '高端', msrp: 199.95, finalPrice: 149.99, days: 6, discountRate: 20.00, savings: 50.00 },
+            'T010': { sales: 1309, changePercent: 9.17, changeRaw: 110, priceTier: '高端', msrp: 249.99, finalPrice: 249.99, days: 0, discountRate: 0.00, savings: 0.00 },
+            'E320': { sales: 1525, changePercent: 144.78, changeRaw: 902, priceTier: '高端', msrp: 199.95, finalPrice: 199.95, days: 0, discountRate: 0.00, savings: 0.00 },
+            'E210': { sales: 239, changePercent: 129.81, changeRaw: 135, priceTier: '中端', msrp: 129.95, finalPrice: 129.95, days: 0, discountRate: 0.00, savings: 0.00 }
         };
 
         // ==================== 7. 动态生成表格行 ====================
 // STORE_WEEKLY_DATA_START
-        const storeWeeklyMeta = {"date": "2026/6/7", "activeStoreCount": 876, "top100Sales": 4518, "top100Share": 43.71};
-        const storeWeeklyData = [{"rank": 1, "store": "960", "idNumber": "-", "state": "Online", "channelKey": "online", "channelLabel": "Online", "storeTypeCode": 0, "storeTypeLabel": "Online Aggregate", "storeTypeDesc": "Online 聚合店号", "pop": 0.0, "popText": "0", "sales": 2178, "salesText": "2,178", "revenue": 393460.14, "revenueText": "$393,460", "share": 21.07, "shareText": "21.07%"}, {"rank": 2, "store": "973", "idNumber": "-", "state": "Online", "channelKey": "online", "channelLabel": "Online", "storeTypeCode": 0, "storeTypeLabel": "Online Aggregate", "storeTypeDesc": "Online 聚合店号", "pop": 0.0, "popText": "0", "sales": 349, "salesText": "349", "revenue": 60642.91, "revenueText": "$60,643", "share": 3.38, "shareText": "3.38%"}, {"rank": 3, "store": "1118", "idNumber": "ID001", "state": "Puerto Rico", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 55, "salesText": "55", "revenue": 10097.37, "revenueText": "$10,097", "share": 0.53, "shareText": "0.53%"}, {"rank": 4, "store": "526", "idNumber": "ID006", "state": "Idaho", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 34, "salesText": "34", "revenue": 6338.42, "revenueText": "$6,338", "share": 0.33, "shareText": "0.33%"}, {"rank": 5, "store": "488", "idNumber": "ID004", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 34, "salesText": "34", "revenue": 6328.5, "revenueText": "$6,328", "share": 0.33, "shareText": "0.33%"}, {"rank": 6, "store": "241", "idNumber": "ID017", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 34, "salesText": "34", "revenue": 5918.38, "revenueText": "$5,918", "share": 0.33, "shareText": "0.33%"}, {"rank": 7, "store": "353", "idNumber": "ID036", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 33, "salesText": "33", "revenue": 5688.47, "revenueText": "$5,688", "share": 0.32, "shareText": "0.32%"}, {"rank": 8, "store": "1028", "idNumber": "ID019", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 0, "storeTypeLabel": "No POP", "storeTypeDesc": "-", "pop": 0.0, "popText": "0", "sales": 30, "salesText": "30", "revenue": 5188.54, "revenueText": "$5,189", "share": 0.29, "shareText": "0.29%"}, {"rank": 9, "store": "235", "idNumber": "ID005", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 29, "salesText": "29", "revenue": 5218.59, "revenueText": "$5,219", "share": 0.28, "shareText": "0.28%"}, {"rank": 10, "store": "1531", "idNumber": "ID025", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 5508.84, "revenueText": "$5,509", "share": 0.27, "shareText": "0.27%"}, {"rank": 11, "store": "218", "idNumber": "ID050", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 5018.72, "revenueText": "$5,019", "share": 0.27, "shareText": "0.27%"}, {"rank": 12, "store": "1530", "idNumber": "ID007", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 5008.69, "revenueText": "$5,009", "share": 0.26, "shareText": "0.26%"}, {"rank": 13, "store": "174", "idNumber": "ID030", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 4928.77, "revenueText": "$4,929", "share": 0.26, "shareText": "0.26%"}, {"rank": 14, "store": "236", "idNumber": "ID009", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 4828.81, "revenueText": "$4,829", "share": 0.26, "shareText": "0.26%"}, {"rank": 15, "store": "378", "idNumber": "ID015", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 26, "salesText": "26", "revenue": 4708.82, "revenueText": "$4,709", "share": 0.25, "shareText": "0.25%"}, {"rank": 16, "store": "1459", "idNumber": "ID081", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 25, "salesText": "25", "revenue": 4698.91, "revenueText": "$4,699", "share": 0.24, "shareText": "0.24%"}, {"rank": 17, "store": "511", "idNumber": "ID153", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4568.96, "revenueText": "$4,569", "share": 0.23, "shareText": "0.23%"}, {"rank": 18, "store": "558", "idNumber": "ID002", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4518.92, "revenueText": "$4,519", "share": 0.23, "shareText": "0.23%"}, {"rank": 19, "store": "291", "idNumber": "ID026", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4508.92, "revenueText": "$4,509", "share": 0.23, "shareText": "0.23%"}, {"rank": 20, "store": "1473", "idNumber": "ID034", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4348.88, "revenueText": "$4,349", "share": 0.23, "shareText": "0.23%"}, {"rank": 21, "store": "592", "idNumber": "ID078", "state": "Montana", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4278.84, "revenueText": "$4,279", "share": 0.23, "shareText": "0.23%"}, {"rank": 22, "store": "552", "idNumber": "ID063", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4429.01, "revenueText": "$4,429", "share": 0.22, "shareText": "0.22%"}, {"rank": 23, "store": "201", "idNumber": "ID018", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4388.97, "revenueText": "$4,389", "share": 0.22, "shareText": "0.22%"}, {"rank": 24, "store": "952", "idNumber": "ID128", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4349.01, "revenueText": "$4,349", "share": 0.22, "shareText": "0.22%"}, {"rank": 25, "store": "508", "idNumber": "ID092", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4249.01, "revenueText": "$4,249", "share": 0.22, "shareText": "0.22%"}, {"rank": 26, "store": "1526", "idNumber": "ID041", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4429.1, "revenueText": "$4,429", "share": 0.21, "shareText": "0.21%"}, {"rank": 27, "store": "507", "idNumber": "ID038", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4168.98, "revenueText": "$4,169", "share": 0.21, "shareText": "0.21%"}, {"rank": 28, "store": "13", "idNumber": "ID067", "state": "North Dakota", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4158.98, "revenueText": "$4,159", "share": 0.21, "shareText": "0.21%"}, {"rank": 29, "store": "1258", "idNumber": "ID365", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4118.9, "revenueText": "$4,119", "share": 0.21, "shareText": "0.21%"}, {"rank": 30, "store": "514", "idNumber": "ID022", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4099.02, "revenueText": "$4,099", "share": 0.21, "shareText": "0.21%"}, {"rank": 31, "store": "1080", "idNumber": "ID246", "state": "Louisiana", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4038.94, "revenueText": "$4,039", "share": 0.21, "shareText": "0.21%"}, {"rank": 32, "store": "169", "idNumber": "ID033", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 22, "salesText": "22", "revenue": 4028.9, "revenueText": "$4,029", "share": 0.21, "shareText": "0.21%"}, {"rank": 33, "store": "1502", "idNumber": "ID053", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3998.94, "revenueText": "$3,999", "share": 0.21, "shareText": "0.21%"}, {"rank": 34, "store": "559", "idNumber": "ID044", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 2, "storeTypeLabel": "14in BD", "storeTypeDesc": "4ft 视频POP", "pop": 2.0, "popText": "2", "sales": 22, "salesText": "22", "revenue": 3728.9, "revenueText": "$3,729", "share": 0.21, "shareText": "0.21%"}, {"rank": 35, "store": "340", "idNumber": "ID013", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3668.94, "revenueText": "$3,669", "share": 0.21, "shareText": "0.21%"}, {"rank": 36, "store": "1411", "idNumber": "ID003", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3899.03, "revenueText": "$3,899", "share": 0.2, "shareText": "0.20%"}, {"rank": 37, "store": "242", "idNumber": "ID072", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3878.99, "revenueText": "$3,879", "share": 0.2, "shareText": "0.20%"}, {"rank": 38, "store": "105", "idNumber": "ID269", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 2, "storeTypeLabel": "14in BD", "storeTypeDesc": "4ft 视频POP", "pop": 2.0, "popText": "2", "sales": 21, "salesText": "21", "revenue": 3708.95, "revenueText": "$3,709", "share": 0.2, "shareText": "0.20%"}, {"rank": 39, "store": "1537", "idNumber": "ID110", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3919.12, "revenueText": "$3,919", "share": 0.19, "shareText": "0.19%"}, {"rank": 40, "store": "830", "idNumber": "ID031", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3869.16, "revenueText": "$3,869", "share": 0.19, "shareText": "0.19%"}, {"rank": 41, "store": "1090", "idNumber": "ID076", "state": "-", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3819.12, "revenueText": "$3,819", "share": 0.19, "shareText": "0.19%"}, {"rank": 42, "store": "859", "idNumber": "ID553", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3739.16, "revenueText": "$3,739", "share": 0.19, "shareText": "0.19%"}, {"rank": 43, "store": "495", "idNumber": "ID042", "state": "Louisiana", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3639.12, "revenueText": "$3,639", "share": 0.19, "shareText": "0.19%"}, {"rank": 44, "store": "237", "idNumber": "ID037", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3629.04, "revenueText": "$3,629", "share": 0.19, "shareText": "0.19%"}, {"rank": 45, "store": "555", "idNumber": "ID032", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3539.04, "revenueText": "$3,539", "share": 0.19, "shareText": "0.19%"}, {"rank": 46, "store": "226", "idNumber": "ID011", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3919.29, "revenueText": "$3,919", "share": 0.18, "shareText": "0.18%"}, {"rank": 47, "store": "1517", "idNumber": "ID336", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3849.29, "revenueText": "$3,849", "share": 0.18, "shareText": "0.18%"}, {"rank": 48, "store": "856", "idNumber": "ID075", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3549.17, "revenueText": "$3,549", "share": 0.18, "shareText": "0.18%"}, {"rank": 49, "store": "1784", "idNumber": "ID027", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3489.13, "revenueText": "$3,489", "share": 0.18, "shareText": "0.18%"}, {"rank": 50, "store": "158", "idNumber": "ID048", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3419.17, "revenueText": "$3,419", "share": 0.18, "shareText": "0.18%"}, {"rank": 51, "store": "1082", "idNumber": "ID090", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3669.3, "revenueText": "$3,669", "share": 0.17, "shareText": "0.17%"}, {"rank": 52, "store": "52", "idNumber": "ID047", "state": "Missouri", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 18, "salesText": "18", "revenue": 3569.22, "revenueText": "$3,569", "share": 0.17, "shareText": "0.17%"}, {"rank": 53, "store": "147", "idNumber": "ID117", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3519.18, "revenueText": "$3,519", "share": 0.17, "shareText": "0.17%"}, {"rank": 54, "store": "470", "idNumber": "ID308", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3499.22, "revenueText": "$3,499", "share": 0.17, "shareText": "0.17%"}, {"rank": 55, "store": "870", "idNumber": "ID580", "state": "Arizona", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3379.14, "revenueText": "$3,379", "share": 0.17, "shareText": "0.17%"}, {"rank": 56, "store": "940", "idNumber": "ID224", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3349.18, "revenueText": "$3,349", "share": 0.17, "shareText": "0.17%"}, {"rank": 57, "store": "563", "idNumber": "ID119", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3239.14, "revenueText": "$3,239", "share": 0.17, "shareText": "0.17%"}, {"rank": 58, "store": "58", "idNumber": "ID130", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 18, "salesText": "18", "revenue": 3169.22, "revenueText": "$3,169", "share": 0.17, "shareText": "0.17%"}, {"rank": 59, "store": "51", "idNumber": "ID023", "state": "Kansas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 18, "salesText": "18", "revenue": 3119.14, "revenueText": "$3,119", "share": 0.17, "shareText": "0.17%"}, {"rank": 60, "store": "408", "idNumber": "ID089", "state": "Michigan", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3519.39, "revenueText": "$3,519", "share": 0.16, "shareText": "0.16%"}, {"rank": 61, "store": "148", "idNumber": "ID245", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3459.31, "revenueText": "$3,459", "share": 0.16, "shareText": "0.16%"}, {"rank": 62, "store": "54", "idNumber": "ID046", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3269.23, "revenueText": "$3,269", "share": 0.16, "shareText": "0.16%"}, {"rank": 63, "store": "497", "idNumber": "ID098", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3209.23, "revenueText": "$3,209", "share": 0.16, "shareText": "0.16%"}, {"rank": 64, "store": "866", "idNumber": "ID184", "state": "New Mexico", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3099.19, "revenueText": "$3,099", "share": 0.16, "shareText": "0.16%"}, {"rank": 65, "store": "1491", "idNumber": "ID073", "state": "Oregon", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3049.19, "revenueText": "$3,049", "share": 0.16, "shareText": "0.16%"}, {"rank": 66, "store": "857", "idNumber": "ID189", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 3019.19, "revenueText": "$3,019", "share": 0.16, "shareText": "0.16%"}, {"rank": 67, "store": "221", "idNumber": "ID045", "state": "Oklahoma", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 2989.19, "revenueText": "$2,989", "share": 0.16, "shareText": "0.16%"}, {"rank": 68, "store": "382", "idNumber": "ID129", "state": "Colorado", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 2979.15, "revenueText": "$2,979", "share": 0.16, "shareText": "0.16%"}, {"rank": 69, "store": "165", "idNumber": "ID143", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 17, "salesText": "17", "revenue": 2929.19, "revenueText": "$2,929", "share": 0.16, "shareText": "0.16%"}, {"rank": 70, "store": "258", "idNumber": "ID339", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3349.44, "revenueText": "$3,349", "share": 0.15, "shareText": "0.15%"}, {"rank": 71, "store": "395", "idNumber": "ID008", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3209.32, "revenueText": "$3,209", "share": 0.15, "shareText": "0.15%"}, {"rank": 72, "store": "872", "idNumber": "ID170", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 16, "salesText": "16", "revenue": 3199.4, "revenueText": "$3,199", "share": 0.15, "shareText": "0.15%"}, {"rank": 73, "store": "527", "idNumber": "ID051", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3189.36, "revenueText": "$3,189", "share": 0.15, "shareText": "0.15%"}, {"rank": 74, "store": "524", "idNumber": "ID186", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3149.32, "revenueText": "$3,149", "share": 0.15, "shareText": "0.15%"}, {"rank": 75, "store": "865", "idNumber": "ID250", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3139.32, "revenueText": "$3,139", "share": 0.15, "shareText": "0.15%"}, {"rank": 76, "store": "332", "idNumber": "ID068", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3099.36, "revenueText": "$3,099", "share": 0.15, "shareText": "0.15%"}, {"rank": 77, "store": "188", "idNumber": "ID107", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3069.32, "revenueText": "$3,069", "share": 0.15, "shareText": "0.15%"}, {"rank": 78, "store": "281", "idNumber": "ID168", "state": "Minnesota", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 16, "salesText": "16", "revenue": 3049.28, "revenueText": "$3,049", "share": 0.15, "shareText": "0.15%"}, {"rank": 79, "store": "120", "idNumber": "ID296", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3019.32, "revenueText": "$3,019", "share": 0.15, "shareText": "0.15%"}, {"rank": 80, "store": "517", "idNumber": "ID185", "state": "South Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 3009.24, "revenueText": "$3,009", "share": 0.15, "shareText": "0.15%"}, {"rank": 81, "store": "1790", "idNumber": "ID321", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2999.28, "revenueText": "$2,999", "share": 0.15, "shareText": "0.15%"}, {"rank": 82, "store": "447", "idNumber": "ID028", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2989.28, "revenueText": "$2,989", "share": 0.15, "shareText": "0.15%"}, {"rank": 83, "store": "1780", "idNumber": "ID411", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2979.28, "revenueText": "$2,979", "share": 0.15, "shareText": "0.15%"}, {"rank": 84, "store": "1494", "idNumber": "ID162", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2969.28, "revenueText": "$2,969", "share": 0.15, "shareText": "0.15%"}, {"rank": 85, "store": "1078", "idNumber": "ID101", "state": "Idaho", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2969.24, "revenueText": "$2,969", "share": 0.15, "shareText": "0.15%"}, {"rank": 86, "store": "843", "idNumber": "ID029", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2969.24, "revenueText": "$2,969", "share": 0.15, "shareText": "0.15%"}, {"rank": 87, "store": "107", "idNumber": "ID071", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2959.28, "revenueText": "$2,959", "share": 0.15, "shareText": "0.15%"}, {"rank": 88, "store": "479", "idNumber": "ID194", "state": "Virginia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2959.28, "revenueText": "$2,959", "share": 0.15, "shareText": "0.15%"}, {"rank": 89, "store": "209", "idNumber": "ID122", "state": "Colorado", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2909.2, "revenueText": "$2,909", "share": 0.15, "shareText": "0.15%"}, {"rank": 90, "store": "453", "idNumber": "ID132", "state": "Oregon", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2879.28, "revenueText": "$2,879", "share": 0.15, "shareText": "0.15%"}, {"rank": 91, "store": "246", "idNumber": "ID084", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2879.2, "revenueText": "$2,879", "share": 0.15, "shareText": "0.15%"}, {"rank": 92, "store": "210", "idNumber": "ID422", "state": "Colorado", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2859.2, "revenueText": "$2,859", "share": 0.15, "shareText": "0.15%"}, {"rank": 93, "store": "539", "idNumber": "ID010", "state": "Alaska", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2839.24, "revenueText": "$2,839", "share": 0.15, "shareText": "0.15%"}, {"rank": 94, "store": "357", "idNumber": "ID140", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 16, "salesText": "16", "revenue": 2799.24, "revenueText": "$2,799", "share": 0.15, "shareText": "0.15%"}, {"rank": 95, "store": "510", "idNumber": "ID039", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 2, "storeTypeLabel": "14in BD", "storeTypeDesc": "4ft 视频POP", "pop": 2.0, "popText": "2", "sales": 16, "salesText": "16", "revenue": 2779.28, "revenueText": "$2,779", "share": 0.15, "shareText": "0.15%"}, {"rank": 96, "store": "280", "idNumber": "ID024", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 16, "salesText": "16", "revenue": 2699.2, "revenueText": "$2,699", "share": 0.15, "shareText": "0.15%"}, {"rank": 97, "store": "229", "idNumber": "ID652", "state": "Indiana", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 3089.45, "revenueText": "$3,089", "share": 0.15, "shareText": "0.15%"}, {"rank": 98, "store": "1767", "idNumber": "ID591", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 3009.41, "revenueText": "$3,009", "share": 0.15, "shareText": "0.15%"}, {"rank": 99, "store": "496", "idNumber": "ID020", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 3009.41, "revenueText": "$3,009", "share": 0.15, "shareText": "0.15%"}, {"rank": 100, "store": "424", "idNumber": "ID088", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 15, "salesText": "15", "revenue": 2979.33, "revenueText": "$2,979", "share": 0.15, "shareText": "0.15%"}];
+        const storeWeeklyMeta = {"date": "2026/6/14", "activeStoreCount": 886, "top100Sales": 5830, "top100Share": 45.25};
+        const storeWeeklyData = [{"rank": 1, "store": "960", "idNumber": "-", "state": "Online", "channelKey": "online", "channelLabel": "Online", "storeTypeCode": 0, "storeTypeLabel": "Online Aggregate", "storeTypeDesc": "Online 聚合店号", "pop": 0.0, "popText": "0", "sales": 3185, "salesText": "3,185", "revenue": 569680.15, "revenueText": "$569,680", "share": 24.72, "shareText": "24.72%"}, {"rank": 2, "store": "973", "idNumber": "-", "state": "Online", "channelKey": "online", "channelLabel": "Online", "storeTypeCode": 0, "storeTypeLabel": "Online Aggregate", "storeTypeDesc": "Online 聚合店号", "pop": 0.0, "popText": "0", "sales": 102, "salesText": "102", "revenue": 17245.02, "revenueText": "$17,245", "share": 0.79, "shareText": "0.79%"}, {"rank": 3, "store": "1118", "idNumber": "ID001", "state": "Puerto Rico", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 77, "salesText": "77", "revenue": 13586.27, "revenueText": "$13,586", "share": 0.6, "shareText": "0.60%"}, {"rank": 4, "store": "1090", "idNumber": "ID076", "state": "-", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 51, "salesText": "51", "revenue": 9177.65, "revenueText": "$9,178", "share": 0.4, "shareText": "0.40%"}, {"rank": 5, "store": "241", "idNumber": "ID017", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 43, "salesText": "43", "revenue": 7737.97, "revenueText": "$7,738", "share": 0.33, "shareText": "0.33%"}, {"rank": 6, "store": "1028", "idNumber": "ID019", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 0, "storeTypeLabel": "No POP", "storeTypeDesc": "-", "pop": 0.0, "popText": "0", "sales": 42, "salesText": "42", "revenue": 7328.02, "revenueText": "$7,328", "share": 0.33, "shareText": "0.33%"}, {"rank": 7, "store": "395", "idNumber": "ID008", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 39, "salesText": "39", "revenue": 7238.17, "revenueText": "$7,238", "share": 0.3, "shareText": "0.30%"}, {"rank": 8, "store": "378", "idNumber": "ID015", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 39, "salesText": "39", "revenue": 7158.13, "revenueText": "$7,158", "share": 0.3, "shareText": "0.30%"}, {"rank": 9, "store": "857", "idNumber": "ID189", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 37, "salesText": "37", "revenue": 6968.23, "revenueText": "$6,968", "share": 0.29, "shareText": "0.29%"}, {"rank": 10, "store": "174", "idNumber": "ID030", "state": "North Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 36, "salesText": "36", "revenue": 6688.32, "revenueText": "$6,688", "share": 0.28, "shareText": "0.28%"}, {"rank": 11, "store": "488", "idNumber": "ID004", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 35, "salesText": "35", "revenue": 6918.53, "revenueText": "$6,919", "share": 0.27, "shareText": "0.27%"}, {"rank": 12, "store": "58", "idNumber": "ID130", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 34, "salesText": "34", "revenue": 6488.58, "revenueText": "$6,489", "share": 0.26, "shareText": "0.26%"}, {"rank": 13, "store": "1526", "idNumber": "ID041", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 34, "salesText": "34", "revenue": 6438.54, "revenueText": "$6,439", "share": 0.26, "shareText": "0.26%"}, {"rank": 14, "store": "1411", "idNumber": "ID003", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 33, "salesText": "33", "revenue": 5998.39, "revenueText": "$5,998", "share": 0.26, "shareText": "0.26%"}, {"rank": 15, "store": "226", "idNumber": "ID011", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 32, "salesText": "32", "revenue": 6098.6, "revenueText": "$6,099", "share": 0.25, "shareText": "0.25%"}, {"rank": 16, "store": "218", "idNumber": "ID050", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 32, "salesText": "32", "revenue": 5928.56, "revenueText": "$5,929", "share": 0.25, "shareText": "0.25%"}, {"rank": 17, "store": "1473", "idNumber": "ID034", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 31, "salesText": "31", "revenue": 5758.57, "revenueText": "$5,759", "share": 0.24, "shareText": "0.24%"}, {"rank": 18, "store": "563", "idNumber": "ID119", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 30, "salesText": "30", "revenue": 5988.78, "revenueText": "$5,989", "share": 0.23, "shareText": "0.23%"}, {"rank": 19, "store": "526", "idNumber": "ID006", "state": "Idaho", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 30, "salesText": "30", "revenue": 5498.54, "revenueText": "$5,499", "share": 0.23, "shareText": "0.23%"}, {"rank": 20, "store": "1081", "idNumber": "ID095", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 30, "salesText": "30", "revenue": 5398.54, "revenueText": "$5,399", "share": 0.23, "shareText": "0.23%"}, {"rank": 21, "store": "1502", "idNumber": "ID053", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 30, "salesText": "30", "revenue": 5218.58, "revenueText": "$5,219", "share": 0.23, "shareText": "0.23%"}, {"rank": 22, "store": "559", "idNumber": "ID044", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 2, "storeTypeLabel": "14in BD", "storeTypeDesc": "4ft 视频POP", "pop": 2.0, "popText": "2", "sales": 30, "salesText": "30", "revenue": 5088.58, "revenueText": "$5,089", "share": 0.23, "shareText": "0.23%"}, {"rank": 23, "store": "1082", "idNumber": "ID090", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 29, "salesText": "29", "revenue": 5538.91, "revenueText": "$5,539", "share": 0.23, "shareText": "0.23%"}, {"rank": 24, "store": "255", "idNumber": "ID359", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 29, "salesText": "29", "revenue": 5418.71, "revenueText": "$5,419", "share": 0.23, "shareText": "0.23%"}, {"rank": 25, "store": "280", "idNumber": "ID024", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 29, "salesText": "29", "revenue": 5348.71, "revenueText": "$5,349", "share": 0.23, "shareText": "0.23%"}, {"rank": 26, "store": "952", "idNumber": "ID128", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 29, "salesText": "29", "revenue": 5208.59, "revenueText": "$5,209", "share": 0.23, "shareText": "0.23%"}, {"rank": 27, "store": "1784", "idNumber": "ID027", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 29, "salesText": "29", "revenue": 4848.59, "revenueText": "$4,849", "share": 0.23, "shareText": "0.23%"}, {"rank": 28, "store": "57", "idNumber": "ID074", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 2, "storeTypeLabel": "14in BD", "storeTypeDesc": "4ft 视频POP", "pop": 2.0, "popText": "2", "sales": 28, "salesText": "28", "revenue": 5498.76, "revenueText": "$5,499", "share": 0.22, "shareText": "0.22%"}, {"rank": 29, "store": "291", "idNumber": "ID026", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 5448.84, "revenueText": "$5,449", "share": 0.22, "shareText": "0.22%"}, {"rank": 30, "store": "424", "idNumber": "ID088", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 5118.68, "revenueText": "$5,119", "share": 0.22, "shareText": "0.22%"}, {"rank": 31, "store": "555", "idNumber": "ID032", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 5118.64, "revenueText": "$5,119", "share": 0.22, "shareText": "0.22%"}, {"rank": 32, "store": "236", "idNumber": "ID009", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 5108.68, "revenueText": "$5,109", "share": 0.22, "shareText": "0.22%"}, {"rank": 33, "store": "539", "idNumber": "ID010", "state": "Alaska", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 4928.68, "revenueText": "$4,929", "share": 0.22, "shareText": "0.22%"}, {"rank": 34, "store": "353", "idNumber": "ID036", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 28, "salesText": "28", "revenue": 4868.6, "revenueText": "$4,869", "share": 0.22, "shareText": "0.22%"}, {"rank": 35, "store": "1425", "idNumber": "ID062", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 5308.85, "revenueText": "$5,309", "share": 0.21, "shareText": "0.21%"}, {"rank": 36, "store": "1537", "idNumber": "ID110", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 5168.73, "revenueText": "$5,169", "share": 0.21, "shareText": "0.21%"}, {"rank": 37, "store": "1531", "idNumber": "ID025", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 4878.73, "revenueText": "$4,879", "share": 0.21, "shareText": "0.21%"}, {"rank": 38, "store": "237", "idNumber": "ID037", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 27, "salesText": "27", "revenue": 4848.69, "revenueText": "$4,849", "share": 0.21, "shareText": "0.21%"}, {"rank": 39, "store": "52", "idNumber": "ID047", "state": "Missouri", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 27, "salesText": "27", "revenue": 4668.65, "revenueText": "$4,669", "share": 0.21, "shareText": "0.21%"}, {"rank": 40, "store": "51", "idNumber": "ID023", "state": "Kansas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 26, "salesText": "26", "revenue": 5028.86, "revenueText": "$5,029", "share": 0.2, "shareText": "0.20%"}, {"rank": 41, "store": "1459", "idNumber": "ID081", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 26, "salesText": "26", "revenue": 4728.9, "revenueText": "$4,729", "share": 0.2, "shareText": "0.20%"}, {"rank": 42, "store": "125", "idNumber": "ID176", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 26, "salesText": "26", "revenue": 4648.82, "revenueText": "$4,649", "share": 0.2, "shareText": "0.20%"}, {"rank": 43, "store": "835", "idNumber": "ID105", "state": "New York", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 25, "salesText": "25", "revenue": 4838.87, "revenueText": "$4,839", "share": 0.19, "shareText": "0.19%"}, {"rank": 44, "store": "167", "idNumber": "ID083", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 25, "salesText": "25", "revenue": 4688.91, "revenueText": "$4,689", "share": 0.19, "shareText": "0.19%"}, {"rank": 45, "store": "289", "idNumber": "ID093", "state": "Nevada", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 25, "salesText": "25", "revenue": 4638.87, "revenueText": "$4,639", "share": 0.19, "shareText": "0.19%"}, {"rank": 46, "store": "1790", "idNumber": "ID321", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4779.0, "revenueText": "$4,779", "share": 0.19, "shareText": "0.19%"}, {"rank": 47, "store": "843", "idNumber": "ID029", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4568.96, "revenueText": "$4,569", "share": 0.19, "shareText": "0.19%"}, {"rank": 48, "store": "948", "idNumber": "ID169", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4418.8, "revenueText": "$4,419", "share": 0.19, "shareText": "0.19%"}, {"rank": 49, "store": "496", "idNumber": "ID020", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4408.88, "revenueText": "$4,409", "share": 0.19, "shareText": "0.19%"}, {"rank": 50, "store": "856", "idNumber": "ID075", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4228.84, "revenueText": "$4,229", "share": 0.19, "shareText": "0.19%"}, {"rank": 51, "store": "508", "idNumber": "ID092", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 24, "salesText": "24", "revenue": 4118.8, "revenueText": "$4,119", "share": 0.19, "shareText": "0.19%"}, {"rank": 52, "store": "1494", "idNumber": "ID162", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4509.01, "revenueText": "$4,509", "share": 0.18, "shareText": "0.18%"}, {"rank": 53, "store": "514", "idNumber": "ID022", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4339.01, "revenueText": "$4,339", "share": 0.18, "shareText": "0.18%"}, {"rank": 54, "store": "565", "idNumber": "ID156", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4338.97, "revenueText": "$4,339", "share": 0.18, "shareText": "0.18%"}, {"rank": 55, "store": "852", "idNumber": "ID155", "state": "Hawaii", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4188.97, "revenueText": "$4,189", "share": 0.18, "shareText": "0.18%"}, {"rank": 56, "store": "169", "idNumber": "ID033", "state": "Tennessee", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 23, "salesText": "23", "revenue": 4078.89, "revenueText": "$4,079", "share": 0.18, "shareText": "0.18%"}, {"rank": 57, "store": "152", "idNumber": "ID138", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 4028.89, "revenueText": "$4,029", "share": 0.18, "shareText": "0.18%"}, {"rank": 58, "store": "223", "idNumber": "ID043", "state": "New Mexico", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 23, "salesText": "23", "revenue": 3838.85, "revenueText": "$3,839", "share": 0.18, "shareText": "0.18%"}, {"rank": 59, "store": "560", "idNumber": "ID123", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4289.14, "revenueText": "$4,289", "share": 0.17, "shareText": "0.17%"}, {"rank": 60, "store": "558", "idNumber": "ID002", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4189.1, "revenueText": "$4,189", "share": 0.17, "shareText": "0.17%"}, {"rank": 61, "store": "1498", "idNumber": "ID021", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4179.06, "revenueText": "$4,179", "share": 0.17, "shareText": "0.17%"}, {"rank": 62, "store": "201", "idNumber": "ID018", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4129.02, "revenueText": "$4,129", "share": 0.17, "shareText": "0.17%"}, {"rank": 63, "store": "7", "idNumber": "ID116", "state": "Minnesota", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4109.06, "revenueText": "$4,109", "share": 0.17, "shareText": "0.17%"}, {"rank": 64, "store": "1462", "idNumber": "ID621", "state": "Louisiana", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 4068.98, "revenueText": "$4,069", "share": 0.17, "shareText": "0.17%"}, {"rank": 65, "store": "355", "idNumber": "ID175", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 22, "salesText": "22", "revenue": 4059.02, "revenueText": "$4,059", "share": 0.17, "shareText": "0.17%"}, {"rank": 66, "store": "1153", "idNumber": "ID251", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3978.94, "revenueText": "$3,979", "share": 0.17, "shareText": "0.17%"}, {"rank": 67, "store": "382", "idNumber": "ID129", "state": "Colorado", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3928.94, "revenueText": "$3,929", "share": 0.17, "shareText": "0.17%"}, {"rank": 68, "store": "221", "idNumber": "ID045", "state": "Oklahoma", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3908.9, "revenueText": "$3,909", "share": 0.17, "shareText": "0.17%"}, {"rank": 69, "store": "340", "idNumber": "ID013", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 22, "salesText": "22", "revenue": 3788.9, "revenueText": "$3,789", "share": 0.17, "shareText": "0.17%"}, {"rank": 70, "store": "438", "idNumber": "ID058", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 21, "salesText": "21", "revenue": 4159.11, "revenueText": "$4,159", "share": 0.16, "shareText": "0.16%"}, {"rank": 71, "store": "1184", "idNumber": "ID086", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3989.03, "revenueText": "$3,989", "share": 0.16, "shareText": "0.16%"}, {"rank": 72, "store": "1469", "idNumber": "ID496", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3929.03, "revenueText": "$3,929", "share": 0.16, "shareText": "0.16%"}, {"rank": 73, "store": "13", "idNumber": "ID067", "state": "North Dakota", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3869.03, "revenueText": "$3,869", "share": 0.16, "shareText": "0.16%"}, {"rank": 74, "store": "1540", "idNumber": "ID219", "state": "Alabama", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3859.03, "revenueText": "$3,859", "share": 0.16, "shareText": "0.16%"}, {"rank": 75, "store": "338", "idNumber": "ID014", "state": "New Mexico", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3839.07, "revenueText": "$3,839", "share": 0.16, "shareText": "0.16%"}, {"rank": 76, "store": "357", "idNumber": "ID140", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3659.07, "revenueText": "$3,659", "share": 0.16, "shareText": "0.16%"}, {"rank": 77, "store": "275", "idNumber": "ID106", "state": "Arkansas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 21, "salesText": "21", "revenue": 3648.99, "revenueText": "$3,649", "share": 0.16, "shareText": "0.16%"}, {"rank": 78, "store": "216", "idNumber": "ID174", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 21, "salesText": "21", "revenue": 3648.95, "revenueText": "$3,649", "share": 0.16, "shareText": "0.16%"}, {"rank": 79, "store": "527", "idNumber": "ID051", "state": "Utah", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3819.12, "revenueText": "$3,819", "share": 0.16, "shareText": "0.16%"}, {"rank": 80, "store": "447", "idNumber": "ID028", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3809.12, "revenueText": "$3,809", "share": 0.16, "shareText": "0.16%"}, {"rank": 81, "store": "1780", "idNumber": "ID411", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3799.12, "revenueText": "$3,799", "share": 0.16, "shareText": "0.16%"}, {"rank": 82, "store": "180", "idNumber": "ID231", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3799.12, "revenueText": "$3,799", "share": 0.16, "shareText": "0.16%"}, {"rank": 83, "store": "1452", "idNumber": "ID627", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3779.12, "revenueText": "$3,779", "share": 0.16, "shareText": "0.16%"}, {"rank": 84, "store": "176", "idNumber": "ID164", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3739.16, "revenueText": "$3,739", "share": 0.16, "shareText": "0.16%"}, {"rank": 85, "store": "1080", "idNumber": "ID246", "state": "Louisiana", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3729.08, "revenueText": "$3,729", "share": 0.16, "shareText": "0.16%"}, {"rank": 86, "store": "123", "idNumber": "ID241", "state": "Arizona", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3729.08, "revenueText": "$3,729", "share": 0.16, "shareText": "0.16%"}, {"rank": 87, "store": "187", "idNumber": "ID149", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 2, "storeTypeLabel": "14in BD", "storeTypeDesc": "4ft 视频POP", "pop": 2.0, "popText": "2", "sales": 20, "salesText": "20", "revenue": 3689.08, "revenueText": "$3,689", "share": 0.16, "shareText": "0.16%"}, {"rank": 88, "store": "188", "idNumber": "ID107", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3669.12, "revenueText": "$3,669", "share": 0.16, "shareText": "0.16%"}, {"rank": 89, "store": "242", "idNumber": "ID072", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3659.12, "revenueText": "$3,659", "share": 0.16, "shareText": "0.16%"}, {"rank": 90, "store": "1072", "idNumber": "ID291", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3599.12, "revenueText": "$3,599", "share": 0.16, "shareText": "0.16%"}, {"rank": 91, "store": "1545", "idNumber": "ID390", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3599.08, "revenueText": "$3,599", "share": 0.16, "shareText": "0.16%"}, {"rank": 92, "store": "54", "idNumber": "ID046", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3529.12, "revenueText": "$3,529", "share": 0.16, "shareText": "0.16%"}, {"rank": 93, "store": "1530", "idNumber": "ID007", "state": "Florida", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 20, "salesText": "20", "revenue": 3519.08, "revenueText": "$3,519", "share": 0.16, "shareText": "0.16%"}, {"rank": 94, "store": "829", "idNumber": "ID279", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3649.13, "revenueText": "$3,649", "share": 0.15, "shareText": "0.15%"}, {"rank": 95, "store": "498", "idNumber": "ID113", "state": "Washington", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3579.13, "revenueText": "$3,579", "share": 0.15, "shareText": "0.15%"}, {"rank": 96, "store": "1527", "idNumber": "ID120", "state": "Wyoming", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3569.21, "revenueText": "$3,569", "share": 0.15, "shareText": "0.15%"}, {"rank": 97, "store": "501", "idNumber": "ID468", "state": "Georgia", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 19, "salesText": "19", "revenue": 3569.13, "revenueText": "$3,569", "share": 0.15, "shareText": "0.15%"}, {"rank": 98, "store": "1019", "idNumber": "ID355", "state": "California", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3559.09, "revenueText": "$3,559", "share": 0.15, "shareText": "0.15%"}, {"rank": 99, "store": "272", "idNumber": "ID016", "state": "South Carolina", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 1, "storeTypeLabel": "SideStock", "storeTypeDesc": "4ft 白色POP", "pop": 1.0, "popText": "1", "sales": 19, "salesText": "19", "revenue": 3549.09, "revenueText": "$3,549", "share": 0.15, "shareText": "0.15%"}, {"rank": 100, "store": "864", "idNumber": "ID108", "state": "Texas", "channelKey": "in-store", "channelLabel": "In-store", "storeTypeCode": 3, "storeTypeLabel": "35K 2ft EC", "storeTypeDesc": "2ft 视频POP", "pop": 3.0, "popText": "3", "sales": 19, "salesText": "19", "revenue": 3519.13, "revenueText": "$3,519", "share": 0.15, "shareText": "0.15%"}];
 // STORE_WEEKLY_DATA_END
 
         function generateSummaryTableRows() {
@@ -2193,21 +2190,21 @@
             weeks: weeks,
             dates: weekDates,
             series: [
-                { name: 'T511', data: [1247,952,970,842,976,480,366,632,752,1155,939,458,405] },
-                { name: 'T910', data: [21,21,27,21,25,19,16,14,18,18,14,10,7] },
-                { name: 'T920', data: [238,212,187,157,201,157,142,186,188,176,145,187,358] },
-                { name: 'T921', data: [910,1295,1710,1109,1457,1140,1578,2098,1110,903,865,885,814] },
-                { name: 'E310', data: [1623,1551,1773,1166,1301,1135,1531,2026,1100,1109,1152,766,768] },
-                { name: 'E320', data: [0,0,0,0,0,0,0,0,0,11,68,623,1054] },
-                { name: 'E210', data: [0,0,0,0,0,0,0,0,0,0,10,104,158] },
-                { name: 'S710', data: [1071,990,637,494,511,450,501,516,485,533,519,595,595] },
-                { name: 'S661', data: [61,69,71,67,52,60,48,50,58,132,99,89,49] },
-                { name: 'S803', data: [629,902,1150,811,656,834,1088,1385,867,631,806,873,913] },
-                { name: 'S810', data: [356,121,94,111,296,145,62,59,66,443,301,44,141] },
-                { name: 'S820', data: [4660,4181,4616,3306,4084,3950,4839,5678,3875,5419,4290,3410,3476] },
-                { name: 'C120', data: [325,375,387,309,462,347,390,413,336,436,394,309,342] },
-                { name: 'T010', data: [1624,1383,1122,1099,1305,1470,1322,1348,1409,1268,1305,1199,1250] },
-                { name: 'Other', data: [28,34,31,37,22,18,46,52,31,26,93,748,1219] }
+                { name: 'T511', data: [1247,952,970,842,976,480,366,632,752,1155,939,458,928] },
+                { name: 'T910', data: [21,21,27,21,25,19,16,14,18,18,14,10,14] },
+                { name: 'T920', data: [238,212,187,157,201,157,142,186,188,176,145,187,133] },
+                { name: 'T921', data: [910,1295,1710,1109,1457,1140,1578,2098,1110,903,865,885,1483] },
+                { name: 'E310', data: [1623,1551,1773,1166,1301,1135,1531,2026,1100,1109,1152,766,534] },
+                { name: 'E320', data: [0,0,0,0,0,0,0,0,0,11,68,623,1525] },
+                { name: 'E210', data: [0,0,0,0,0,0,0,0,0,0,10,104,239] },
+                { name: 'S710', data: [1071,990,637,494,511,450,501,516,485,533,519,595,647] },
+                { name: 'S661', data: [61,69,71,67,52,60,48,50,58,132,99,89,51] },
+                { name: 'S803', data: [629,902,1150,811,656,834,1088,1385,867,631,806,873,1108] },
+                { name: 'S810', data: [356,121,94,111,296,145,62,59,66,443,301,44,157] },
+                { name: 'S820', data: [4660,4181,4616,3306,4084,3950,4839,5678,3875,5419,4290,3410,4339] },
+                { name: 'C120', data: [325,375,387,309,462,347,390,413,336,436,394,309,412] },
+                { name: 'T010', data: [1624,1383,1122,1099,1305,1470,1322,1348,1409,1268,1305,1199,1309] },
+                { name: 'Other', data: [28,34,31,37,22,18,46,52,31,26,93,748,1770] }
             ]
         };
 
@@ -2533,8 +2530,8 @@
                 series: [{
                     type: 'pie', radius: ['40%','70%'],
                     data: [
-                        { value: 53.43, name: '骨导销量 53.43%' },
-                        { value: 46.57, name: '气导销量 46.57%' },
+                        { value: 52.15, name: '骨导销量 52.15%' },
+                        { value: 47.85, name: '气导销量 47.85%' },
                         { value: 0.00, name: '其他 0.00%' }
                     ],
                     color: ['#3498db','#2ecc71','#f39c12'],
@@ -2547,8 +2544,8 @@
                 series: [{
                     type: 'pie', radius: ['40%','70%'],
                     data: [
-                        { value: 49.01, name: '骨导销售额 49.01%' },
-                        { value: 50.99, name: '气导销售额 50.99%' },
+                        { value: 48.64, name: '骨导销售额 48.64%' },
+                        { value: 51.36, name: '气导销售额 51.36%' },
                         { value: 0.00, name: '其他 0.00%' }
                     ],
                     color: ['#3498db','#2ecc71','#f39c12'],
@@ -2777,9 +2774,9 @@
                         if (!currentPromoRows.length) {
                             promoSkuStripNoteDom.innerText = '本周没有促销 SKU。';
                         } else if (family) {
-                            promoSkuStripNoteDom.innerText = `2026.6.9-6.15 ${family} 本周共有 ${point.promoSkuCount} 个打折小类 SKU，平均折扣 ${Math.round(point.avgDiscountRate)}%，平均促销 ${point.avgPromoDays.toFixed(1)} 天；图表展示该大类过去十三周的打折历史。`;
+                            promoSkuStripNoteDom.innerText = `2026.6.14-6.20 ${family} 本周共有 ${point.promoSkuCount} 个打折小类 SKU，平均折扣 ${Math.round(point.avgDiscountRate)}%，平均促销 ${point.avgPromoDays.toFixed(1)} 天；图表展示该大类过去十三周的打折历史。`;
                         } else {
-                            promoSkuStripNoteDom.innerText = `2026.6.9-6.15 共 ${promoFamilies.length} 个大类 SKU、${currentPromoRows.length} 个小类 SKU 在促销；点击某个大类即可查看该大类过去十三周的打折历史。`;
+                            promoSkuStripNoteDom.innerText = `2026.6.14-6.20 共 ${promoFamilies.length} 个大类 SKU、${currentPromoRows.length} 个小类 SKU 在促销；点击某个大类即可查看该大类过去十三周的打折历史。`;
                         }
                     }
                 };
@@ -3035,8 +3032,8 @@
             const businessLineSeries = [
                 { key: 'showBone', name: '骨导线', data: boneData, color: '#3498db' },
                 { key: 'showAir', name: '气导线', data: airData, color: '#9b59b6' },
-                { key: 'showEarClip', name: '耳夹', data: [1623,1551,1773,1166,1301,1135,1531,2026,1100,1120,1230,1493,1980], color: '#1abc9c' },
-                { key: 'showEarHook', name: '耳挂', data: [4040,3863,4016,3228,3964,3266,3424,4278,3477,3520,3268,2739,2834], color: '#f39c12' }
+                { key: 'showEarClip', name: '耳夹', data: [1623,1551,1773,1166,1301,1135,1531,2026,1100,1120,1230,1493,2298], color: '#1abc9c' },
+                { key: 'showEarHook', name: '耳挂', data: [4040,3863,4016,3228,3964,3266,3424,4278,3477,3520,3268,2739,3867], color: '#f39c12' }
             ];
             const renderBusinessLineChart = () => {
                 const activeSeries = businessLineSeries
@@ -3096,94 +3093,94 @@
             // 更新动态文本
             // 更新动态文本
             document.getElementById('totalSalesSpan').innerText = totalSales[12].toLocaleString();
-            document.getElementById('wowSpan').innerText = '↑ +7.98%';
-            document.getElementById('yoySpan').innerText = '↓ -11.92%';
+            document.getElementById('wowSpan').innerText = '↑ +34.60%';
+            document.getElementById('yoySpan').innerText = '↑ +23.08%';
             document.getElementById('boneSalesSpan').innerText = boneData[12].toLocaleString();
             document.getElementById('bonePctSpan').innerText = (boneData[12]/totalSales[12]*100).toFixed(2);
             document.getElementById('airSalesSpan').innerText = airData[12].toLocaleString();
             document.getElementById('airPctSpan').innerText = (airData[12]/totalSales[12]*100).toFixed(2);
             document.getElementById('kpiTotalSales').innerText = totalSales[12].toLocaleString();
-            document.getElementById('kpiWow').innerHTML = '↑ WoW +7.98%';
-            document.getElementById('kpiYoy').innerHTML = '↓ YoY -11.92%';
-            document.getElementById('kpiYtdSales').innerText = '270,667';
-            document.getElementById('kpiYtdPct').innerHTML = '↑ +13.62%';
-            document.getElementById('kpiYtdChange').innerText = '累计同比 +32,456';
-            document.getElementById('kpiTotalRevenue').innerText = '$1,910,403';
-            document.getElementById('kpiRevenueWow').innerHTML = '↑ WoW +8.46%';
-            document.getElementById('kpiRevenueYoy').innerHTML = '↓ YoY -0.64%';
-            document.getElementById('kpiYtdRevenue').innerText = '$49,497,786';
-            document.getElementById('kpiYtdRevenuePct').innerHTML = '↑ +29.79%';
-            document.getElementById('kpiYtdRevenueChange').innerText = '累计同比 +$11.36M';
-            document.getElementById('kpiOnlinePct').innerText = '24.49%';
-            document.getElementById('kpiOnlineWow').innerHTML = '↑ 环比 +1.62pct';
-            document.getElementById('kpiOnlineSales').innerHTML = '本周线上销量 2,532 条';
-            document.getElementById('kpiPop').innerText = '9.31';
-            document.getElementById('kpiPopWow').innerHTML = '↑ 环比 +0.64';
+            document.getElementById('kpiWow').innerHTML = '↑ WoW +34.60%';
+            document.getElementById('kpiYoy').innerHTML = '↑ YoY +23.08%';
+            document.getElementById('kpiYtdSales').innerText = '272,543';
+            document.getElementById('kpiYtdPct').innerHTML = '↑ +14.13%';
+            document.getElementById('kpiYtdChange').innerText = '累计同比 +33,740';
+            document.getElementById('kpiTotalRevenue').innerText = '$2,344,308';
+            document.getElementById('kpiRevenueWow').innerHTML = '↑ WoW +33.09%';
+            document.getElementById('kpiRevenueYoy').innerHTML = '↑ YoY +36.19%';
+            document.getElementById('kpiYtdRevenue').innerText = '$49,923,334';
+            document.getElementById('kpiYtdRevenuePct').innerHTML = '↑ +30.12%';
+            document.getElementById('kpiYtdRevenueChange').innerText = '累计同比 +$11.56M';
+            document.getElementById('kpiOnlinePct').innerText = '25.54%';
+            document.getElementById('kpiOnlineWow').innerHTML = '↑ 环比 +2.67pct';
+            document.getElementById('kpiOnlineSales').innerHTML = '本周线上销量 3,291 条';
+            document.getElementById('kpiPop').innerText = '11.39';
+            document.getElementById('kpiPopWow').innerHTML = '↑ 环比 +2.72';
             document.getElementById('summarySales').innerText = totalSales[12].toLocaleString();
             document.getElementById('summaryRevenue').innerText = (totalRevenue[12]/1e6).toFixed(2);
-            document.getElementById('summaryWow').innerText = '7.98';
-            document.getElementById('summaryYoy').innerText = '-11.92';
+            document.getElementById('summaryWow').innerText = '34.60';
+            document.getElementById('summaryYoy').innerText = '23.08';
             document.getElementById('summaryBone').innerText = boneData[12].toLocaleString();
             document.getElementById('summaryBonePct').innerText = (boneData[12]/totalSales[12]*100).toFixed(1);
             document.getElementById('summaryAir').innerText = airData[12].toLocaleString();
             document.getElementById('summaryAirPct').innerText = (airData[12]/totalSales[12]*100).toFixed(1);
 
             document.getElementById('boneCardSales').innerText = boneData[12].toLocaleString();
-            document.getElementById('boneCardPct').innerText = '53.43%';
-            document.getElementById('boneCardYoY').innerHTML = '↓ -19.16%';
-            document.getElementById('boneCardWoW').innerHTML = '↑ +3.41%';
-            document.getElementById('boneCardYtd').innerText = '145,702';
-            document.getElementById('boneCardYtdYoY').innerHTML = '↑ +6.04%';
-            document.getElementById('boneCardRevenue').innerText = '$936,194';
-            document.getElementById('boneCardRevPct').innerText = '49.01%';
-            document.getElementById('boneCardRevYoY').innerHTML = '↓ -16.57%';
-            document.getElementById('boneCardRevWoW').innerHTML = '↑ +3.65%';
-            document.getElementById('boneCardRevYtd').innerText = '$24,746,965';
-            document.getElementById('boneCardRevYtdYoY').innerHTML = '↑ +9.82%';
+            document.getElementById('boneCardPct').innerText = '52.15%';
+            document.getElementById('boneCardYoY').innerHTML = '↑ +6.96%';
+            document.getElementById('boneCardWoW').innerHTML = '↑ +25.82%';
+            document.getElementById('boneCardYtd').innerText = '146,510';
+            document.getElementById('boneCardYtdYoY').innerHTML = '↑ +6.66%';
+            document.getElementById('boneCardRevenue').innerText = '$1,140,304';
+            document.getElementById('boneCardRevPct').innerText = '48.64%';
+            document.getElementById('boneCardRevYoY').innerHTML = '↑ +11.00%';
+            document.getElementById('boneCardRevWoW').innerHTML = '↑ +26.24%';
+            document.getElementById('boneCardRevYtd').innerText = '$24,880,894';
+            document.getElementById('boneCardRevYtdYoY').innerHTML = '↑ +10.38%';
 
             document.getElementById('airCardSales').innerText = airData[12].toLocaleString();
-            document.getElementById('airCardPct').innerText = '46.57%';
-            document.getElementById('airCardYoY').innerHTML = '↓ -1.84%';
-            document.getElementById('airCardWoW').innerHTML = '↑ +13.75%';
-            document.getElementById('airCardYtd').innerText = '124,965';
-            document.getElementById('airCardYtdYoY').innerHTML = '↑ +23.96%';
-            document.getElementById('airCardRevenue').innerText = '$974,209';
-            document.getElementById('airCardRevPct').innerText = '50.99%';
-            document.getElementById('airCardRevYoY').innerHTML = '↑ +21.70%';
-            document.getElementById('airCardRevWoW').innerHTML = '↑ +13.53%';
-            document.getElementById('airCardRevYtd').innerText = '$24,750,821';
-            document.getElementById('airCardRevYtdYoY').innerHTML = '↑ +58.63%';
+            document.getElementById('airCardPct').innerText = '47.85%';
+            document.getElementById('airCardYoY').innerHTML = '↑ +47.28%';
+            document.getElementById('airCardWoW').innerHTML = '↑ +45.68%';
+            document.getElementById('airCardYtd').innerText = '126,033';
+            document.getElementById('airCardYtdYoY').innerHTML = '↑ +24.24%';
+            document.getElementById('airCardRevenue').innerText = '$1,204,004';
+            document.getElementById('airCardRevPct').innerText = '51.36%';
+            document.getElementById('airCardRevYoY').innerHTML = '↑ +73.46%';
+            document.getElementById('airCardRevWoW').innerHTML = '↑ +40.31%';
+            document.getElementById('airCardRevYtd').innerText = '$25,042,440';
+            document.getElementById('airCardRevYtdYoY').innerHTML = '↑ +58.23%';
 
-            document.getElementById('clipCardSales').innerText = '1,980';
-            document.getElementById('clipCardPct').innerText = '19.15%';
-            document.getElementById('clipCardYoY').innerHTML = '↑ +53.37%';
-            document.getElementById('clipCardWoW').innerHTML = '↑ +32.62%';
-            document.getElementById('clipCardYtd').innerText = '37,034';
-            document.getElementById('clipCardYtdYoY').innerHTML = '↑ +315.65%';
-            document.getElementById('clipCardRevenue').innerText = '$384,841';
-            document.getElementById('clipCardRevPct').innerText = '20.14%';
-            document.getElementById('clipCardRevYoY').innerHTML = '↑ +49.08%';
-            document.getElementById('clipCardRevWoW').innerHTML = '↑ +32.14%';
-            document.getElementById('clipCardRevYtd').innerText = '$7,385,908';
-            document.getElementById('clipCardRevYtdYoY').innerHTML = '↑ +314.58%';
+            document.getElementById('clipCardSales').innerText = '2,298';
+            document.getElementById('clipCardPct').innerText = '17.83%';
+            document.getElementById('clipCardYoY').innerHTML = '↑ +107.96%';
+            document.getElementById('clipCardWoW').innerHTML = '↑ +53.92%';
+            document.getElementById('clipCardYtd').innerText = '37,568';
+            document.getElementById('clipCardYtdYoY').innerHTML = '↑ +275.12%';
+            document.getElementById('clipCardRevenue').innerText = '$442,755';
+            document.getElementById('clipCardRevPct').innerText = '18.89%';
+            document.getElementById('clipCardRevYoY').innerHTML = '↑ +100.39%';
+            document.getElementById('clipCardRevWoW').innerHTML = '↑ +52.02%';
+            document.getElementById('clipCardRevYtd').innerText = '$7,475,952';
+            document.getElementById('clipCardRevYtdYoY').innerHTML = '↑ +273.33%';
 
-            document.getElementById('hookCardSales').innerText = '2,834';
-            document.getElementById('hookCardPct').innerText = '27.42%';
-            document.getElementById('hookCardYoY').innerHTML = '↓ -21.56%';
-            document.getElementById('hookCardWoW').innerHTML = '↑ +3.47%';
-            document.getElementById('hookCardYtd').innerText = '87,931';
-            document.getElementById('hookCardYtdYoY').innerHTML = '↓ -4.32%';
-            document.getElementById('hookCardRevenue').innerText = '$589,368';
-            document.getElementById('hookCardRevPct').innerText = '30.85%';
-            document.getElementById('hookCardRevYoY').innerHTML = '↑ +8.66%';
-            document.getElementById('hookCardRevWoW').innerHTML = '↑ +3.97%';
-            document.getElementById('hookCardRevYtd').innerText = '$17,364,913';
-            document.getElementById('hookCardRevYtdYoY').innerHTML = '↑ +25.64%';
+            document.getElementById('hookCardSales').innerText = '3,867';
+            document.getElementById('hookCardPct').innerText = '30.01%';
+            document.getElementById('hookCardYoY').innerHTML = '↑ +25.51%';
+            document.getElementById('hookCardWoW').innerHTML = '↑ +41.18%';
+            document.getElementById('hookCardYtd').innerText = '88,465';
+            document.getElementById('hookCardYtdYoY').innerHTML = '↓ -3.24%';
+            document.getElementById('hookCardRevenue').innerText = '$761,249';
+            document.getElementById('hookCardRevPct').innerText = '32.47%';
+            document.getElementById('hookCardRevYoY').innerHTML = '↑ +60.88%';
+            document.getElementById('hookCardRevWoW').innerHTML = '↑ +34.29%';
+            document.getElementById('hookCardRevYtd').innerText = '$17,566,488';
+            document.getElementById('hookCardRevYtdYoY').innerHTML = '↑ +27.07%';
 
             const marketYoYEl = document.getElementById('marketYoY');
-            if (marketYoYEl) marketYoYEl.innerHTML = '↓ -11.92%';
+            if (marketYoYEl) marketYoYEl.innerHTML = '↑ +23.08%';
             const airYoYEl = document.getElementById('airYoY');
-            if (airYoYEl) airYoYEl.innerHTML = '↓ -1.84%';
+            if (airYoYEl) airYoYEl.innerHTML = '↑ +47.28%';
         }
 
         // ==================== 10. 页面加载完成后执行 ====================
